@@ -1,0 +1,11 @@
+*.log
+node_modules
+.DS_Store
+webpack.stats.js
+.yarnclean
+.next
+snippets
+**/yarn.lock
+.vscode
+out
+*.tsx.swp
