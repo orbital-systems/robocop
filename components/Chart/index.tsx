@@ -1,7 +1,5 @@
-/* eslint-disable @typescript-eslint/no-use-before-define */
-import React, { useRef, useState, useMemo } from "react";
+import React, { useRef, useState, useMemo, useEffect } from "react";
 import { scaleTime, scaleLinear } from "@visx/scale";
-import appleStock, { AppleStock } from "@visx/mock-data/lib/mocks/appleStock";
 import { Brush } from "@visx/brush";
 import { Bounds } from "@visx/brush/lib/types";
 import BaseBrush, {
@@ -13,33 +11,34 @@ import { Group } from "@visx/group";
 import { LinearGradient } from "@visx/gradient";
 import { max, extent } from "d3-array";
 import AreaChart from "./AreaChart";
+import { Data } from "../../pages";
+import { getDateAccessor, getValueAccessor } from "./util";
 
-// Initialize some variables
-const stock = appleStock.slice(1000);
 const brushMargin = { top: 10, bottom: 15, left: 50, right: 20 };
-const chartSeparation = 30;
+const chartSeparation = 20;
 const PATTERN_ID = "brush_pattern";
 const GRADIENT_ID = "brush_gradient";
-export const accentColor = "#f6acc8";
-export const background = "#584153";
-export const background2 = "#af8baf";
+const accentColor = "#fff";
+const background = "#00203e";
+const background2 = "#4d4343";
+
 const selectedBrushStyle = {
   fill: `url(#${PATTERN_ID})`,
   stroke: "white",
 };
 
-// accessors
-const getDate = (d: AppleStock) => new Date(d.date);
-const getStockValue = (d: AppleStock) => d.close;
-
-export type BrushProps = {
+type ChartProps = {
   width: number;
   height: number;
   margin?: { top: number; right: number; bottom: number; left: number };
   compact?: boolean;
+  data: Data[];
+  filteredData: Data[];
+  setFilteredData(d: Data[]): void;
+  hiddenSymptoms: string[];
 };
 
-function BrushChart({
+const Chart = ({
   compact = false,
   width,
   height,
@@ -49,19 +48,22 @@ function BrushChart({
     bottom: 20,
     right: 20,
   },
-}: BrushProps) {
+  data,
+  filteredData,
+  setFilteredData,
+  hiddenSymptoms,
+}: ChartProps) => {
   const brushRef = useRef<BaseBrush | null>(null);
-  const [filteredStock, setFilteredStock] = useState(stock);
 
   const onBrushChange = (domain: Bounds | null) => {
     if (!domain) return;
     const { x0, x1, y0, y1 } = domain;
-    const stockCopy = stock.filter((s) => {
-      const x = getDate(s).getTime();
-      const y = getStockValue(s);
+    const dataCopy = data.filter((s) => {
+      const x = getDateAccessor(s).getTime();
+      const y = getValueAccessor(s);
       return x > x0 && x < x1 && y > y0 && y < y1;
     });
-    setFilteredStock(stockCopy);
+    setFilteredData(dataCopy);
   };
 
   const innerHeight = height - margin.top - margin.bottom;
@@ -85,32 +87,35 @@ function BrushChart({
     () =>
       scaleTime<number>({
         range: [0, xMax],
-        domain: extent(filteredStock, getDate) as [Date, Date],
+        domain: extent(filteredData, getDateAccessor) as [Date, Date],
       }),
-    [xMax, filteredStock]
+    [xMax, filteredData]
   );
-  const stockScale = useMemo(
+
+  const valueScale = useMemo(
     () =>
       scaleLinear<number>({
         range: [yMax, 0],
-        domain: [0, max(filteredStock, getStockValue) || 0],
+        domain: [0, max(filteredData, getValueAccessor) || 0],
         nice: true,
       }),
-    [yMax, filteredStock]
+    [yMax, filteredData]
   );
+
   const brushDateScale = useMemo(
     () =>
       scaleTime<number>({
         range: [0, xBrushMax],
-        domain: extent(stock, getDate) as [Date, Date],
+        domain: extent(data, getDateAccessor) as [Date, Date],
       }),
     [xBrushMax]
   );
-  const brushStockScale = useMemo(
+
+  const brushvalueScale = useMemo(
     () =>
       scaleLinear({
         range: [yBrushMax, 0],
-        domain: [0, max(stock, getStockValue) || 0],
+        domain: [0, max(data, getValueAccessor) || 0],
         nice: true,
       }),
     [yBrushMax]
@@ -118,8 +123,8 @@ function BrushChart({
 
   const initialBrushPosition = useMemo(
     () => ({
-      start: { x: brushDateScale(getDate(stock[50])) },
-      end: { x: brushDateScale(getDate(stock[100])) },
+      start: { x: brushDateScale(getDateAccessor(data[0])) },
+      end: { x: brushDateScale(getDateAccessor(data[150])) },
     }),
     [brushDateScale]
   );
@@ -127,7 +132,7 @@ function BrushChart({
   // event handlers
   const handleClearClick = () => {
     if (brushRef?.current) {
-      setFilteredStock(stock);
+      setFilteredData(data);
       brushRef.current.reset();
     }
   };
@@ -152,6 +157,13 @@ function BrushChart({
       brushRef.current.updateBrush(updater);
     }
   };
+  useEffect(() => {
+    handleResetClick();
+  }, []);
+
+  const filterSymptomData = filteredData.filter(
+    (d) => !hiddenSymptoms.includes(d.symptom)
+  );
 
   return (
     <div>
@@ -171,23 +183,23 @@ function BrushChart({
           rx={14}
         />
         <AreaChart
-          hideBottomAxis={compact}
-          data={filteredStock}
+          hideLeftAxis
+          data={filterSymptomData}
           width={width}
           margin={{ ...margin, bottom: topChartBottomMargin }}
           yMax={yMax}
           xScale={dateScale}
-          yScale={stockScale}
+          yScale={valueScale}
           gradientColor={background2}
         />
         <AreaChart
           hideBottomAxis
           hideLeftAxis
-          data={stock}
+          data={filterSymptomData}
           width={width}
           yMax={yBrushMax}
           xScale={brushDateScale}
-          yScale={brushStockScale}
+          yScale={brushvalueScale}
           margin={brushMargin}
           top={topChartHeight + topChartBottomMargin + margin.top}
           gradientColor={background2}
@@ -202,7 +214,7 @@ function BrushChart({
           />
           <Brush
             xScale={brushDateScale}
-            yScale={brushStockScale}
+            yScale={brushvalueScale}
             width={xBrushMax}
             height={yBrushMax}
             margin={brushMargin}
@@ -212,7 +224,7 @@ function BrushChart({
             brushDirection="horizontal"
             initialBrushPosition={initialBrushPosition}
             onChange={onBrushChange}
-            onClick={() => setFilteredStock(stock)}
+            onClick={() => setFilteredData(data)}
             selectedBoxStyle={selectedBrushStyle}
             useWindowMoveEvents
             renderBrushHandle={(props) => <BrushHandle {...props} />}
@@ -223,7 +235,7 @@ function BrushChart({
       <button onClick={handleResetClick}>Reset</button>
     </div>
   );
-}
+};
 // We need to manually offset the handles for them to be rendered at the right position
 function BrushHandle({ x, height, isBrushActive }: any) {
   const pathWidth = 8;
@@ -231,6 +243,7 @@ function BrushHandle({ x, height, isBrushActive }: any) {
   if (!isBrushActive) {
     return null;
   }
+
   return (
     <Group left={x + pathWidth / 2} top={(height - pathHeight) / 2}>
       <path
@@ -244,4 +257,4 @@ function BrushHandle({ x, height, isBrushActive }: any) {
   );
 }
 
-export default BrushChart;
+export default Chart;

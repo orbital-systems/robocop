@@ -1,10 +1,11 @@
 import React from "react";
 import { Group } from "@visx/group";
-import { AreaClosed } from "@visx/shape";
+import { AreaClosed, Bar, Circle } from "@visx/shape";
 import { AxisLeft, AxisBottom, AxisScale } from "@visx/axis";
 import { LinearGradient } from "@visx/gradient";
 import { curveMonotoneX } from "@visx/curve";
-import { AppleStock } from "@visx/mock-data/lib/mocks/appleStock";
+import { Data } from "../../pages";
+import { getDateAccessor, getSymptomColor, getValueAccessor } from "./util";
 
 // Initialize some variables
 const axisColor = "#fff";
@@ -23,10 +24,6 @@ const axisLeftTickLabelProps = {
   fill: axisColor,
 };
 
-// accessors
-const getDate = (d: AppleStock) => new Date(d.date);
-const getStockValue = (d: AppleStock) => d.close;
-
 export default function AreaChart({
   data,
   gradientColor,
@@ -41,7 +38,7 @@ export default function AreaChart({
   left,
   children,
 }: {
-  data: AppleStock[];
+  data: Data[];
   gradientColor: string;
   xScale: AxisScale<number>;
   yScale: AxisScale<number>;
@@ -64,16 +61,16 @@ export default function AreaChart({
         to={gradientColor}
         toOpacity={0.2}
       />
-      <AreaClosed<AppleStock>
-        data={data}
-        x={(d) => xScale(getDate(d)) || 0}
-        y={(d) => yScale(getStockValue(d)) || 0}
-        yScale={yScale}
-        strokeWidth={1}
-        stroke="url(#gradient)"
-        fill="url(#gradient)"
-        curve={curveMonotoneX}
-      />
+      {data.map((d, i) => (
+        <Circle
+          key={`point-${i}`}
+          className="dot"
+          cx={xScale(getDateAccessor(d))}
+          cy={yScale(getValueAccessor(d))}
+          fill={getSymptomColor(d.symptom)}
+          r={3}
+        />
+      ))}
       {!hideBottomAxis && (
         <AxisBottom
           top={yMax}
