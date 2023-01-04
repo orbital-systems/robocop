@@ -161,7 +161,11 @@ const Chart = ({
     handleResetClick();
   }, []);
 
-  const filterSymptomData = filteredData.filter(
+  const dataInRangeFiltered = filteredData.filter(
+    (d) => !hiddenSymptoms.includes(d.symptom)
+  );
+
+  const allDataFiltered = data.filter(
     (d) => !hiddenSymptoms.includes(d.symptom)
   );
 
@@ -184,7 +188,7 @@ const Chart = ({
         />
         <AreaChart
           hideLeftAxis
-          data={filterSymptomData}
+          data={dataInRangeFiltered}
           width={width}
           margin={{ ...margin, bottom: topChartBottomMargin }}
           yMax={yMax}
@@ -195,7 +199,7 @@ const Chart = ({
         <AreaChart
           hideBottomAxis
           hideLeftAxis
-          data={filterSymptomData}
+          data={allDataFiltered}
           width={width}
           yMax={yBrushMax}
           xScale={brushDateScale}
