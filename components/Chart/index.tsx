@@ -11,7 +11,7 @@ import { Group } from "@visx/group";
 import { LinearGradient } from "@visx/gradient";
 import { max, extent } from "d3-array";
 import AreaChart from "./AreaChart";
-import { Data } from "../../pages";
+import { Data } from "../../pages/home";
 import { getDateAccessor, getValueAccessor } from "./util";
 
 const brushMargin = { top: 10, bottom: 15, left: 50, right: 20 };
@@ -35,7 +35,7 @@ type ChartProps = {
   data: Data[];
   filteredData: Data[];
   setFilteredData(d: Data[]): void;
-  hiddenSymptoms: string[];
+  externalFilter(d: Data[]): Data[];
 };
 
 const Chart = ({
@@ -51,7 +51,7 @@ const Chart = ({
   data,
   filteredData,
   setFilteredData,
-  hiddenSymptoms,
+  externalFilter,
 }: ChartProps) => {
   const brushRef = useRef<BaseBrush | null>(null);
 
@@ -161,13 +161,8 @@ const Chart = ({
     handleResetClick();
   }, []);
 
-  const dataInRangeFiltered = filteredData.filter(
-    (d) => !hiddenSymptoms.includes(d.symptom)
-  );
-
-  const allDataFiltered = data.filter(
-    (d) => !hiddenSymptoms.includes(d.symptom)
-  );
+  const dataInRangeFiltered = externalFilter(filteredData);
+  const allDataFiltered = externalFilter(data);
 
   return (
     <div>

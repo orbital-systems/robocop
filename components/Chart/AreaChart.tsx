@@ -4,7 +4,7 @@ import { AreaClosed, Bar, Circle } from "@visx/shape";
 import { AxisLeft, AxisBottom, AxisScale } from "@visx/axis";
 import { LinearGradient } from "@visx/gradient";
 import { curveMonotoneX } from "@visx/curve";
-import { Data } from "../../pages";
+import { Data } from "../../pages/home";
 import { getDateAccessor, getSymptomColor, getValueAccessor } from "./util";
 
 // Initialize some variables

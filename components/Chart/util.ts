@@ -1,4 +1,4 @@
-import { Data } from "../../pages";
+import { Data } from "../../pages/home";
 
 const symptoms = [
   "heatup_error",
