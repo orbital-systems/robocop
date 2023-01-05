@@ -1,13 +1,4 @@
-import React, {
-  HTMLAttributes,
-  HTMLProps,
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-} from "react";
-import ReactDOM from "react-dom/client";
-
+import React from "react";
 import {
   Column,
   ColumnDef,
@@ -18,6 +9,7 @@ import {
   Table,
   useReactTable,
 } from "@tanstack/react-table";
+import { IndeterminateCheckbox } from "../InterminateCheckbox";
 
 interface DataTableProps {
   data: unknown[];
@@ -219,29 +211,6 @@ function Filter({
       onChange={(e) => column.setFilterValue(e.target.value)}
       placeholder={`Search...`}
       className="w-36 border shadow rounded"
-    />
-  );
-}
-
-function IndeterminateCheckbox({
-  indeterminate,
-  className = "",
-  ...rest
-}: { indeterminate?: boolean } & HTMLProps<HTMLInputElement>) {
-  const ref = useRef<HTMLInputElement>(null!);
-
-  React.useEffect(() => {
-    if (typeof indeterminate === "boolean") {
-      ref.current.indeterminate = !rest.checked && indeterminate;
-    }
-  }, [ref, indeterminate]);
-
-  return (
-    <input
-      type="checkbox"
-      ref={ref}
-      className={className + " cursor-pointer"}
-      {...rest}
     />
   );
 }
