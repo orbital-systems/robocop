@@ -99,6 +99,11 @@ export default function Home() {
       </Head>
       <main>
         <h1>Robocop</h1>
+        <div style={{ position: "absolute", top: 20, right: 20 }}>
+          <a href="https://orbital-systems.atlassian.net/browse/OSW-271">
+            Feature request or bug report
+          </a>
+        </div>
         <div style={{ height: 500, marginBottom: 30 }}>
           {data?.length > 0 && (
             <ParentSize>
