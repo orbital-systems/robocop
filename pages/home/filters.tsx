@@ -83,40 +83,43 @@ export const Filters = ({
   );
 
   return (
-    <div
-      style={{
-        display: "flex",
-        justifyContent: "space-between",
-      }}
-    >
+    <>
+      <h2>Filters</h2>
       <div
         style={{
-          width: "48%",
-          backgroundColor: "#0a325733",
-          border: "3px solid #0a3257",
+          display: "flex",
+          justifyContent: "space-between",
         }}
       >
-        <DataTable
-          data={symptomsData}
-          columns={symptomsColumns as any}
-          rowSelection={selectedSymptomIndexes}
-          setRowSelection={setSelectedSymptomIndexes}
-        />
+        <div
+          style={{
+            width: "48%",
+            backgroundColor: "#0a325733",
+            border: "3px solid #0a3257",
+          }}
+        >
+          <DataTable
+            data={symptomsData}
+            columns={symptomsColumns as any}
+            rowSelection={selectedSymptomIndexes}
+            setRowSelection={setSelectedSymptomIndexes}
+          />
+        </div>
+        <div
+          style={{
+            width: "48%",
+            backgroundColor: "#0a325733",
+            border: "3px solid #0a3257",
+          }}
+        >
+          <DataTable
+            data={installationData}
+            columns={installationColumns as any}
+            rowSelection={selectedInstallationIndexes}
+            setRowSelection={setSelectedInstallationIndexes}
+          />
+        </div>
       </div>
-      <div
-        style={{
-          width: "48%",
-          backgroundColor: "#0a325733",
-          border: "3px solid #0a3257",
-        }}
-      >
-        <DataTable
-          data={installationData}
-          columns={installationColumns as any}
-          rowSelection={selectedInstallationIndexes}
-          setRowSelection={setSelectedInstallationIndexes}
-        />
-      </div>
-    </div>
+    </>
   );
 };

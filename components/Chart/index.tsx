@@ -12,7 +12,7 @@ import { LinearGradient } from "@visx/gradient";
 import { max, extent } from "d3-array";
 import AreaChart from "./AreaChart";
 import { Data } from "../../pages/home";
-import { getDateAccessor, getValueAccessor } from "./util";
+import { getDateAccessor, getSymptomColor, getValueAccessor } from "./util";
 
 const brushMargin = { top: 10, bottom: 15, left: 50, right: 20 };
 const chartSeparation = 20;
@@ -164,8 +164,42 @@ const Chart = ({
   const dataInRangeFiltered = externalFilter(filteredData);
   const allDataFiltered = externalFilter(data);
 
+  const [hoverData, setHoverData] = useState<Data | undefined>(undefined);
+
   return (
     <div>
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "space-between",
+          marginBottom: 8,
+        }}
+      >
+        <div>
+          <button onClick={handleClearClick} style={{ marginRight: 8 }}>
+            Clear timespan
+          </button>
+          <button onClick={handleResetClick}>Reset timespan</button>
+        </div>
+        <div>
+          {typeof hoverData !== "undefined" && (
+            <div style={{ display: "flex" }}>
+              <div>
+                {hoverData?.os_name || hoverData?.session_id}
+                {` (sw version: ${hoverData.software_version})`}
+              </div>
+              <div
+                style={{
+                  backgroundColor: getSymptomColor(hoverData.symptom),
+                  marginLeft: 8,
+                }}
+              >
+                {hoverData?.symptom}
+              </div>
+            </div>
+          )}
+        </div>
+      </div>
       <svg width={width} height={height}>
         <LinearGradient
           id={GRADIENT_ID}
@@ -190,6 +224,7 @@ const Chart = ({
           xScale={dateScale}
           yScale={valueScale}
           gradientColor={background2}
+          onHover={setHoverData}
         />
         <AreaChart
           hideBottomAxis
@@ -230,8 +265,6 @@ const Chart = ({
           />
         </AreaChart>
       </svg>
-      <button onClick={handleClearClick}>Clear</button>&nbsp;
-      <button onClick={handleResetClick}>Reset</button>
     </div>
   );
 };

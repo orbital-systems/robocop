@@ -35,6 +35,7 @@ export default function AreaChart({
   top,
   left,
   children,
+  onHover,
 }: {
   data: Data[];
   gradientColor: string;
@@ -48,6 +49,7 @@ export default function AreaChart({
   top?: number;
   left?: number;
   children?: React.ReactNode;
+  onHover?(d: Data | undefined): void;
 }) {
   if (width < 10) return null;
   return (
@@ -67,6 +69,16 @@ export default function AreaChart({
           cy={yScale(getValueAccessor(d))}
           fill={getSymptomColor(d.symptom)}
           r={3}
+          onMouseEnter={() => onHover && onHover(d)}
+          onMouseLeave={() => onHover && onHover(undefined)}
+          style={{ cursor: onHover && "pointer" }}
+          onClick={() =>
+            onHover &&
+            window.open(
+              `https://osw.orb-sys.com/plotting/?device_id=${d.shower_id}&session_id=${d.session_id}`,
+              "blank"
+            )
+          }
         />
       ))}
       {!hideBottomAxis && (
