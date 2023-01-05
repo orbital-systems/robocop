@@ -99,7 +99,7 @@ export default function Home() {
       </Head>
       <main>
         <h1>Robocop</h1>
-        <div style={{ height: 500, marginBottom: 50 }}>
+        <div style={{ height: 500, marginBottom: 30 }}>
           {data?.length > 0 && (
             <ParentSize>
               {({ width, height }) => (

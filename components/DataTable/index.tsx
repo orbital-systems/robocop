@@ -48,17 +48,21 @@ export const DataTable = ({
                 return (
                   <th key={header.id} colSpan={header.colSpan}>
                     {header.isPlaceholder ? null : (
-                      <>
+                      <div
+                        style={{
+                          display: "flex",
+                        }}
+                      >
                         {flexRender(
                           header.column.columnDef.header,
                           header.getContext()
                         )}
                         {header.column.getCanFilter() ? (
-                          <div>
+                          <div style={{ marginLeft: 8 }}>
                             <Filter column={header.column} table={table} />
                           </div>
                         ) : null}
-                      </>
+                      </div>
                     )}
                   </th>
                 );
@@ -166,8 +170,6 @@ export const DataTable = ({
         {Object.keys(rowSelection).length} of{" "}
         {table.getPreFilteredRowModel().rows.length} Total Rows Selected
       </div>
-      <hr />
-      <br />
     </div>
   );
 };

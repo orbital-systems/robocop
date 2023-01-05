@@ -8,25 +8,18 @@ body {
 }
 
 table {
-    border: 1px solid lightgray;
+    border: 3px solid #0a3257;
+    width: 100%;
 }
 
 tbody {
-    border-bottom: 1px solid lightgray;
+    border-bottom: 3px solid #0a3257;
 }
 
 th {
-    border-bottom: 1px solid lightgray;
-    border-right: 1px solid lightgray;
-    padding: 2px 4px;
+    border-bottom: 1px solid #0a3257;
+    border-right: 1px solid #0a3257;
 }
-  
-tfoot {
-    color: gray;
+td {
+    border-right: 1px solid #0a3257;
 }
-  
-tfoot th {
-    font-weight: normal;
-}
-
-  

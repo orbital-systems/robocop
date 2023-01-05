@@ -37,13 +37,13 @@ export const getSymptomColor = (symptom: string) => {
     "#008080",
     "#e6beff",
     "#9a6324",
-    "#fffac8",
-    "#800000",
-    "#aaffc3",
-    "#808000",
-    "#ffd8b1",
-    "#000075",
-    "#808080",
+    "#fffac8", // 14 total
+    // "#800000",
+    // "#aaffc3",
+    // "#808000",
+    // "#ffd8b1",
+    // "#000075",
+    // "#808080",
   ];
   const index = symptoms.indexOf(symptom);
   return colors[index];

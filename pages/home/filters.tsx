@@ -84,20 +84,19 @@ export const Filters = ({
 
   return (
     <>
-      <h2>Filters</h2>
       <div
         style={{
           display: "flex",
           justifyContent: "space-between",
+          marginBottom: 32,
         }}
       >
         <div
           style={{
             width: "48%",
-            backgroundColor: "#0a325733",
-            border: "3px solid #0a3257",
           }}
         >
+          <h3>Symptoms</h3>
           <DataTable
             data={symptomsData}
             columns={symptomsColumns as any}
@@ -108,10 +107,9 @@ export const Filters = ({
         <div
           style={{
             width: "48%",
-            backgroundColor: "#0a325733",
-            border: "3px solid #0a3257",
           }}
         >
+          <h3>Installations</h3>
           <DataTable
             data={installationData}
             columns={installationColumns as any}

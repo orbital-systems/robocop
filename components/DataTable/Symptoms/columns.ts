@@ -1,4 +1,5 @@
 import { ColumnDef } from "@tanstack/react-table";
+import { SymptomCell } from "./cells";
 
 export enum SymptomsTableAccessors {
   name = "name",
@@ -18,5 +19,6 @@ export const symptomsTableColumns: ColumnDef<SymptomsTable>[] = [
     accessorKey: SymptomsTableAccessors.name,
     id: SymptomsTableAccessors.name,
     header: SymptomTableNames.name,
+    cell: SymptomCell,
   },
 ];
