@@ -12,7 +12,7 @@ import { LinearGradient } from "@visx/gradient";
 import { max, extent } from "d3-array";
 import AreaChart from "./AreaChart";
 import { Data } from "../../pages/home";
-import { getDateAccessor, getSymptomColor, getValueAccessor } from "./util";
+import { getDateAccessor, getSymptomColor } from "./util";
 
 const brushMargin = { top: 10, bottom: 15, left: 50, right: 20 };
 const chartSeparation = 20;
@@ -36,6 +36,9 @@ type ChartProps = {
   filteredData: Data[];
   setFilteredData(d: Data[]): void;
   externalFilter(d: Data[]): Data[];
+  getValueAccessor(d: Data): number;
+  setValueAccessor(a: "symptom" | "installation"): void;
+  valueAccessor: "symptom" | "installation";
 };
 
 const Chart = ({
@@ -52,6 +55,9 @@ const Chart = ({
   filteredData,
   setFilteredData,
   externalFilter,
+  getValueAccessor,
+  setValueAccessor,
+  valueAccessor,
 }: ChartProps) => {
   const brushRef = useRef<BaseBrush | null>(null);
 
@@ -179,7 +185,18 @@ const Chart = ({
           <button onClick={handleClearClick} style={{ marginRight: 8 }}>
             Clear timespan
           </button>
-          <button onClick={handleResetClick}>Reset timespan</button>
+          <button onClick={handleResetClick} style={{ marginRight: 8 }}>
+            Reset timespan
+          </button>
+          <button
+            onClick={() =>
+              setValueAccessor(
+                valueAccessor === "installation" ? "symptom" : "installation"
+              )
+            }
+          >{`Set Y = ${
+            valueAccessor === "installation" ? "symptom" : "installation"
+          }`}</button>
         </div>
         <div>
           {typeof hoverData !== "undefined" && (
@@ -225,10 +242,12 @@ const Chart = ({
           yScale={valueScale}
           gradientColor={background2}
           onHover={setHoverData}
+          getValueAccessor={getValueAccessor}
         />
         <AreaChart
           hideBottomAxis
           hideLeftAxis
+          circleRadius={2}
           data={allDataFiltered}
           width={width}
           yMax={yBrushMax}
@@ -237,6 +256,7 @@ const Chart = ({
           margin={brushMargin}
           top={topChartHeight + topChartBottomMargin + margin.top}
           gradientColor={background2}
+          getValueAccessor={getValueAccessor}
         >
           <PatternLines
             id={PATTERN_ID}

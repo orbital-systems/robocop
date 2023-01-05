@@ -4,6 +4,7 @@ import ParentSize from "@visx/responsive/lib/components/ParentSize";
 import dynamic from "next/dynamic";
 import { exampleData } from "../../exampledata";
 import { Filters } from "./filters";
+import { symptoms } from "../../components/Chart/util";
 
 const Chart = dynamic(() => import("../../components/Chart"), { ssr: false });
 
@@ -89,6 +90,20 @@ export default function Home() {
     );
   };
 
+  const [valueAccessor, setValueAccessor] = useState<
+    "installation" | "symptom"
+  >("installation");
+
+  const symptomAccessor = (d: Data): number =>
+    symptoms?.indexOf(d.symptom) + 1 || 0;
+
+  const installationAccessor = (d: Data): number =>
+    installationData?.map((d) => d.name)?.indexOf(d?.os_name || d.shower_id) +
+      1 || 0;
+
+  const getValueAccessor =
+    valueAccessor === "symptom" ? symptomAccessor : installationAccessor;
+
   return (
     <>
       <Head>
@@ -109,12 +124,16 @@ export default function Home() {
             <ParentSize>
               {({ width, height }) => (
                 <Chart
+                  key={valueAccessor}
                   width={width}
                   height={height}
                   data={data}
                   filteredData={filteredData}
                   setFilteredData={setFilteredData}
                   externalFilter={externalFilter}
+                  getValueAccessor={getValueAccessor}
+                  setValueAccessor={setValueAccessor}
+                  valueAccessor={valueAccessor}
                 />
               )}
             </ParentSize>

@@ -4,7 +4,7 @@ import { Circle } from "@visx/shape";
 import { AxisLeft, AxisBottom, AxisScale } from "@visx/axis";
 import { LinearGradient } from "@visx/gradient";
 import { Data } from "../../pages/home";
-import { getDateAccessor, getSymptomColor, getValueAccessor } from "./util";
+import { getDateAccessor, getSymptomColor } from "./util";
 
 const axisColor = "#fff";
 const axisBottomTickLabelProps = {
@@ -36,6 +36,8 @@ export default function AreaChart({
   left,
   children,
   onHover,
+  getValueAccessor,
+  circleRadius,
 }: {
   data: Data[];
   gradientColor: string;
@@ -50,6 +52,8 @@ export default function AreaChart({
   left?: number;
   children?: React.ReactNode;
   onHover?(d: Data | undefined): void;
+  getValueAccessor(d: Data): number;
+  circleRadius?: number;
 }) {
   if (width < 10) return null;
   return (
@@ -68,7 +72,7 @@ export default function AreaChart({
           cx={xScale(getDateAccessor(d))}
           cy={yScale(getValueAccessor(d))}
           fill={getSymptomColor(d.symptom)}
-          r={3}
+          r={circleRadius ?? 3}
           onMouseEnter={() => onHover && onHover(d)}
           onMouseLeave={() => onHover && onHover(undefined)}
           style={{ cursor: onHover && "pointer" }}

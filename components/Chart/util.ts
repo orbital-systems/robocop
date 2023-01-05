@@ -1,6 +1,6 @@
 import { Data } from "../../pages/home";
 
-const symptoms = [
+export const symptoms = [
   "heatup_error",
   "b11_other",
   "drain_leak",
@@ -19,8 +19,6 @@ const symptoms = [
 
 // accessors
 export const getDateAccessor = (d: Data): Date => new Date(d.timestamp);
-export const getValueAccessor = (d: Data): number =>
-  symptoms?.indexOf(d.symptom) + 1 || 0;
 
 export const getSymptomColor = (symptom: string) => {
   const colors = [
