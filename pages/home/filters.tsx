@@ -5,12 +5,12 @@ import { symptomsTableColumns } from "../../components/DataTable/Symptoms/column
 import { IndeterminateCheckbox } from "../../components/InterminateCheckbox";
 
 interface FiltersProps {
-  symptomsData: { name: string }[];
+  symptomsData: string[];
   selectedSymptomIndexes: { [key: string]: boolean };
   setSelectedSymptomIndexes(data: { [key: string]: boolean }): void;
   selectedInstallationIndexes: { [key: string]: boolean };
   setSelectedInstallationIndexes(data: { [key: string]: boolean }): void;
-  installationData: { name: string }[];
+  installationData: string[];
 }
 export const Filters = ({
   symptomsData,
@@ -98,7 +98,9 @@ export const Filters = ({
         >
           <h3>Symptoms</h3>
           <DataTable
-            data={symptomsData}
+            data={symptomsData.map((d) => {
+              return { name: d };
+            })}
             columns={symptomsColumns as any}
             rowSelection={selectedSymptomIndexes}
             setRowSelection={setSelectedSymptomIndexes}
@@ -111,7 +113,9 @@ export const Filters = ({
         >
           <h3>Installations</h3>
           <DataTable
-            data={installationData}
+            data={installationData.map((d) => {
+              return { name: d };
+            })}
             columns={installationColumns as any}
             rowSelection={selectedInstallationIndexes}
             setRowSelection={setSelectedInstallationIndexes}

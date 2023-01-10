@@ -11,8 +11,8 @@ import { Group } from "@visx/group";
 import { LinearGradient } from "@visx/gradient";
 import { max, extent } from "d3-array";
 import AreaChart from "./AreaChart";
-import { Data } from "../../pages/home";
 import { getDateAccessor, getSymptomColor } from "./util";
+import { Data } from "../../types";
 
 const brushMargin = { top: 10, bottom: 15, left: 50, right: 20 };
 const chartSeparation = 20;

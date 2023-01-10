@@ -1,48 +1,24 @@
-import { Data } from "../../pages/home";
+import { Data } from "../../types";
 
-export const symptoms = [
-  "heatup_error",
-  "b11_other",
-  "drain_leak",
-  "w7_other",
-  "no_inlet",
-  "airsuction",
-  "restricted_flow",
-  "weak_radar",
-  "radar_ghost",
-  "setpoint_too_low",
-  "w7_c7",
-  "slow_heatup",
-  "insufficient_power",
-  "lid_open",
-]; // 14 total
+const colors = {
+  heatup_error: "#e6194b",
+  b11_other: "#3cb44b",
+  drain_leak: "#ffe119",
+  w7_other: "#4363d8",
+  no_inlet: "#f58231",
+  airsuction: "#911eb4",
+  restricted_flow: "#46f0f0",
+  weak_radar: "#f032e6",
+  radar_ghost: "#bcf60c",
+  setpoint_too_low: "#fabebe",
+  w7_c7: "#008080",
+  slow_heatup: "#e6beff",
+  insufficient_power: "#9a6324",
+  lid_open: "#fffac8",
+};
+
+export const getSymptomColor = (symptom: string) =>
+  colors[symptom as keyof typeof colors];
 
 // accessors
 export const getDateAccessor = (d: Data): Date => new Date(d.timestamp);
-
-export const getSymptomColor = (symptom: string) => {
-  const colors = [
-    "#e6194b",
-    "#3cb44b",
-    "#ffe119",
-    "#4363d8",
-    "#f58231",
-    "#911eb4",
-    "#46f0f0",
-    "#f032e6",
-    "#bcf60c",
-    "#fabebe",
-    "#008080",
-    "#e6beff",
-    "#9a6324",
-    "#fffac8", // 14 total
-    // "#800000",
-    // "#aaffc3",
-    // "#808000",
-    // "#ffd8b1",
-    // "#000075",
-    // "#808080",
-  ];
-  const index = symptoms.indexOf(symptom);
-  return colors[index];
-};

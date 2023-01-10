@@ -3,8 +3,8 @@ import { Group } from "@visx/group";
 import { Circle } from "@visx/shape";
 import { AxisLeft, AxisBottom, AxisScale } from "@visx/axis";
 import { LinearGradient } from "@visx/gradient";
-import { Data } from "../../pages/home";
 import { getDateAccessor, getSymptomColor } from "./util";
+import { Data } from "../../types";
 
 const axisColor = "#fff";
 const axisBottomTickLabelProps = {

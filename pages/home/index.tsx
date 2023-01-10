@@ -4,20 +4,9 @@ import ParentSize from "@visx/responsive/lib/components/ParentSize";
 import dynamic from "next/dynamic";
 import { exampleData } from "../../exampledata";
 import { Filters } from "./filters";
-import { symptoms } from "../../components/Chart/util";
+import { Data } from "../../types";
 
 const Chart = dynamic(() => import("../../components/Chart"), { ssr: false });
-
-export interface Data {
-  index: number;
-  timestamp: string;
-  week: number;
-  shower_id: string;
-  os_name: string | null;
-  session_id: string;
-  software_version: string;
-  symptom: string;
-}
 
 export default function Home() {
   const [data, setData] = useState<Data[]>([]);
@@ -33,29 +22,22 @@ export default function Home() {
 
   /* All symptoms in the data set */
   const symptomsData = useMemo(
-    () =>
-      Array.from(new Set(data.map((d) => d.symptom)))?.map((s) => {
-        return { name: s };
-      }),
+    () => Array.from(new Set(data.map((d) => d.symptom))),
     [data]
   );
 
   /* All installations in the data set */
   const installationData = useMemo(
-    () =>
-      Array.from(new Set(data.map((d) => d?.os_name || d.shower_id)))?.map(
-        (s) => {
-          return { name: s };
-        }
-      ),
+    () => Array.from(new Set(data.map((d) => d?.os_name || d.shower_id))),
     [data]
   );
 
-  /* Indexes of selected symtpoms & installations*/
+  /* Indexes of selected symtpoms */
   const [selectedSymptomIndexes, setSelectedSymptomIndexes] = useState<{
     [key: string]: boolean;
   }>({});
 
+  /* Indexes of selected installations */
   const [selectedInstallationIndexes, setSelectedInstallationIndexes] =
     useState<{
       [key: string]: boolean;
@@ -74,14 +56,15 @@ export default function Home() {
     } as any as { [key: string]: boolean });
   }, [symptomsData]);
 
-  /* Function to filter out data that's not desired */
+  /* Function to filter out data that's not selected symptom & installation  */
   const externalFilter = (unfilteredData: Data[]) => {
-    const hiddenSymptomIndexes = symptomsData
-      .filter((_, i) => !selectedSymptomIndexes[i])
-      .map((s) => s.name);
-    const hiddenInstallationIndexes = installationData
-      .filter((_, i) => !selectedInstallationIndexes[i])
-      .map((s) => s.name);
+    const hiddenSymptomIndexes = symptomsData.filter(
+      (_, i) => !selectedSymptomIndexes[i]
+    );
+
+    const hiddenInstallationIndexes = installationData.filter(
+      (_, i) => !selectedInstallationIndexes[i]
+    );
 
     return [...unfilteredData].filter(
       (d) =>
@@ -95,11 +78,10 @@ export default function Home() {
   >("installation");
 
   const symptomAccessor = (d: Data): number =>
-    symptoms?.indexOf(d.symptom) + 1 || 0;
+    symptomsData?.indexOf(d.symptom) + 1 || 0;
 
   const installationAccessor = (d: Data): number =>
-    installationData?.map((d) => d.name)?.indexOf(d?.os_name || d.shower_id) +
-      1 || 0;
+    installationData?.indexOf(d?.os_name || d.shower_id) + 1 || 0;
 
   const getValueAccessor =
     valueAccessor === "symptom" ? symptomAccessor : installationAccessor;
