@@ -14,8 +14,8 @@ import { IndeterminateCheckbox } from "../InterminateCheckbox";
 interface DataTableProps {
   data: unknown[];
   columns: ColumnDef<unknown, unknown>[];
-  rowSelection: any;
-  setRowSelection(d: any): void;
+  rowSelection?: any;
+  setRowSelection?(d: any): void;
 }
 
 export const DataTable = ({
@@ -88,20 +88,24 @@ export const DataTable = ({
             );
           })}
         </tbody>
-        <tfoot>
-          <tr>
-            <td className="p-1">
-              <IndeterminateCheckbox
-                {...{
-                  checked: table.getIsAllPageRowsSelected(),
-                  indeterminate: table.getIsSomePageRowsSelected(),
-                  onChange: table.getToggleAllPageRowsSelectedHandler(),
-                }}
-              />
-            </td>
-            <td colSpan={20}>Page Rows ({table.getRowModel().rows.length})</td>
-          </tr>
-        </tfoot>
+        {rowSelection && (
+          <tfoot>
+            <tr>
+              <td className="p-1">
+                <IndeterminateCheckbox
+                  {...{
+                    checked: table.getIsAllPageRowsSelected(),
+                    indeterminate: table.getIsSomePageRowsSelected(),
+                    onChange: table.getToggleAllPageRowsSelectedHandler(),
+                  }}
+                />
+              </td>
+              <td colSpan={20}>
+                Page Rows ({table.getRowModel().rows.length})
+              </td>
+            </tr>
+          </tfoot>
+        )}
       </table>
       <div className="h-2" />
       <div className="flex items-center gap-2">
@@ -166,10 +170,12 @@ export const DataTable = ({
         </select>
       </div>
       <br />
-      <div>
-        {Object.keys(rowSelection).length} of{" "}
-        {table.getPreFilteredRowModel().rows.length} Total Rows Selected
-      </div>
+      {rowSelection && (
+        <div>
+          {Object.keys(rowSelection).length} of{" "}
+          {table.getPreFilteredRowModel().rows.length} Total Rows Selected
+        </div>
+      )}
     </div>
   );
 };

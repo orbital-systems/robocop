@@ -11,6 +11,8 @@ interface FiltersProps {
   selectedInstallationIndexes: { [key: string]: boolean };
   setSelectedInstallationIndexes(data: { [key: string]: boolean }): void;
   installationData: string[];
+  selectedSoftwareVersions: string[];
+  setSelectedSoftwareVersions(v: string[]): void;
 }
 export const Filters = ({
   symptomsData,
@@ -19,6 +21,8 @@ export const Filters = ({
   selectedInstallationIndexes,
   setSelectedInstallationIndexes,
   installationData,
+  selectedSoftwareVersions,
+  setSelectedSoftwareVersions,
 }: FiltersProps) => {
   const symptomsColumns = useMemo(
     () => [
@@ -82,8 +86,37 @@ export const Filters = ({
     []
   );
 
+  const toggleSoftwareVersion = (v: string) => {
+    const updatedSoftwareVersions = [...selectedSoftwareVersions];
+    if (selectedSoftwareVersions.includes(v)) {
+      const removeIndex = updatedSoftwareVersions.indexOf(v);
+      updatedSoftwareVersions.splice(removeIndex, 1);
+    } else {
+      updatedSoftwareVersions.push(v);
+    }
+    setSelectedSoftwareVersions(updatedSoftwareVersions);
+  };
+
   return (
     <>
+      <h2>Filter data</h2>
+      <h3>Software version</h3>
+      <input
+        type="checkbox"
+        id="r2"
+        name="r2"
+        checked={selectedSoftwareVersions.includes("r2")}
+        onClick={() => toggleSoftwareVersion("r2")}
+      />
+      <label htmlFor="r2">R2</label>
+      <input
+        type="checkbox"
+        id="r3"
+        name="r3"
+        checked={selectedSoftwareVersions.includes("r3")}
+        onClick={() => toggleSoftwareVersion("r3")}
+      />
+      <label htmlFor="r3">R3</label>
       <div
         style={{
           display: "flex",

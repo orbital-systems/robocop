@@ -4,13 +4,38 @@ import ParentSize from "@visx/responsive/lib/components/ParentSize";
 import dynamic from "next/dynamic";
 import { exampleData } from "../../exampledata";
 import { Filters } from "./filters";
-import { Data } from "../../types";
+import { Data, DateInterval } from "../../types";
+import { Report } from "./report";
 
 const Chart = dynamic(() => import("../../components/Chart"), { ssr: false });
 
 export default function Home() {
   const [data, setData] = useState<Data[]>([]);
   const [filteredData, setFilteredData] = useState<Data[]>([]);
+
+  const [dateInterval, setDateInterval] = useState<DateInterval | undefined>(
+    undefined
+  );
+
+  useEffect(() => {
+    const sort = data.sort(
+      (a, b) =>
+        new Date(a.timestamp).getTime() - new Date(b.timestamp).getTime()
+    );
+
+    const minDate = new Date(sort[0]?.timestamp);
+    const maxDate = new Date(sort[sort.length - 1]?.timestamp);
+
+    const oneWeekAgo = new Date(maxDate);
+    oneWeekAgo.setDate(oneWeekAgo.getDate() - 7);
+
+    setDateInterval({
+      from: oneWeekAgo,
+      to: maxDate,
+      min: minDate,
+      max: maxDate,
+    });
+  }, [data]);
 
   useEffect(() => {
     setData(
@@ -31,6 +56,10 @@ export default function Home() {
     () => Array.from(new Set(data.map((d) => d?.os_name || d.shower_id))),
     [data]
   );
+
+  const [selectedSoftwareVersions, setSelectedSoftwareVersions] = useState<
+    string[]
+  >(["r2", "r3"]);
 
   /* Indexes of selected symtpoms */
   const [selectedSymptomIndexes, setSelectedSymptomIndexes] = useState<{
@@ -69,7 +98,8 @@ export default function Home() {
     return [...unfilteredData].filter(
       (d) =>
         !hiddenSymptomIndexes.includes(d.symptom) &&
-        !hiddenInstallationIndexes.includes(d?.os_name || d.shower_id)
+        !hiddenInstallationIndexes.includes(d?.os_name || d.shower_id) &&
+        selectedSoftwareVersions.includes(`r${d.software_version[0]}`)
     );
   };
 
@@ -101,8 +131,9 @@ export default function Home() {
             Feature request or bug report
           </a>
         </div>
-        <div style={{ height: 500, marginBottom: 30 }}>
-          {data?.length > 0 && (
+        {/* <Report data={filteredData} /> */}
+        <div style={{ height: 500, marginBottom: 200 }}>
+          {data?.length > 0 && typeof dateInterval !== "undefined" && (
             <ParentSize>
               {({ width, height }) => (
                 <Chart
@@ -116,6 +147,8 @@ export default function Home() {
                   getValueAccessor={getValueAccessor}
                   setValueAccessor={setValueAccessor}
                   valueAccessor={valueAccessor}
+                  dateInterval={dateInterval}
+                  setDateInterval={setDateInterval}
                 />
               )}
             </ParentSize>
@@ -128,6 +161,8 @@ export default function Home() {
           installationData={installationData}
           selectedInstallationIndexes={selectedInstallationIndexes}
           setSelectedInstallationIndexes={setSelectedInstallationIndexes}
+          selectedSoftwareVersions={selectedSoftwareVersions}
+          setSelectedSoftwareVersions={setSelectedSoftwareVersions}
         />
       </main>
     </>

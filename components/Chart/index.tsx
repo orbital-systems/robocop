@@ -12,7 +12,8 @@ import { LinearGradient } from "@visx/gradient";
 import { max, extent } from "d3-array";
 import AreaChart from "./AreaChart";
 import { getDateAccessor, getSymptomColor } from "./util";
-import { Data } from "../../types";
+import { Data, DateInterval } from "../../types";
+import DatePicker from "react-datepicker";
 
 const brushMargin = { top: 10, bottom: 15, left: 50, right: 20 };
 const chartSeparation = 20;
@@ -39,6 +40,8 @@ type ChartProps = {
   getValueAccessor(d: Data): number;
   setValueAccessor(a: "symptom" | "installation"): void;
   valueAccessor: "symptom" | "installation";
+  dateInterval: DateInterval;
+  setDateInterval(d: DateInterval): void;
 };
 
 const Chart = ({
@@ -58,12 +61,15 @@ const Chart = ({
   getValueAccessor,
   setValueAccessor,
   valueAccessor,
+  dateInterval,
+  setDateInterval,
 }: ChartProps) => {
   const brushRef = useRef<BaseBrush | null>(null);
 
   const onBrushChange = (domain: Bounds | null) => {
     if (!domain) return;
     const { x0, x1, y0, y1 } = domain;
+    setDateInterval({ ...dateInterval, from: new Date(x0), to: new Date(x1) });
     const dataCopy = data.filter((s) => {
       const x = getDateAccessor(s).getTime();
       const y = getValueAccessor(s);
@@ -127,12 +133,19 @@ const Chart = ({
     [yBrushMax]
   );
 
+  const getXFromDate = (d: Date) =>
+    brushDateScale(
+      getDateAccessor({
+        timestamp: d.toISOString(),
+      } as Data)
+    );
+
   const initialBrushPosition = useMemo(
     () => ({
-      start: { x: brushDateScale(getDateAccessor(data[0])) },
-      end: { x: brushDateScale(getDateAccessor(data[150])) },
+      start: { x: getXFromDate(dateInterval.from) },
+      end: { x: getXFromDate(dateInterval.to) },
     }),
-    [brushDateScale]
+    [brushDateScale, dateInterval]
   );
 
   // event handlers
@@ -146,9 +159,11 @@ const Chart = ({
   const handleResetClick = () => {
     if (brushRef?.current) {
       const updater: UpdateBrush = (prevBrush) => {
+        const oneWeekAgo = new Date(dateInterval.max);
+        oneWeekAgo.setDate(oneWeekAgo.getDate() - 7);
         const newExtent = brushRef.current!.getExtent(
-          initialBrushPosition.start,
-          initialBrushPosition.end
+          { x: getXFromDate(oneWeekAgo) },
+          { x: getXFromDate(dateInterval.max) }
         );
 
         const newState: BaseBrushState = {
@@ -163,6 +178,32 @@ const Chart = ({
       brushRef.current.updateBrush(updater);
     }
   };
+
+  const handleDatepickerClick = (newValue: Date, type: "from" | "to") => {
+    if (brushRef?.current) {
+      const updater: UpdateBrush = (prevBrush) => {
+        const newExtent = brushRef.current!.getExtent(
+          {
+            x: type === "from" ? getXFromDate(newValue) : prevBrush.extent.x0,
+          },
+          {
+            x: type === "to" ? getXFromDate(newValue) : prevBrush.extent.x1,
+          }
+        );
+
+        const newState: BaseBrushState = {
+          ...prevBrush,
+          start: { y: newExtent.y0, x: newExtent.x0 },
+          end: { y: newExtent.y1, x: newExtent.x1 },
+          extent: newExtent,
+        };
+
+        return newState;
+      };
+      brushRef.current.updateBrush(updater);
+    }
+  };
+
   useEffect(() => {
     handleResetClick();
   }, []);
@@ -174,29 +215,74 @@ const Chart = ({
 
   return (
     <div>
+      {/* <h2>Chart</h2> */}
       <div
         style={{
           display: "flex",
           justifyContent: "space-between",
+          alignItems: "flex-end",
           marginBottom: 8,
         }}
       >
         <div>
-          <button onClick={handleClearClick} style={{ marginRight: 8 }}>
-            Clear timespan
-          </button>
-          <button onClick={handleResetClick} style={{ marginRight: 8 }}>
-            Reset timespan
-          </button>
-          <button
-            onClick={() =>
-              setValueAccessor(
-                valueAccessor === "installation" ? "symptom" : "installation"
-              )
-            }
-          >{`Set Y = ${
-            valueAccessor === "installation" ? "symptom" : "installation"
-          }`}</button>
+          <div>
+            <h3>Y axis</h3>
+            <button
+              onClick={() => setValueAccessor("installation")}
+              style={{
+                marginRight: 8,
+                fontWeight:
+                  valueAccessor === "installation" ? "bold" : "normal",
+              }}
+            >
+              {"Installation"}
+            </button>
+            <button
+              onClick={() => setValueAccessor("symptom")}
+              style={{
+                fontWeight: valueAccessor === "symptom" ? "bold" : "normal",
+              }}
+            >
+              {"Symptom"}
+            </button>
+          </div>
+          <div>
+            <h3>Time span</h3>
+            <div style={{ display: "flex" }}>
+              <button onClick={handleClearClick} style={{ marginRight: 8 }}>
+                All time
+              </button>
+              <button onClick={handleResetClick} style={{ marginRight: 8 }}>
+                Past week
+              </button>
+              <div style={{ display: "flex" }}>
+                <label style={{ marginRight: 8 }}>From</label>
+                <DatePicker
+                  selected={dateInterval.from}
+                  onChange={(date: Date) => handleDatepickerClick(date, "from")}
+                  showTimeSelect
+                  dateFormat="dd/MM/yyyy"
+                  timeFormat="HH:mm"
+                  minDate={dateInterval.min}
+                  maxDate={dateInterval.to}
+                />
+                <label style={{ marginRight: 8, marginLeft: 8 }}>To</label>
+                <DatePicker
+                  selected={dateInterval.to}
+                  onChange={(date: Date) => handleDatepickerClick(date, "to")}
+                  showTimeSelect
+                  dateFormat="dd/MM/yyyy"
+                  timeFormat="HH:mm"
+                  minDate={dateInterval.from}
+                  maxDate={dateInterval.max}
+                />
+              </div>
+            </div>
+            <span style={{ fontSize: 10, color: "red", float: "right" }}>
+              Not corresponding to the X-axis, I'm loooking into why. Trust
+              these values more.
+            </span>
+          </div>
         </div>
         <div>
           {typeof hoverData !== "undefined" && (
