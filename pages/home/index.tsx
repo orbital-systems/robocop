@@ -1,13 +1,10 @@
 import Head from "next/head";
 import { useEffect, useMemo, useState } from "react";
-import ParentSize from "@visx/responsive/lib/components/ParentSize";
-import dynamic from "next/dynamic";
 import { exampleData } from "../../exampledata";
 import { Filters } from "./filters";
 import { Data, DateInterval } from "../../types";
 import { Report } from "./report";
-
-const Chart = dynamic(() => import("../../components/Chart"), { ssr: false });
+import { Chart } from "./chart";
 
 export default function Home() {
   const [data, setData] = useState<Data[]>([]);
@@ -73,17 +70,17 @@ export default function Home() {
     }>({});
 
   /* Make sure everything is selected by default when you render the app */
-  useEffect(() => {
-    setSelectedInstallationIndexes({
-      ...Array(installationData.length).fill(true),
-    } as any as { [key: string]: boolean });
-  }, [installationData]);
+  //   useEffect(() => {
+  //     setSelectedInstallationIndexes({
+  //       ...Array(installationData.length).fill(true),
+  //     } as any as { [key: string]: boolean });
+  //   }, [installationData]);
 
-  useEffect(() => {
-    setSelectedSymptomIndexes({
-      ...Array(symptomsData.length).fill(true),
-    } as any as { [key: string]: boolean });
-  }, [symptomsData]);
+  //   useEffect(() => {
+  //     setSelectedSymptomIndexes({
+  //       ...Array(symptomsData.length).fill(true),
+  //     } as any as { [key: string]: boolean });
+  //   }, [symptomsData]);
 
   /* Function to filter out data that's not selected symptom & installation  */
   const externalFilter = (unfilteredData: Data[]) => {
@@ -103,18 +100,7 @@ export default function Home() {
     );
   };
 
-  const [valueAccessor, setValueAccessor] = useState<
-    "installation" | "symptom"
-  >("installation");
-
-  const symptomAccessor = (d: Data): number =>
-    symptomsData?.indexOf(d.symptom) + 1 || 0;
-
-  const installationAccessor = (d: Data): number =>
-    installationData?.indexOf(d?.os_name || d.shower_id) + 1 || 0;
-
-  const getValueAccessor =
-    valueAccessor === "symptom" ? symptomAccessor : installationAccessor;
+  const dataInRangeFiltered = externalFilter(filteredData);
 
   return (
     <>
@@ -131,29 +117,6 @@ export default function Home() {
             Feature request or bug report
           </a>
         </div>
-        {/* <Report data={filteredData} /> */}
-        <div style={{ height: 500, marginBottom: 200 }}>
-          {data?.length > 0 && typeof dateInterval !== "undefined" && (
-            <ParentSize>
-              {({ width, height }) => (
-                <Chart
-                  key={valueAccessor}
-                  width={width}
-                  height={height}
-                  data={data}
-                  filteredData={filteredData}
-                  setFilteredData={setFilteredData}
-                  externalFilter={externalFilter}
-                  getValueAccessor={getValueAccessor}
-                  setValueAccessor={setValueAccessor}
-                  valueAccessor={valueAccessor}
-                  dateInterval={dateInterval}
-                  setDateInterval={setDateInterval}
-                />
-              )}
-            </ParentSize>
-          )}
-        </div>
         <Filters
           symptomsData={symptomsData}
           selectedSymptomIndexes={selectedSymptomIndexes}
@@ -164,6 +127,17 @@ export default function Home() {
           selectedSoftwareVersions={selectedSoftwareVersions}
           setSelectedSoftwareVersions={setSelectedSoftwareVersions}
         />
+        <Chart
+          data={data}
+          filteredData={filteredData}
+          setFilteredData={setFilteredData}
+          symptomsData={symptomsData}
+          installationData={installationData}
+          dateInterval={dateInterval}
+          setDateInterval={setDateInterval}
+          externalFilter={externalFilter}
+        />
+        <Report data={dataInRangeFiltered} dateInterval={dateInterval} />
       </main>
     </>
   );

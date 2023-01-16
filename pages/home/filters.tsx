@@ -99,7 +99,7 @@ export const Filters = ({
 
   return (
     <>
-      <h2>Filter data</h2>
+      <h2>1: Filter data</h2>
       <h3>Software version</h3>
       <input
         type="checkbox"
