@@ -156,11 +156,34 @@ const Chart = ({
     }
   };
 
-  const handleResetClick = () => {
+  const setBrushPastWeek = () => {
     if (brushRef?.current) {
       const updater: UpdateBrush = (prevBrush) => {
         const oneWeekAgo = new Date(dateInterval.max);
         oneWeekAgo.setDate(oneWeekAgo.getDate() - 7);
+        const newExtent = brushRef.current!.getExtent(
+          { x: getXFromDate(oneWeekAgo) },
+          { x: getXFromDate(dateInterval.max) }
+        );
+
+        const newState: BaseBrushState = {
+          ...prevBrush,
+          start: { y: newExtent.y0, x: newExtent.x0 },
+          end: { y: newExtent.y1, x: newExtent.x1 },
+          extent: newExtent,
+        };
+
+        return newState;
+      };
+      brushRef.current.updateBrush(updater);
+    }
+  };
+
+  const setBrushPastMonth = () => {
+    if (brushRef?.current) {
+      const updater: UpdateBrush = (prevBrush) => {
+        const oneWeekAgo = new Date(dateInterval.max);
+        oneWeekAgo.setMonth(oneWeekAgo.getMonth() - 1);
         const newExtent = brushRef.current!.getExtent(
           { x: getXFromDate(oneWeekAgo) },
           { x: getXFromDate(dateInterval.max) }
@@ -205,7 +228,7 @@ const Chart = ({
   };
 
   useEffect(() => {
-    handleResetClick();
+    setBrushPastWeek();
   }, []);
 
   const dataInRangeFiltered = externalFilter(filteredData);
@@ -252,7 +275,10 @@ const Chart = ({
               <button onClick={handleClearClick} style={{ marginRight: 8 }}>
                 All time
               </button>
-              <button onClick={handleResetClick} style={{ marginRight: 8 }}>
+              <button onClick={setBrushPastMonth} style={{ marginRight: 8 }}>
+                Past month
+              </button>
+              <button onClick={setBrushPastWeek} style={{ marginRight: 8 }}>
                 Past week
               </button>
               <div style={{ display: "flex" }}>
