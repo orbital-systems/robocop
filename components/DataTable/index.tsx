@@ -35,6 +35,7 @@ export const DataTable = ({
     getFilteredRowModel: getFilteredRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
     debugTable: true,
+    autoResetPageIndex: false,
   });
 
   return (
