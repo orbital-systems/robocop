@@ -36,17 +36,19 @@ export const Report = ({ data, dateInterval }: ReportProps) => {
     typeof dateInterval === "undefined"
       ? "all time"
       : `${dateInterval.from.toLocaleDateString()} - ${dateInterval.to.toLocaleDateString()}`;
+
+  const dynamicHeight = groupedData?.length * 15;
+  const minHeight = 500;
+
   return (
     <div>
       <h2>{`3: Report ${reportTimeInterval}`}</h2>
-      {groupedData?.length > 50 && (
-        <>
-          <p>{`Too many items (${groupedData?.length}) to create a report. No more than 50 currently supported.`}</p>
-          <p>Try limiting number of symptoms, installations or time span.</p>
-        </>
-      )}
-      {groupedData?.length > 0 && groupedData.length <= 50 && (
-        <div style={{ height: 700 }}>
+      {groupedData?.length > 0 && (
+        <div
+          style={{
+            height: dynamicHeight > minHeight ? dynamicHeight : minHeight,
+          }}
+        >
           <ParentSize>
             {({ width, height }) => (
               <BarChart width={width} height={height} data={groupedData} />

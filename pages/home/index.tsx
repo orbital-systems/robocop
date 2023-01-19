@@ -110,7 +110,7 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <main>
+      <main style={{ marginBottom: 16 }}>
         <h1>Robocop</h1>
         <div style={{ position: "absolute", top: 20, right: 20 }}>
           <a href="https://orbital-systems.atlassian.net/browse/OSW-271">
