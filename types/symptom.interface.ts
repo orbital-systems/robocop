@@ -1,4 +1,4 @@
-export interface Data {
+export interface Symptom {
   index: number;
   timestamp: string;
   week: number;

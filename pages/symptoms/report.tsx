@@ -1,19 +1,19 @@
 import ParentSize from "@visx/responsive/lib/components/ParentSizeModern";
 import dynamic from "next/dynamic";
-import { Data, DateInterval } from "../../types";
+import { Symptom, DateInterval } from "../../types";
 
 const BarChart = dynamic(() => import("../../components/BarChart"), {
   ssr: false,
 });
 
 interface ReportProps {
-  data: Data[];
+  data: Symptom[];
   dateInterval: DateInterval | undefined;
 }
 
 export const Report = ({ data, dateInterval }: ReportProps) => {
   const groupByInstallation = data.reduce(
-    (group: { [key: string]: Data[] }, d) => {
+    (group: { [key: string]: Symptom[] }, d) => {
       const id = d.os_name || d.session_id;
       group[id] = group[id] ?? [];
       group[id].push(d);

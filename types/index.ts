@@ -1,2 +1,2 @@
-export * from "./data.interface";
+export * from "./symptom.interface";
 export * from "./dateinterval.interface";

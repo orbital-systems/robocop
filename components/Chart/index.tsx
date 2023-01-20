@@ -12,7 +12,7 @@ import { LinearGradient } from "@visx/gradient";
 import { max, extent } from "d3-array";
 import AreaChart from "./AreaChart";
 import { getDateAccessor, getSymptomColor } from "./util";
-import { Data, DateInterval } from "../../types";
+import { Symptom, DateInterval } from "../../types";
 import DatePicker from "react-datepicker";
 
 const brushMargin = { top: 10, bottom: 15, left: 50, right: 20 };
@@ -33,11 +33,11 @@ type ChartProps = {
   height: number;
   margin?: { top: number; right: number; bottom: number; left: number };
   compact?: boolean;
-  data: Data[];
-  filteredData: Data[];
-  setFilteredData(d: Data[]): void;
-  externalFilter(d: Data[]): Data[];
-  getValueAccessor(d: Data): number;
+  data: Symptom[];
+  filteredData: Symptom[];
+  setFilteredData(d: Symptom[]): void;
+  externalFilter(d: Symptom[]): Symptom[];
+  getValueAccessor(d: Symptom): number;
   setValueAccessor(a: "symptom" | "installation"): void;
   valueAccessor: "symptom" | "installation";
   dateInterval: DateInterval;
@@ -69,7 +69,12 @@ const Chart = ({
   const onBrushChange = (domain: Bounds | null) => {
     if (!domain) return;
     const { x0, x1, y0, y1 } = domain;
-    setDateInterval({ ...dateInterval, from: new Date(x0), to: new Date(x1) });
+
+    setDateInterval({
+      ...dateInterval,
+      from: new Date(x0),
+      to: new Date(x1),
+    });
     const dataCopy = data.filter((s) => {
       const x = getDateAccessor(s).getTime();
       const y = getValueAccessor(s);
@@ -136,8 +141,8 @@ const Chart = ({
   const getXFromDate = (d: Date) =>
     brushDateScale(
       getDateAccessor({
-        timestamp: d.toISOString(),
-      } as Data)
+        timestamp: d?.toISOString(),
+      } as Symptom)
     );
 
   const initialBrushPosition = useMemo(
@@ -234,11 +239,10 @@ const Chart = ({
   const dataInRangeFiltered = externalFilter(filteredData);
   const allDataFiltered = externalFilter(data);
 
-  const [hoverData, setHoverData] = useState<Data | undefined>(undefined);
+  const [hoverData, setHoverData] = useState<Symptom | undefined>(undefined);
 
   return (
     <div>
-      {/* <h2>Chart</h2> */}
       <div
         style={{
           display: "flex",

@@ -1,4 +1,4 @@
-import { Data } from "../../types";
+import { Symptom } from "../../types";
 
 const colors = {
   heatup_error: "#e6194b",
@@ -21,4 +21,4 @@ export const getSymptomColor = (symptom: string) =>
   colors[symptom as keyof typeof colors];
 
 // accessors
-export const getDateAccessor = (d: Data): Date => new Date(d.timestamp);
+export const getDateAccessor = (d: Symptom): Date => new Date(d.timestamp);

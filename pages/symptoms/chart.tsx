@@ -1,6 +1,6 @@
 import dynamic from "next/dynamic";
 import ParentSize from "@visx/responsive/lib/components/ParentSize";
-import { Data, DateInterval } from "../../types";
+import { Symptom, DateInterval } from "../../types";
 import { useState } from "react";
 
 const AreaChart = dynamic(() => import("../../components/Chart"), {
@@ -8,14 +8,14 @@ const AreaChart = dynamic(() => import("../../components/Chart"), {
 });
 
 interface ChartProps {
-  data: Data[];
-  filteredData: Data[];
-  setFilteredData(d: Data[]): void;
+  data: Symptom[];
+  filteredData: Symptom[];
+  setFilteredData(d: Symptom[]): void;
   symptomsData: string[];
   installationData: string[];
   dateInterval: DateInterval | undefined;
   setDateInterval(d: DateInterval): void;
-  externalFilter(d: Data[]): Data[];
+  externalFilter(d: Symptom[]): Symptom[];
 }
 
 export const Chart = ({
@@ -32,10 +32,10 @@ export const Chart = ({
     "installation" | "symptom"
   >("installation");
 
-  const symptomAccessor = (d: Data): number =>
+  const symptomAccessor = (d: Symptom): number =>
     symptomsData?.indexOf(d.symptom) + 1 || 0;
 
-  const installationAccessor = (d: Data): number =>
+  const installationAccessor = (d: Symptom): number =>
     installationData?.indexOf(d?.os_name || d.shower_id) + 1 || 0;
 
   const getValueAccessor =
@@ -45,7 +45,7 @@ export const Chart = ({
     <>
       <h2>2: Select time span</h2>
       <div style={{ height: 500, marginBottom: 200 }}>
-        {data?.length > 0 && typeof dateInterval !== "undefined" && (
+        {data?.length > 0 && typeof dateInterval?.from !== "undefined" && (
           <ParentSize>
             {({ width, height }) => (
               <AreaChart

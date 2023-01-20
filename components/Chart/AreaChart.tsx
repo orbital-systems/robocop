@@ -4,7 +4,7 @@ import { Circle } from "@visx/shape";
 import { AxisLeft, AxisBottom, AxisScale } from "@visx/axis";
 import { LinearGradient } from "@visx/gradient";
 import { getDateAccessor, getSymptomColor } from "./util";
-import { Data } from "../../types";
+import { Symptom } from "../../types";
 
 const axisColor = "#fff";
 const axisBottomTickLabelProps = {
@@ -39,7 +39,7 @@ export default function AreaChart({
   getValueAccessor,
   circleRadius,
 }: {
-  data: Data[];
+  data: Symptom[];
   gradientColor: string;
   xScale: AxisScale<number>;
   yScale: AxisScale<number>;
@@ -51,8 +51,8 @@ export default function AreaChart({
   top?: number;
   left?: number;
   children?: React.ReactNode;
-  onHover?(d: Data | undefined): void;
-  getValueAccessor(d: Data): number;
+  onHover?(d: Symptom | undefined): void;
+  getValueAccessor(d: Symptom): number;
   circleRadius?: number;
 }) {
   if (width < 10) return null;

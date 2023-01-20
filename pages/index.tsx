@@ -1,2 +1,2 @@
-import home from "./home";
-export default home;
+import symptoms from "./symptoms";
+export default symptoms;
