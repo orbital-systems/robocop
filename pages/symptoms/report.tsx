@@ -22,28 +22,53 @@ export const Report = ({ data, dateInterval }: ReportProps) => {
     {}
   );
 
-  const groupedData = Object.entries(groupByInstallation).map((d, i) => {
-    const groupBySymptom = d[1].reduce((obj: any, b) => {
-      const oldVal = obj[b.symptom] || 0;
-      obj[b.symptom] = oldVal + 1;
-      return obj;
-    }, {});
+  const groupedByInstallationData = Object.entries(groupByInstallation).map(
+    (d) => {
+      const groupBySymptom = d[1].reduce((obj: any, b) => {
+        const oldVal = obj[b.symptom] || 0;
+        obj[b.symptom] = oldVal + 1;
+        return obj;
+      }, {});
 
-    return { name: d[0], ...groupBySymptom };
-  });
+      return { name: d[0], ...groupBySymptom };
+    }
+  );
 
   const reportTimeInterval =
     typeof dateInterval === "undefined"
       ? "all time"
       : `${dateInterval.from.toLocaleDateString()} - ${dateInterval.to.toLocaleDateString()}`;
 
-  const dynamicHeight = groupedData?.length * 15;
+  const dynamicHeight = groupedByInstallationData?.length * 15;
   const minHeight = 500;
+
+  const groupBySymptom = data.reduce((obj: any, b) => {
+    const oldVal = obj[b.symptom] || 0;
+    obj[b.symptom] = oldVal + 1;
+    return obj;
+  }, {});
+
+  const groupedBySymptomData = Object.entries(groupBySymptom).map((d) => {
+    return { name: d[0], [`${d[0]}`]: d[1] };
+  });
 
   return (
     <div>
       <h2>{`3: Report ${reportTimeInterval}`}</h2>
-      {groupedData?.length > 0 && (
+      <h3>Symptoms in total</h3>
+      <div style={{ height: 500 }}>
+        <ParentSize>
+          {({ width, height }) => (
+            <BarChart
+              width={width}
+              height={height}
+              data={groupedBySymptomData}
+            />
+          )}
+        </ParentSize>
+      </div>
+      <h3>Symptoms per installation</h3>
+      {groupedByInstallationData?.length > 0 && (
         <div
           style={{
             height: dynamicHeight > minHeight ? dynamicHeight : minHeight,
@@ -51,7 +76,11 @@ export const Report = ({ data, dateInterval }: ReportProps) => {
         >
           <ParentSize>
             {({ width, height }) => (
-              <BarChart width={width} height={height} data={groupedData} />
+              <BarChart
+                width={width}
+                height={height}
+                data={groupedByInstallationData}
+              />
             )}
           </ParentSize>
         </div>

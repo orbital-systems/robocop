@@ -41,6 +41,7 @@ export default function App({ Component, pageProps }: AppProps) {
               style={{
                 marginRight: 8,
                 fontWeight: tab === "symptoms" ? "bold" : "normal",
+                cursor: "pointer",
               }}
               onClick={() => handleTabClick("symptoms")}
             >
@@ -49,6 +50,7 @@ export default function App({ Component, pageProps }: AppProps) {
             <a
               style={{
                 fontWeight: tab === "diagnoses" ? "bold" : "normal",
+                cursor: "pointer",
               }}
               onClick={() => handleTabClick("diagnoses")}
             >

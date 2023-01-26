@@ -187,7 +187,7 @@ export default withTooltip<BarStackHorizontalProps, TooltipData>(
               scale={xScale}
               stroke={color}
               tickStroke={color}
-              numTicks={Math.max(...totalNbrSymptoms)}
+              numTicks={Math.min(10, Math.max(...totalNbrSymptoms))}
               tickLabelProps={() => ({
                 fill: color,
                 fontSize: 11,
@@ -200,6 +200,7 @@ export default withTooltip<BarStackHorizontalProps, TooltipData>(
           <Tooltip top={tooltipTop} left={tooltipLeft} style={tooltipStyles}>
             <div style={{ color: getSymptomColor(tooltipData.key) }}>
               <strong>{tooltipData.key}</strong>
+              <span>{`: ${tooltipData.bar[1]}`}</span>
             </div>
           </Tooltip>
         )}
