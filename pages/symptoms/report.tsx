@@ -55,35 +55,43 @@ export const Report = ({ data, dateInterval }: ReportProps) => {
   return (
     <div>
       <h2>{`3: Report ${reportTimeInterval}`}</h2>
-      <h3>Symptoms in total</h3>
-      <div style={{ height: 500 }}>
-        <ParentSize>
-          {({ width, height }) => (
-            <BarChart
-              width={width}
-              height={height}
-              data={groupedBySymptomData}
-            />
+      {data?.length > 0 ? (
+        <>
+          <h3>Symptoms in total</h3>
+          {groupedBySymptomData?.length > 0 && (
+            <div style={{ height: 500 }}>
+              <ParentSize>
+                {({ width, height }) => (
+                  <BarChart
+                    width={width}
+                    height={height}
+                    data={groupedBySymptomData}
+                  />
+                )}
+              </ParentSize>
+            </div>
           )}
-        </ParentSize>
-      </div>
-      <h3>Symptoms per installation</h3>
-      {groupedByInstallationData?.length > 0 && (
-        <div
-          style={{
-            height: dynamicHeight > minHeight ? dynamicHeight : minHeight,
-          }}
-        >
-          <ParentSize>
-            {({ width, height }) => (
-              <BarChart
-                width={width}
-                height={height}
-                data={groupedByInstallationData}
-              />
-            )}
-          </ParentSize>
-        </div>
+          <h3>Symptoms per installation</h3>
+          {groupedByInstallationData?.length > 0 && (
+            <div
+              style={{
+                height: dynamicHeight > minHeight ? dynamicHeight : minHeight,
+              }}
+            >
+              <ParentSize>
+                {({ width, height }) => (
+                  <BarChart
+                    width={width}
+                    height={height}
+                    data={groupedByInstallationData}
+                  />
+                )}
+              </ParentSize>
+            </div>
+          )}
+        </>
+      ) : (
+        <p>Nothing found with selected filters and date interval</p>
       )}
     </div>
   );
