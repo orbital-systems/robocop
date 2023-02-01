@@ -1,10 +1,9 @@
 export interface Symptom {
   index: number;
   timestamp: string;
-  week: number;
-  shower_id: string;
-  os_name: string | null;
+  symptom_id: string;
+  device_id: string;
   session_id: string;
-  software_version: string;
-  symptom: string;
+  code: string;
+  software_version?: string;
 }

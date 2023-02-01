@@ -200,7 +200,7 @@ export default withTooltip<BarStackHorizontalProps, TooltipData>(
           <Tooltip top={tooltipTop} left={tooltipLeft} style={tooltipStyles}>
             <div style={{ color: getSymptomColor(tooltipData.key) }}>
               <strong>{tooltipData.key}</strong>
-              <span>{`: ${tooltipData.bar[1]}`}</span>
+              <span>{`: ${tooltipData.bar[1] - tooltipData.bar[0]}`}</span>
             </div>
           </Tooltip>
         )}

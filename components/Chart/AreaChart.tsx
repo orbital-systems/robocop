@@ -71,7 +71,7 @@ export default function AreaChart({
           className="dot"
           cx={xScale(getDateAccessor(d))}
           cy={yScale(getValueAccessor(d))}
-          fill={getSymptomColor(d.symptom)}
+          fill={getSymptomColor(d.code)}
           r={circleRadius ?? 3}
           onMouseEnter={() => onHover && onHover(d)}
           onMouseLeave={() => onHover && onHover(undefined)}
@@ -79,7 +79,7 @@ export default function AreaChart({
           onClick={() =>
             onHover &&
             window.open(
-              `https://osw.orb-sys.com/plotting/?device_id=${d.shower_id}&session_id=${d.session_id}`,
+              `https://osw.orb-sys.com/plotting/?device_id=${d.device_id}&session_id=${d.session_id}`,
               "blank"
             )
           }

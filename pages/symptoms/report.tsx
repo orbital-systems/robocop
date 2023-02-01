@@ -14,7 +14,7 @@ interface ReportProps {
 export const Report = ({ data, dateInterval }: ReportProps) => {
   const groupByInstallation = data.reduce(
     (group: { [key: string]: Symptom[] }, d) => {
-      const id = d.os_name || d.session_id;
+      const id = d.device_id;
       group[id] = group[id] ?? [];
       group[id].push(d);
       return group;
@@ -25,8 +25,8 @@ export const Report = ({ data, dateInterval }: ReportProps) => {
   const groupedByInstallationData = Object.entries(groupByInstallation).map(
     (d) => {
       const groupBySymptom = d[1].reduce((obj: any, b) => {
-        const oldVal = obj[b.symptom] || 0;
-        obj[b.symptom] = oldVal + 1;
+        const oldVal = obj[b.code] || 0;
+        obj[b.code] = oldVal + 1;
         return obj;
       }, {});
 
@@ -43,8 +43,8 @@ export const Report = ({ data, dateInterval }: ReportProps) => {
   const minHeight = 500;
 
   const groupBySymptom = data.reduce((obj: any, b) => {
-    const oldVal = obj[b.symptom] || 0;
-    obj[b.symptom] = oldVal + 1;
+    const oldVal = obj[b.code] || 0;
+    obj[b.code] = oldVal + 1;
     return obj;
   }, {});
 

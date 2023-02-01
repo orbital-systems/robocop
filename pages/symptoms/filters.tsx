@@ -1,4 +1,5 @@
 import { useMemo } from "react";
+import { getSymptomName } from "../../components/Chart/util";
 import { DataTable } from "../../components/DataTable";
 import { installationTableColumns } from "../../components/DataTable/Installations/columns";
 import { symptomsTableColumns } from "../../components/DataTable/Symptoms/columns";
@@ -132,7 +133,7 @@ export const Filters = ({
           <h3>Symptoms</h3>
           <DataTable
             data={symptomsData.map((d) => {
-              return { name: d };
+              return { value: d, name: `${d} - ${getSymptomName(d)}` };
             })}
             columns={symptomsColumns as any}
             rowSelection={selectedSymptomIndexes}

@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
-import { exampleData } from "../../exampledata";
+import { symptoms } from "../../exampledata";
 import { Filters } from "./filters";
 import { Symptom, DateInterval } from "../../types";
 import { Report } from "./report";
@@ -36,21 +36,25 @@ export default function Symptoms() {
 
   useEffect(() => {
     setData(
-      exampleData.map((d, i) => {
-        return { ...d, index: i };
+      symptoms.map((d, i) => {
+        return {
+          ...d,
+          index: i,
+          timestamp: new Date(d.timestamp).toISOString(),
+        };
       })
     );
   }, []);
 
   /* All symptoms in the data set */
   const symptomsData = useMemo(
-    () => Array.from(new Set(data.map((d) => d.symptom))),
+    () => Array.from(new Set(data.map((d) => d.code))),
     [data]
   );
 
   /* All installations in the data set */
   const installationData = useMemo(
-    () => Array.from(new Set(data.map((d) => d?.os_name || d.shower_id))),
+    () => Array.from(new Set(data.map((d) => d.device_id))),
     [data]
   );
 
@@ -94,14 +98,13 @@ export default function Symptoms() {
 
     return [...unfilteredData].filter(
       (d) =>
-        !hiddenSymptomIndexes.includes(d.symptom) &&
-        !hiddenInstallationIndexes.includes(d?.os_name || d.shower_id) &&
-        selectedSoftwareVersions.includes(`r${d.software_version[0]}`)
+        !hiddenSymptomIndexes.includes(d.code) &&
+        !hiddenInstallationIndexes.includes(d.device_id)
+      // selectedSoftwareVersions.includes(`r${d.software_version[0]}`)
     );
   };
 
   const dataInRangeFiltered = externalFilter(filteredData);
-
   return (
     <>
       <Filters

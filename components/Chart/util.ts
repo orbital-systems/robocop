@@ -1,24 +1,35 @@
 import { Symptom } from "../../types";
 
-const colors = {
-  heatup_error: "#e6194b",
-  b11_other: "#3cb44b",
-  drain_leak: "#ffe119",
-  w7_other: "#4363d8",
-  no_inlet: "#f58231",
-  airsuction: "#911eb4",
-  restricted_flow: "#46f0f0",
-  weak_radar: "#f032e6",
-  radar_ghost: "#bcf60c",
-  setpoint_too_low: "#fabebe",
-  w7_c7: "#008080",
-  slow_heatup: "#e6beff",
-  insufficient_power: "#9a6324",
-  lid_open: "#fffac8",
+const symptomData = {
+  S01: { name: "Noisy turbdity", color: "#e6194b" },
+  S02: { name: "Weak turbidity", color: "#3cb44b" },
+  S03: { name: "Strong turbidity", color: "#ffe119" },
+  S04: { name: "Weak turbidity during calibration", color: "#4363d8" },
+  S05: { name: "Incorrect sensor tank level readings", color: "#f58231" },
+  S06: { name: "Level readings noisy during SU Calibration", color: "#911eb4" },
+  S07: { name: "Sensor tank intensity saturated", color: "#46f0f0" },
+  S08: {
+    name: "Sensor tank unreachable. Calibration failed 3 times",
+    color: "#f032e6",
+  },
+  S09: {
+    name: "Sensor tank calibration atempt failed once due to being unreachable",
+    color: "#bcf60c",
+  },
+  S10: {
+    name: "Sensor tank calibration attempt failed once due to insufficient water",
+    color: "#fabebe",
+  },
+  S11: { name: "Sensor tank communication error", color: "#008080" },
+  S12: { name: "Sensor tank software crash", color: "#e6beff" },
+  S13: { name: "Sensor tank power issue", color: "#9a6324" },
 };
 
 export const getSymptomColor = (symptom: string) =>
-  colors[symptom as keyof typeof colors];
+  symptomData[symptom as keyof typeof symptomData]?.color || "orange";
+
+export const getSymptomName = (symptom: string) =>
+  symptomData[symptom as keyof typeof symptomData]?.name || "unknown";
 
 // accessors
 export const getDateAccessor = (d: Symptom): Date => new Date(d.timestamp);

@@ -33,10 +33,10 @@ export const Chart = ({
   >("installation");
 
   const symptomAccessor = (d: Symptom): number =>
-    symptomsData?.indexOf(d.symptom) + 1 || 0;
+    symptomsData?.indexOf(d.code) + 1 || 0;
 
   const installationAccessor = (d: Symptom): number =>
-    installationData?.indexOf(d?.os_name || d.shower_id) + 1 || 0;
+    installationData?.indexOf(d.device_id) + 1 || 0;
 
   const getValueAccessor =
     valueAccessor === "symptom" ? symptomAccessor : installationAccessor;

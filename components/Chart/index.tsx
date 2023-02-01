@@ -11,7 +11,7 @@ import { Group } from "@visx/group";
 import { LinearGradient } from "@visx/gradient";
 import { max, extent } from "d3-array";
 import AreaChart from "./AreaChart";
-import { getDateAccessor, getSymptomColor } from "./util";
+import { getDateAccessor, getSymptomColor, getSymptomName } from "./util";
 import { Symptom, DateInterval } from "../../types";
 import DatePicker from "react-datepicker";
 
@@ -308,26 +308,22 @@ const Chart = ({
                 />
               </div>
             </div>
-            <span style={{ fontSize: 10, color: "red", float: "right" }}>
-              Not corresponding to the X-axis, I'm loooking into why. Trust
-              these values more.
-            </span>
           </div>
         </div>
         <div>
           {typeof hoverData !== "undefined" && (
             <div style={{ display: "flex" }}>
-              <div>
-                {hoverData?.os_name || hoverData?.session_id}
+              {/* <div>
+                {`device ${hoverData?.device_id}`}
                 {` (sw version: ${hoverData.software_version})`}
-              </div>
+              </div> */}
               <div
                 style={{
-                  backgroundColor: getSymptomColor(hoverData.symptom),
+                  backgroundColor: getSymptomColor(hoverData.code),
                   marginLeft: 8,
                 }}
               >
-                {hoverData?.symptom}
+                {hoverData?.code} - {getSymptomName(hoverData?.code)}
               </div>
             </div>
           )}
