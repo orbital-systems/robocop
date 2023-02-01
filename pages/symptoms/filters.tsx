@@ -101,7 +101,7 @@ export const Filters = ({
   return (
     <>
       <h2>1: Filter data</h2>
-      <h3>Software version</h3>
+      {/* <h3>Software version</h3>
       <input
         type="checkbox"
         id="r2"
@@ -117,7 +117,7 @@ export const Filters = ({
         checked={selectedSoftwareVersions.includes("r3")}
         onClick={() => toggleSoftwareVersion("r3")}
       />
-      <label htmlFor="r3">R3</label>
+      <label htmlFor="r3">R3</label> */}
       <div
         style={{
           display: "flex",

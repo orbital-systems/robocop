@@ -100,11 +100,12 @@ export default function Symptoms() {
       (d) =>
         !hiddenSymptomIndexes.includes(d.code) &&
         !hiddenInstallationIndexes.includes(d.device_id)
-      // selectedSoftwareVersions.includes(`r${d.software_version[0]}`)
+      // selectedSoftwareVersions.includes(`r${d.software_version[0]}`) TODO
     );
   };
 
   const dataInRangeFiltered = externalFilter(filteredData);
+
   return (
     <>
       <Filters
