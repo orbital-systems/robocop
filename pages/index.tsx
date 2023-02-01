@@ -1,2 +1,2 @@
-import symptoms from "./symptoms";
-export default symptoms;
+import diagnoses from "./diagnoses";
+export default diagnoses;

@@ -6,7 +6,7 @@ import { useState } from "react";
 import { useRouter } from "next/router";
 
 export default function App({ Component, pageProps }: AppProps) {
-  const [tab, setTab] = useState<"symptoms" | "diagnoses">("symptoms");
+  const [tab, setTab] = useState<"symptoms" | "diagnoses">("diagnoses");
 
   const router = useRouter();
 
@@ -40,21 +40,21 @@ export default function App({ Component, pageProps }: AppProps) {
             <a
               style={{
                 marginRight: 8,
-                fontWeight: tab === "symptoms" ? "bold" : "normal",
-                cursor: "pointer",
-              }}
-              onClick={() => handleTabClick("symptoms")}
-            >
-              Symptoms
-            </a>
-            <a
-              style={{
                 fontWeight: tab === "diagnoses" ? "bold" : "normal",
                 cursor: "pointer",
               }}
               onClick={() => handleTabClick("diagnoses")}
             >
               Diagnoses
+            </a>
+            <a
+              style={{
+                fontWeight: tab === "symptoms" ? "bold" : "normal",
+                cursor: "pointer",
+              }}
+              onClick={() => handleTabClick("symptoms")}
+            >
+              Symptoms
             </a>
           </div>
         </div>

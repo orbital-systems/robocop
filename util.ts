@@ -1,4 +1,4 @@
-import { Symptom } from "../../types";
+import { ChartData } from "./types";
 
 const symptomData = {
   S01: { name: "Noisy turbdity", color: "#e6194b" },
@@ -32,4 +32,18 @@ export const getSymptomName = (symptom: string) =>
   symptomData[symptom as keyof typeof symptomData]?.name || "unknown";
 
 // accessors
-export const getDateAccessor = (d: Symptom): Date => new Date(d.timestamp);
+export const getDateAccessor = (d: ChartData): Date => new Date(d.timestamp);
+
+const diagnosisData = {
+  D01: { name: "Loose cable", color: "#e6194b" },
+  D02: { name: "Cable rupture/ Missing sensor tank", color: "#3cb44b" },
+  D03: { name: "Hardware failure", color: "#ffe119" },
+  D04: { name: "Software error", color: "#4363d8" },
+  D05: { name: "Cleaning needed", color: "#911eb4" },
+};
+
+export const getDiagnosisColor = (diagnose: string) =>
+  diagnosisData[diagnose as keyof typeof diagnosisData]?.color || "orange";
+
+export const getDiagnosisName = (diagnose: string) =>
+  diagnosisData[diagnose as keyof typeof diagnosisData]?.name || "unknown";

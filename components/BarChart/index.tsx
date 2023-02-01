@@ -6,7 +6,6 @@ import { AxisBottom, AxisLeft } from "@visx/axis";
 import { scaleBand, scaleLinear } from "@visx/scale";
 import { withTooltip, Tooltip, defaultStyles } from "@visx/tooltip";
 import { WithTooltipProvidedProps } from "@visx/tooltip/lib/enhancers/withTooltip";
-import { getSymptomColor } from "../Chart/util";
 
 interface DataPointValues {
   heatup_error?: number;
@@ -45,6 +44,7 @@ type BarStackHorizontalProps = {
   height: number;
   margin?: { top: number; right: number; bottom: number; left: number };
   events?: boolean;
+  getCodeColor(code: string): string;
 };
 
 const color = "#a44afe";
@@ -76,6 +76,7 @@ export default withTooltip<BarStackHorizontalProps, TooltipData>(
     tooltipData,
     hideTooltip,
     showTooltip,
+    getCodeColor,
   }: BarStackHorizontalProps & WithTooltipProvidedProps<TooltipData>) => {
     const xMax = width - margin.left - margin.right;
     const yMax = height - margin.top - margin.bottom;
@@ -133,7 +134,7 @@ export default withTooltip<BarStackHorizontalProps, TooltipData>(
               y={yAccessor}
               xScale={xScale}
               yScale={yScale}
-              color={(symptom) => getSymptomColor(symptom)}
+              color={(symptom) => getCodeColor(symptom)}
             >
               {(barStacks) =>
                 barStacks.map((barStack) =>
@@ -198,7 +199,7 @@ export default withTooltip<BarStackHorizontalProps, TooltipData>(
         </svg>
         {tooltipOpen && tooltipData && (
           <Tooltip top={tooltipTop} left={tooltipLeft} style={tooltipStyles}>
-            <div style={{ color: getSymptomColor(tooltipData.key) }}>
+            <div style={{ color: getCodeColor(tooltipData.key) }}>
               <strong>{tooltipData.key}</strong>
               <span>{`: ${tooltipData.bar[1] - tooltipData.bar[0]}`}</span>
             </div>

@@ -1,4 +1,4 @@
-import { getSymptomColor } from "../../Chart/util";
+import { getSymptomColor } from "../../../util";
 
 export const SymptomCell = ({ row }: any) => (
   <div

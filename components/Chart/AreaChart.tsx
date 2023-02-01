@@ -3,8 +3,8 @@ import { Group } from "@visx/group";
 import { Circle } from "@visx/shape";
 import { AxisLeft, AxisBottom, AxisScale } from "@visx/axis";
 import { LinearGradient } from "@visx/gradient";
-import { getDateAccessor, getSymptomColor } from "./util";
-import { Symptom } from "../../types";
+import { getDateAccessor } from "../../util";
+import { ChartData } from "../../types";
 
 const axisColor = "#fff";
 const axisBottomTickLabelProps = {
@@ -36,10 +36,12 @@ export default function AreaChart({
   left,
   children,
   onHover,
+  onClick,
   getValueAccessor,
   circleRadius,
+  getCodeColor,
 }: {
-  data: Symptom[];
+  data: ChartData[];
   gradientColor: string;
   xScale: AxisScale<number>;
   yScale: AxisScale<number>;
@@ -51,9 +53,11 @@ export default function AreaChart({
   top?: number;
   left?: number;
   children?: React.ReactNode;
-  onHover?(d: Symptom | undefined): void;
-  getValueAccessor(d: Symptom): number;
+  onHover?(d: ChartData | undefined): void;
+  onClick?(d: ChartData): void;
+  getValueAccessor(d: ChartData): number;
   circleRadius?: number;
+  getCodeColor(code: string): string;
 }) {
   if (width < 10) return null;
   return (
@@ -71,18 +75,12 @@ export default function AreaChart({
           className="dot"
           cx={xScale(getDateAccessor(d))}
           cy={yScale(getValueAccessor(d))}
-          fill={getSymptomColor(d.code)}
+          fill={getCodeColor(d.code)}
           r={circleRadius ?? 3}
           onMouseEnter={() => onHover && onHover(d)}
           onMouseLeave={() => onHover && onHover(undefined)}
           style={{ cursor: onHover && "pointer" }}
-          onClick={() =>
-            onHover &&
-            window.open(
-              `https://osw.orb-sys.com/plotting/?device_id=${d.device_id}&session_id=${d.session_id}`,
-              "blank"
-            )
-          }
+          onClick={() => onClick && onClick(d)}
         />
       ))}
       {!hideBottomAxis && (

@@ -1,4 +1,4 @@
-import React, { useRef, useState, useMemo, useEffect } from "react";
+import React, { useRef, useState, useMemo, useEffect, ReactNode } from "react";
 import { scaleTime, scaleLinear } from "@visx/scale";
 import { Brush } from "@visx/brush";
 import { Bounds } from "@visx/brush/lib/types";
@@ -11,8 +11,8 @@ import { Group } from "@visx/group";
 import { LinearGradient } from "@visx/gradient";
 import { max, extent } from "d3-array";
 import AreaChart from "./AreaChart";
-import { getDateAccessor, getSymptomColor, getSymptomName } from "./util";
-import { Symptom, DateInterval } from "../../types";
+import { getDateAccessor } from "../../util";
+import { DateInterval, ChartData } from "../../types";
 import DatePicker from "react-datepicker";
 
 const brushMargin = { top: 10, bottom: 15, left: 50, right: 20 };
@@ -33,15 +33,18 @@ type ChartProps = {
   height: number;
   margin?: { top: number; right: number; bottom: number; left: number };
   compact?: boolean;
-  data: Symptom[];
-  filteredData: Symptom[];
-  setFilteredData(d: Symptom[]): void;
-  externalFilter(d: Symptom[]): Symptom[];
-  getValueAccessor(d: Symptom): number;
-  setValueAccessor(a: "symptom" | "installation"): void;
-  valueAccessor: "symptom" | "installation";
+  data: ChartData[];
+  filteredData: ChartData[];
+  setFilteredData(d: ChartData[]): void;
+  externalFilter(d: ChartData[]): ChartData[];
+  getValueAccessor(d: ChartData): number;
+  setValueAccessor(a: "code" | "installation"): void;
+  valueAccessor: "code" | "installation";
   dateInterval: DateInterval;
   setDateInterval(d: DateInterval): void;
+  hoverContent(d: ChartData): ReactNode;
+  onDataPointClick?(d: ChartData): void;
+  getCodeColor(d: string): string;
 };
 
 const Chart = ({
@@ -63,6 +66,9 @@ const Chart = ({
   valueAccessor,
   dateInterval,
   setDateInterval,
+  onDataPointClick,
+  hoverContent,
+  getCodeColor,
 }: ChartProps) => {
   const brushRef = useRef<BaseBrush | null>(null);
 
@@ -142,7 +148,7 @@ const Chart = ({
     brushDateScale(
       getDateAccessor({
         timestamp: d?.toISOString(),
-      } as Symptom)
+      } as ChartData)
     );
 
   const initialBrushPosition = useMemo(
@@ -239,7 +245,7 @@ const Chart = ({
   const dataInRangeFiltered = externalFilter(filteredData);
   const allDataFiltered = externalFilter(data);
 
-  const [hoverData, setHoverData] = useState<Symptom | undefined>(undefined);
+  const [hoverData, setHoverData] = useState<ChartData | undefined>(undefined);
 
   return (
     <div>
@@ -265,12 +271,12 @@ const Chart = ({
               {"Installation"}
             </button>
             <button
-              onClick={() => setValueAccessor("symptom")}
+              onClick={() => setValueAccessor("code")}
               style={{
-                fontWeight: valueAccessor === "symptom" ? "bold" : "normal",
+                fontWeight: valueAccessor === "code" ? "bold" : "normal",
               }}
             >
-              {"Symptom"}
+              {"Code"}
             </button>
           </div>
           <div>
@@ -311,22 +317,9 @@ const Chart = ({
           </div>
         </div>
         <div>
-          {typeof hoverData !== "undefined" && (
-            <div style={{ display: "flex" }}>
-              {/* <div>
-                {`device ${hoverData?.device_id}`}
-                {` (sw version: ${hoverData.software_version})`}
-              </div> */}
-              <div
-                style={{
-                  backgroundColor: getSymptomColor(hoverData.code),
-                  marginLeft: 8,
-                }}
-              >
-                {hoverData?.code} - {getSymptomName(hoverData?.code)}
-              </div>
-            </div>
-          )}
+          {hoverContent &&
+            typeof hoverData !== "undefined" &&
+            hoverContent(hoverData)}
         </div>
       </div>
       <svg width={width} height={height}>
@@ -354,7 +347,9 @@ const Chart = ({
           yScale={valueScale}
           gradientColor={background2}
           onHover={setHoverData}
+          onClick={onDataPointClick}
           getValueAccessor={getValueAccessor}
+          getCodeColor={getCodeColor}
         />
         <AreaChart
           hideBottomAxis
@@ -369,6 +364,7 @@ const Chart = ({
           top={topChartHeight + topChartBottomMargin + margin.top}
           gradientColor={background2}
           getValueAccessor={getValueAccessor}
+          getCodeColor={getCodeColor}
         >
           <PatternLines
             id={PATTERN_ID}
@@ -400,6 +396,7 @@ const Chart = ({
     </div>
   );
 };
+
 // We need to manually offset the handles for them to be rendered at the right position
 function BrushHandle({ x, height, isBrushActive }: any) {
   const pathWidth = 8;

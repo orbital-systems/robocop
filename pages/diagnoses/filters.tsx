@@ -1,29 +1,25 @@
 import { useMemo } from "react";
-import { getSymptomName } from "../../util";
 import { DataTable } from "../../components/DataTable";
+import { DiagnosisTableColumns } from "../../components/DataTable/Diagnosis/columns";
 import { installationTableColumns } from "../../components/DataTable/Installations/columns";
-import { symptomsTableColumns } from "../../components/DataTable/Symptoms/columns";
 import { IndeterminateCheckbox } from "../../components/InterminateCheckbox";
+import { getDiagnosisName } from "../../util";
 
 interface FiltersProps {
-  symptomsData: string[];
+  diagnosisData: string[];
   selectedSymptomIndexes: { [key: string]: boolean };
   setSelectedSymptomIndexes(data: { [key: string]: boolean }): void;
   selectedInstallationIndexes: { [key: string]: boolean };
   setSelectedInstallationIndexes(data: { [key: string]: boolean }): void;
   installationData: string[];
-  selectedSoftwareVersions: string[];
-  setSelectedSoftwareVersions(v: string[]): void;
 }
 export const Filters = ({
-  symptomsData,
+  diagnosisData,
   selectedSymptomIndexes,
   setSelectedSymptomIndexes,
   selectedInstallationIndexes,
   setSelectedInstallationIndexes,
   installationData,
-  selectedSoftwareVersions,
-  setSelectedSoftwareVersions,
 }: FiltersProps) => {
   const symptomsColumns = useMemo(
     () => [
@@ -51,7 +47,7 @@ export const Filters = ({
         ),
       },
       ,
-      ...symptomsTableColumns,
+      ...DiagnosisTableColumns,
     ],
     []
   );
@@ -87,37 +83,9 @@ export const Filters = ({
     []
   );
 
-  const toggleSoftwareVersion = (v: string) => {
-    const updatedSoftwareVersions = [...selectedSoftwareVersions];
-    if (selectedSoftwareVersions.includes(v)) {
-      const removeIndex = updatedSoftwareVersions.indexOf(v);
-      updatedSoftwareVersions.splice(removeIndex, 1);
-    } else {
-      updatedSoftwareVersions.push(v);
-    }
-    setSelectedSoftwareVersions(updatedSoftwareVersions);
-  };
-
   return (
     <>
       <h2>1: Filter data</h2>
-      {/* <h3>Software version</h3>
-      <input
-        type="checkbox"
-        id="r2"
-        name="r2"
-        checked={selectedSoftwareVersions.includes("r2")}
-        onClick={() => toggleSoftwareVersion("r2")}
-      />
-      <label htmlFor="r2">R2</label>
-      <input
-        type="checkbox"
-        id="r3"
-        name="r3"
-        checked={selectedSoftwareVersions.includes("r3")}
-        onClick={() => toggleSoftwareVersion("r3")}
-      />
-      <label htmlFor="r3">R3</label> */}
       <div
         style={{
           display: "flex",
@@ -132,8 +100,8 @@ export const Filters = ({
         >
           <h3>Symptoms</h3>
           <DataTable
-            data={symptomsData.map((d) => {
-              return { value: d, name: `${d} - ${getSymptomName(d)}` };
+            data={diagnosisData.map((d) => {
+              return { value: d, name: `${d} - ${getDiagnosisName(d)}` };
             })}
             columns={symptomsColumns as any}
             rowSelection={selectedSymptomIndexes}

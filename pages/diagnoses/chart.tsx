@@ -1,26 +1,26 @@
 import dynamic from "next/dynamic";
 import ParentSize from "@visx/responsive/lib/components/ParentSize";
-import { Symptom, DateInterval } from "../../types";
+import { Diagnosis, DateInterval } from "../../types";
 import { useState } from "react";
-import { getSymptomColor, getSymptomName } from "../../util";
+import { getDiagnosisColor, getDiagnosisName } from "../../util";
 
 const AreaChart = dynamic(() => import("../../components/Chart"), {
   ssr: false,
 });
 
 interface ChartProps {
-  data: Symptom[];
-  filteredData: Symptom[];
-  setFilteredData(d: Symptom[]): void;
-  symptomsData: string[];
+  data: Diagnosis[];
+  filteredData: Diagnosis[];
+  setFilteredData(d: Diagnosis[]): void;
+  diagnosisData: string[];
   installationData: string[];
   dateInterval: DateInterval | undefined;
   setDateInterval(d: DateInterval): void;
-  externalFilter(d: Symptom[]): Symptom[];
+  externalFilter(d: Diagnosis[]): Diagnosis[];
 }
 
 export const Chart = ({
-  symptomsData,
+  diagnosisData,
   installationData,
   data,
   dateInterval,
@@ -33,10 +33,10 @@ export const Chart = ({
     "installation"
   );
 
-  const codeAccessor = (d: Symptom): number =>
-    symptomsData?.indexOf(d.code) + 1 || 0;
+  const codeAccessor = (d: Diagnosis): number =>
+    diagnosisData?.indexOf(d.code) + 1 || 0;
 
-  const installationAccessor = (d: Symptom): number =>
+  const installationAccessor = (d: Diagnosis): number =>
     installationData?.indexOf(d.device_id) + 1 || 0;
 
   const getValueAccessor =
@@ -62,22 +62,16 @@ export const Chart = ({
                 valueAccessor={valueAccessor}
                 dateInterval={dateInterval}
                 setDateInterval={setDateInterval}
-                getCodeColor={getSymptomColor}
-                onDataPointClick={(dataPoint: Symptom) =>
-                  window.open(
-                    `https://osw.orb-sys.com/plotting/?device_id=${dataPoint.device_id}&session_id=${dataPoint.session_id}`,
-                    "blank"
-                  )
-                }
+                getCodeColor={getDiagnosisColor}
                 hoverContent={(dataPoint) => (
                   <div style={{ display: "flex" }}>
                     <div
                       style={{
-                        backgroundColor: getSymptomColor(dataPoint?.code),
+                        backgroundColor: getDiagnosisColor(dataPoint?.code),
                         marginLeft: 8,
                       }}
                     >
-                      {dataPoint?.code} -{getSymptomName(dataPoint?.code)}
+                      {dataPoint?.code} -{getDiagnosisName(dataPoint?.code)}
                     </div>
                   </div>
                 )}
