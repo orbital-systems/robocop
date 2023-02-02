@@ -58,7 +58,7 @@ export const Report = ({ data, dateInterval }: ReportProps) => {
       <h2>{`3: Report ${reportTimeInterval}`}</h2>
       {data?.length > 0 ? (
         <>
-          <h3>Diagnosiss in total</h3>
+          <h3>Diagnosis in total</h3>
           {groupedByDiagnosisData?.length > 0 && (
             <div style={{ height: 500 }}>
               <ParentSize>
@@ -73,7 +73,7 @@ export const Report = ({ data, dateInterval }: ReportProps) => {
               </ParentSize>
             </div>
           )}
-          <h3>Diagnosiss per installation</h3>
+          <h3>Diagnosis per installation</h3>
           {groupedByInstallationData?.length > 0 && (
             <div
               style={{
