@@ -1,5 +1,6 @@
 import ParentSize from "@visx/responsive/lib/components/ParentSizeModern";
 import dynamic from "next/dynamic";
+import { deviceIdNameMap } from "../../exampledata";
 import { Symptom, DateInterval } from "../../types";
 import { getSymptomColor } from "../../util";
 
@@ -31,7 +32,13 @@ export const Report = ({ data, dateInterval }: ReportProps) => {
         return obj;
       }, {});
 
-      return { name: d[0], ...groupBySymptom };
+      const deviceId = d[0];
+
+      const deviceName = deviceIdNameMap.find(
+        (d) => d.device_id === deviceId
+      )?.os_name;
+
+      return { name: deviceName || deviceId, ...groupBySymptom };
     }
   );
 

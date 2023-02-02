@@ -1,3 +1,1480 @@
+export const deviceIdNameMap = [
+  {
+    device_id: "29c43955-2cf9-4267-90c7-821aad4a08f5",
+    os_name: "Bryggen Room 218",
+    oas_revision: 3.0,
+  },
+  {
+    device_id: "850b01b5-9d7e-4bd8-9b5e-a1adacac09a7",
+    os_name: null,
+    oas_revision: 3.0,
+  },
+  {
+    device_id: "95d2242a-aae0-44e4-98d4-1b2d1087d28b",
+    os_name: "Apalby Stuga 15",
+    oas_revision: 3.0,
+  },
+  {
+    device_id: "8b72adc7-3d32-4602-91db-921e20e221cb",
+    os_name: "Johan Lundqvist \u00d6V",
+    oas_revision: 3.0,
+  },
+  {
+    device_id: "ae34613e-f357-462a-a74e-f30d1e3d7e38",
+    os_name: "Wildernest 1",
+    oas_revision: 2.0,
+  },
+  {
+    device_id: "fdd47589-4f7d-448c-b3e7-65e7c6432eef",
+    os_name: "Murermester 1 (New)",
+    oas_revision: 3.0,
+  },
+  {
+    device_id: "ba4cb522-48d7-45f5-830c-e2e430be1371",
+    os_name: "Pure Lappland New",
+    oas_revision: 3.0,
+  },
+  {
+    device_id: "42355eab-3c52-4f23-8e9d-f209859d8d5d",
+    os_name: "Klaus Blaske Nielsen 2",
+    oas_revision: 3.0,
+  },
+  {
+    device_id: "b23a4718-9a22-4d2d-b6e7-b48403870743",
+    os_name: "Bryggen Room 327",
+    oas_revision: 3.0,
+  },
+  {
+    device_id: "448122cd-80cc-4780-aaeb-60b9c2576496",
+    os_name: null,
+    oas_revision: 2.0,
+  },
+  {
+    device_id: "032aef9f-cb48-4790-a8b4-c673a6bc8226",
+    os_name: "Skovg\u00e5rdskrogen 28 (Myggen VVS)",
+    oas_revision: 3.0,
+  },
+  {
+    device_id: "3ff4433b-36dd-48d7-8df2-4b0c5eabc8e4",
+    os_name: "CoastZone",
+    oas_revision: 3.0,
+  },
+  {
+    device_id: "00e2144f-fa80-40a9-bae6-9058200b051c",
+    os_name: "Peter Livoni",
+    oas_revision: 3.0,
+  },
+  {
+    device_id: "d040b5ac-b333-4733-8e5d-00144bbf3033",
+    os_name: "Bryggen Room 211",
+    oas_revision: 3.0,
+  },
+  {
+    device_id: "f44b50b3-dc28-4393-ab9b-8fc368b14322",
+    os_name: "Sturebadet Dam V\u00e4nster",
+    oas_revision: 3.0,
+  },
+  {
+    device_id: "ff70789d-e29e-4461-8192-4f26d11b1695",
+    os_name: "Jan Vinther Fritsdal - Stue bad 2nd floor",
+    oas_revision: 3.0,
+  },
+  {
+    device_id: "58af2499-3f51-41b0-816d-50f3519eaa19",
+    os_name: "Kippi Schjertzer",
+    oas_revision: 2.0,
+  },
+  {
+    device_id: "9c1aac93-26bb-4b2f-b761-8e647f3614db",
+    os_name: "Bryggen Room 507",
+    oas_revision: 3.0,
+  },
+  {
+    device_id: "e3853068-ef5c-4dc5-b2fc-89e376ff41f3",
+    os_name: "Rasmus Christensen",
+    oas_revision: 2.0,
+  },
+  {
+    device_id: "01652ccf-6d06-4058-afb4-e1989eeafe77",
+    os_name: "Bryggen Room 409",
+    oas_revision: 3.0,
+  },
+  {
+    device_id: "8092d4a5-e19c-44cb-9cb5-2f82f04c7ff7",
+    os_name: "Victor Fredell",
+    oas_revision: 3.0,
+  },
+  {
+    device_id: "38af4c67-f35f-4bb7-ba0b-28122dafb999",
+    os_name: "Jacob Nielsen",
+    oas_revision: 3.0,
+  },
+  {
+    device_id: "67004288-90b7-4a2c-b847-5c012d3f0098",
+    os_name: "Sn\u00e4ck 3303 H\u00f6ger",
+    oas_revision: 3.0,
+  },
+  {
+    device_id: "c051e87c-fbf9-4c13-934a-ef1d3f9a8f84",
+    os_name: "Bryggen Room 532",
+    oas_revision: 3.0,
+  },
+  {
+    device_id: "f9297b21-ebbb-4798-a456-448723dff702",
+    os_name: "Bryggen Room 135",
+    oas_revision: 3.0,
+  },
+  {
+    device_id: "bf0f3c2b-e28b-4339-8118-def059309a86",
+    os_name: "Simon Buie",
+    oas_revision: 2.0,
+  },
+  {
+    device_id: "51baeda6-42a3-40b3-89ae-7c916dda7b63",
+    os_name: "Bryggen Room 404",
+    oas_revision: 3.0,
+  },
+  {
+    device_id: "7a094bef-0b1a-45b3-bbd4-7452409ecf0b",
+    os_name: "Bryggen Room 527",
+    oas_revision: 3.0,
+  },
+  {
+    device_id: "1ad36814-cac2-49d1-8f25-9c83df3dbb0c",
+    os_name: "Bryggen Room 341",
+    oas_revision: 3.0,
+  },
+  {
+    device_id: "404a2d7c-2bc7-4b23-ab22-fbd97bcb2eca",
+    os_name: "Friskis Dam 3 - New",
+    oas_revision: 3.0,
+  },
+  {
+    device_id: "9312ea46-4ad8-4b05-8179-208713bc65dc",
+    os_name: "Klima - D\u00fcne 2",
+    oas_revision: 2.0,
+  },
+  {
+    device_id: "5db5a39e-8674-485f-84f7-60752f4ae48c",
+    os_name: "Rasmus Gothgen",
+    oas_revision: 2.0,
+  },
+  {
+    device_id: "c7b529e1-7b44-4047-b70a-5ba8190af2fe",
+    os_name: "Friskis Herr 2 - New 5",
+    oas_revision: 3.0,
+  },
+  {
+    device_id: "8596ef9b-23fa-49a8-88f5-e1da85699df1",
+    os_name: "Bryggen Room 231",
+    oas_revision: 3.0,
+  },
+  {
+    device_id: "ad58c671-8522-48e7-9a9a-6c962115ac5e",
+    os_name: "Klima Strand 2",
+    oas_revision: 2.0,
+  },
+  {
+    device_id: "f5b0d463-5597-408b-9801-28f4c393b59a",
+    os_name: "Bryggen Room 311",
+    oas_revision: 3.0,
+  },
+  {
+    device_id: "12aa7bfd-72e7-4ddf-9b08-7a064a624e72",
+    os_name: "Bryggen Room 233",
+    oas_revision: 3.0,
+  },
+  {
+    device_id: "33df9545-d02d-42c1-95ad-4f5f4fd6e0e0",
+    os_name: "Bryggen Room 127",
+    oas_revision: 3.0,
+  },
+  {
+    device_id: "37bf639e-6805-4632-967f-64c8d2fd8b04",
+    os_name: "Kasper H\u00f8gh",
+    oas_revision: 2.0,
+  },
+  {
+    device_id: "edd3f56c-04d2-404c-b891-7644766de38b",
+    os_name: "Bryggen Room 205",
+    oas_revision: 3.0,
+  },
+  {
+    device_id: "42603e01-cddf-4e3f-96a6-84fa268240cb",
+    os_name: "Johan Lundqvist BV",
+    oas_revision: 3.0,
+  },
+  {
+    device_id: "6940aba4-1a77-488c-8d19-19ae64106e88",
+    os_name: "Lasse S\u00f8nderup",
+    oas_revision: 2.0,
+  },
+  {
+    device_id: "623d8997-c80b-4278-9f59-d1fe0275280e",
+    os_name: "Sturebadet Herr Mitten ",
+    oas_revision: 3.0,
+  },
+  {
+    device_id: "0657cfff-73be-4b5f-bdd7-7a3b1cbed820",
+    os_name: "Bryggen Room 406",
+    oas_revision: 3.0,
+  },
+  {
+    device_id: "f8b994cf-f434-430c-a3e8-80028398e5ad",
+    os_name: "Bryggen Room 230",
+    oas_revision: 3.0,
+  },
+  {
+    device_id: "53ec849f-971b-407f-ab52-fecfb3bfa261",
+    os_name: "Bryggen Room 129",
+    oas_revision: 3.0,
+  },
+  {
+    device_id: "90004708-0ae3-45c4-be46-b3a0cb0d8821",
+    os_name: "Bryggen Room 202",
+    oas_revision: 3.0,
+  },
+  {
+    device_id: "cc47a1c9-9a59-4032-b9ec-d49833473b7e",
+    os_name: "Sturebadet Herr H\u00f6ger",
+    oas_revision: 3.0,
+  },
+  {
+    device_id: "7a49108b-d102-44b8-a9f4-94a145ee7b51",
+    os_name: "Daniel DK - Hall (New)",
+    oas_revision: 2.0,
+  },
+  {
+    device_id: "380246b8-985f-40b1-ab05-eabcca3e4812",
+    os_name: "Bryggen Room  342",
+    oas_revision: 3.0,
+  },
+  {
+    device_id: "75f75c21-0c83-4d5a-9c16-bfb8783c23aa",
+    os_name: "Klima - Aylin Bunk",
+    oas_revision: 3.0,
+  },
+  {
+    device_id: "ebb0815a-5c13-41fa-a532-3fa8f7f7a568",
+    os_name: "Bryggen Room 411",
+    oas_revision: 3.0,
+  },
+  {
+    device_id: "288dbefa-8f86-4219-b36e-1542c198f50e",
+    os_name: "Bryggen Room 426",
+    oas_revision: 3.0,
+  },
+  {
+    device_id: "d221a5e8-b858-4a84-8750-5369103e1a32",
+    os_name: "Bj\u00f8rn Seerup",
+    oas_revision: 3.0,
+  },
+  {
+    device_id: "cae66350-4d5b-44c2-bddb-a90ac421a03e",
+    os_name: "Mathias Bohman",
+    oas_revision: 3.0,
+  },
+  {
+    device_id: "549160a5-605d-4fdb-b8f0-8f2efee80304",
+    os_name: "Dings - New",
+    oas_revision: 2.0,
+  },
+  {
+    device_id: "fd3ac3b9-7808-4f36-99a6-a698384e7642",
+    os_name: "Factory OPU Tester",
+    oas_revision: 3.0,
+  },
+  {
+    device_id: "9fdf94ae-641f-4211-ac1d-f6028b171cc6",
+    os_name: "Bryggen Room 210",
+    oas_revision: 3.0,
+  },
+  {
+    device_id: "f5c6f134-4965-4d86-9ef1-0f6a04ad727e",
+    os_name: "Bj\u00f6rn seerup tillf\u00e4",
+    oas_revision: 3.0,
+  },
+  {
+    device_id: "ff3ded52-cc43-4d63-a08d-817799d132c3",
+    os_name: "Camilla Skiffard",
+    oas_revision: 3.0,
+  },
+  {
+    device_id: "454f7c50-396a-4dac-b01a-2ed530ea3385",
+    os_name: "Propio House 44",
+    oas_revision: 2.0,
+  },
+  {
+    device_id: "08c2871b-d655-4c8d-8c10-c2abe487ac83",
+    os_name: "Bokskogen Dusch 2  (Torup)",
+    oas_revision: 3.0,
+  },
+  {
+    device_id: "e27fdfa3-989f-4340-b936-8c5acba55f28",
+    os_name: "Erik Asplund ",
+    oas_revision: 3.0,
+  },
+  {
+    device_id: "50016a38-43d7-4de8-b2b6-03c7143ddd94",
+    os_name: "Bryggen Room 509",
+    oas_revision: 3.0,
+  },
+  {
+    device_id: "752859c1-10e4-4c2a-b2dc-3944afe5ab51",
+    os_name: "Sn\u00e4ck 3308",
+    oas_revision: 3.0,
+  },
+  {
+    device_id: "b6ae32d9-24c1-4160-ac82-dd1e99cb611b",
+    os_name: "Laerke NREP - Basement",
+    oas_revision: 3.0,
+  },
+  {
+    device_id: "3281ef44-98c1-4814-800c-28422aa80582",
+    os_name: "3281ef44-98c1-4814-800c-28422aa80582",
+    oas_revision: 3.0,
+  },
+  {
+    device_id: "68090192-88c6-4676-80b0-84bc2fdafcff",
+    os_name: "Sturebadet Herr V\u00e4nster ",
+    oas_revision: 3.0,
+  },
+  {
+    device_id: "5f80e8ef-6231-4011-b793-6d8b63a57e83",
+    os_name: "DKAkustik",
+    oas_revision: 3.0,
+  },
+  {
+    device_id: "3afd2dfa-38f1-4dd8-987e-48693ed1c8ad",
+    os_name: "Bryggen Room 235",
+    oas_revision: 3.0,
+  },
+  {
+    device_id: "ba62c1da-924b-41ba-81b6-3fd7499b3603",
+    os_name: "Michael Nielsen - Sovrum (Main bathroom)",
+    oas_revision: 2.0,
+  },
+  {
+    device_id: "1a6430a8-d5e0-40d8-8163-b72e920e6bfa",
+    os_name: "Bryggen Room 118",
+    oas_revision: 3.0,
+  },
+  {
+    device_id: "c62a5bdc-4ba2-4330-b1de-4c572fbf250e",
+    os_name: "Bokskogen Dusch 1 (Bokskogen) ",
+    oas_revision: 3.0,
+  },
+  {
+    device_id: "68f2503f-cf3f-475e-b88b-77f15cfb8266",
+    os_name: "Bryggen Room 203",
+    oas_revision: 3.0,
+  },
+  {
+    device_id: "0a5c4da0-ee96-485d-9bcf-00f644547cb0",
+    os_name: "0a5c4da0-ee96-485d-9bcf-00f644547cb0",
+    oas_revision: 3.0,
+  },
+  {
+    device_id: "e71aea0d-7a42-44d9-bc24-7fc7e3b8e451",
+    os_name: "Daniel DK - Sovrum (New)",
+    oas_revision: 2.0,
+  },
+  {
+    device_id: "78fd00cc-b8c3-4541-a334-54aadf2a12a6",
+    os_name: "Bryggen Room 222",
+    oas_revision: 3.0,
+  },
+  {
+    device_id: "9e68e847-0120-409d-a52c-cc18b9632594",
+    os_name: "Jesper Gadegaard",
+    oas_revision: 3.0,
+  },
+  {
+    device_id: "353fcfb7-988d-428b-9e5f-7010e2eba846",
+    os_name: "Jan Vinther Fritsdal - 1st floor parterre bad",
+    oas_revision: 3.0,
+  },
+  {
+    device_id: "bd495217-e3a5-4047-8b1d-94025df2e2e2",
+    os_name: "St\u00f6cke 13",
+    oas_revision: 3.0,
+  },
+  {
+    device_id: "da2bba04-976f-40af-9f5d-a3aa4ab3703f",
+    os_name: "Klima Gro\u00dfheide - 1",
+    oas_revision: 2.0,
+  },
+  {
+    device_id: "081c6f55-0f6e-43a3-b2b1-3d68283eb895",
+    os_name: "Therese Ankarberg",
+    oas_revision: 3.0,
+  },
+  {
+    device_id: "65801b80-f5d4-4c31-b501-9e4d787ebf95",
+    os_name: "Morten Altru 2",
+    oas_revision: 2.0,
+  },
+  {
+    device_id: "01596f58-0a84-47d5-a1b1-2319a23d567a",
+    os_name: "Mikkel Lohmann",
+    oas_revision: 3.0,
+  },
+  {
+    device_id: "8c1c425e-0162-4404-b378-8ba03b45cf89",
+    os_name: "Bryggen Room 101",
+    oas_revision: 3.0,
+  },
+  {
+    device_id: "f2a4503c-2c91-43b6-bcd6-cfafdd9c10a7",
+    os_name: "Sturebadet herr 1 (brunnen)",
+    oas_revision: 3.0,
+  },
+  {
+    device_id: "2e143313-e473-4b29-9549-4057608d71e7",
+    os_name: "Jonas Nygren ",
+    oas_revision: 3.0,
+  },
+  {
+    device_id: "0a025db5-78e9-45fa-b599-bf7e4d49e6f2",
+    os_name: "Nikolaj Stavnsk\u00e6r",
+    oas_revision: 2.0,
+  },
+  {
+    device_id: "5971e65e-99e4-42a5-a204-d8af1fe1abd2",
+    os_name: "Bj\u00f6rn T\u00f6rnqvist",
+    oas_revision: 3.0,
+  },
+  {
+    device_id: "c3e7c5b3-aff3-400f-b4b0-f7268dc95f01",
+    os_name: "Kristian Fleron",
+    oas_revision: 2.0,
+  },
+  {
+    device_id: "f2f7dabc-4ce4-44fd-98b4-8cc6ce683b2b",
+    os_name: "Bryggen Room 128",
+    oas_revision: 3.0,
+  },
+  {
+    device_id: "be21381a-68e3-4eae-b5eb-d2faba66ab18",
+    os_name: "Apalby Stuga 6",
+    oas_revision: 3.0,
+  },
+  {
+    device_id: "4df14d6a-98cf-4983-bb15-b3e485e6d437",
+    os_name: null,
+    oas_revision: 2.0,
+  },
+  {
+    device_id: "e19120ac-7a62-472e-9bc6-9d53565614fb",
+    os_name: null,
+    oas_revision: 3.0,
+  },
+  {
+    device_id: "4f82afc6-9a87-4d91-991c-faaaed4e06dd",
+    os_name: "Venitucci - A3301",
+    oas_revision: 2.0,
+  },
+  {
+    device_id: "ecc87601-eff8-45cc-acb1-be5a84fad828",
+    os_name: "Venitucci - A3201",
+    oas_revision: 2.0,
+  },
+  {
+    device_id: "c5b0db33-8f66-44e2-b7e5-e5072f62e348",
+    os_name: "Eggensberger OLD 2 ",
+    oas_revision: 2.0,
+  },
+  {
+    device_id: "92822ea4-594f-4b18-802b-efcb1684231a",
+    os_name: "Casall 304 Omkl\u00e4dningsrum dusch 1",
+    oas_revision: 3.0,
+  },
+  {
+    device_id: "aa121d5e-f242-43f7-9339-7229118e9e25",
+    os_name: "Trendgruppen Showroom",
+    oas_revision: 2.0,
+  },
+  {
+    device_id: "c57ac3e3-ee5b-463d-80f0-46f087e775a9",
+    os_name: "Bryggen Room 505",
+    oas_revision: 3.0,
+  },
+  {
+    device_id: "bd454b64-6d00-4592-b25f-86c1d7f51cd6",
+    os_name: "Klima - Meer 1",
+    oas_revision: 2.0,
+  },
+  {
+    device_id: "136d48ce-08b1-453a-9740-0142c9e07462",
+    os_name: "1944-0015",
+    oas_revision: 2.0,
+  },
+  {
+    device_id: "1ba6958d-35ab-4bf8-801d-ddf3f125e917",
+    os_name: null,
+    oas_revision: 2.0,
+  },
+  {
+    device_id: "9aa19f56-3963-45a1-a680-b17a5a19e116",
+    os_name: "Venitucci - A3102",
+    oas_revision: 2.0,
+  },
+  {
+    device_id: "a8da38c2-de27-425c-bd5c-1acb8dc7be95",
+    os_name: "D1 - NGL V\u00e4nster sida",
+    oas_revision: 2.0,
+  },
+  {
+    device_id: "e709e404-e2e1-46c7-be94-5a86e4f58165",
+    os_name: null,
+    oas_revision: 2.0,
+  },
+  {
+    device_id: "a0aef87c-6c53-4c38-8e5d-0e2823f91830",
+    os_name: "Bryggen Room 432",
+    oas_revision: 3.0,
+  },
+  {
+    device_id: "1b4f8e6e-5a68-40f5-865f-2bba5f765078",
+    os_name: "Propio House 46",
+    oas_revision: 2.0,
+  },
+  {
+    device_id: "c22a2806-2969-4487-96e7-5ac3cac3347f",
+    os_name: "Klima - Meer 2",
+    oas_revision: 2.0,
+  },
+  {
+    device_id: "1d524ca4-c5ee-454f-bf30-b75d45a40185",
+    os_name: "Treehotel Room 7",
+    oas_revision: 2.0,
+  },
+  {
+    device_id: "eb186ba5-3871-46bb-9da3-642b80e1884b",
+    os_name: "Klima Gro\u00dfheide - 2",
+    oas_revision: 2.0,
+  },
+  {
+    device_id: "1bbc5f99-4393-4a7e-935e-3128c9b50fae",
+    os_name: null,
+    oas_revision: 2.0,
+  },
+  {
+    device_id: "67379996-5c08-4462-b9d8-e7e0686978b3",
+    os_name: null,
+    oas_revision: 2.0,
+  },
+  {
+    device_id: "421e98ae-15bb-40c2-a6db-511853539b3c",
+    os_name: null,
+    oas_revision: 2.0,
+  },
+  {
+    device_id: "85c95817-571e-41aa-9ed2-74e8290adf58",
+    os_name: null,
+    oas_revision: 2.0,
+  },
+  {
+    device_id: "448af26c-34e4-4cd7-a1ad-14cfe6a49d25",
+    os_name: "Propio House 40",
+    oas_revision: 2.0,
+  },
+  {
+    device_id: "7d8a8589-36dc-431c-a2e8-35f488aefbf1",
+    os_name: "Laerke NREP - Floor 2",
+    oas_revision: 3.0,
+  },
+  {
+    device_id: "1ca2e9a2-1d3a-4fd2-8849-7106d6d33669",
+    os_name: "Klima - Wohnung 2",
+    oas_revision: 2.0,
+  },
+  {
+    device_id: "ae783c98-18e7-4bfd-99d1-a5532c318283",
+    os_name: null,
+    oas_revision: 2.0,
+  },
+  {
+    device_id: "fa2e9b83-6bdb-4ce9-9a52-e6b9e85ff340",
+    os_name: null,
+    oas_revision: 2.0,
+  },
+  {
+    device_id: "0d8d1682-3309-4279-84fe-4e1e74aa97b2",
+    os_name: null,
+    oas_revision: 2.0,
+  },
+  {
+    device_id: "f24969c5-f28a-48af-863e-78e6b6307735",
+    os_name: null,
+    oas_revision: 2.0,
+  },
+  {
+    device_id: "e6697e8d-bb15-4e65-a535-e55ca1738e1a",
+    os_name: null,
+    oas_revision: 2.0,
+  },
+  {
+    device_id: "9274bbfd-cc41-4906-a3bc-d7885b2334ae",
+    os_name: null,
+    oas_revision: 2.0,
+  },
+  {
+    device_id: "9fdf4b2c-e307-4575-83be-f5b75d8f5767",
+    os_name: null,
+    oas_revision: 2.0,
+  },
+  {
+    device_id: "bf6a9362-8886-4564-9e08-488395d7b869",
+    os_name: null,
+    oas_revision: 2.0,
+  },
+  {
+    device_id: "b4d47851-64d4-4f66-85ac-0f63def173b7",
+    os_name: null,
+    oas_revision: 2.0,
+  },
+  {
+    device_id: "a32123ad-fb39-44ff-9854-077e8e833e4b",
+    os_name: "Klima Gro\u00dfheide - 3",
+    oas_revision: 2.0,
+  },
+  {
+    device_id: "125524a6-8b9e-4439-a6e0-1748ab79987c",
+    os_name: "Klima Gro\u00dfheide - 4",
+    oas_revision: 2.0,
+  },
+  {
+    device_id: "1f3727ba-bd51-49c7-9381-2590363e7fe8",
+    os_name: "Klima Retur 3 ",
+    oas_revision: 2.0,
+  },
+  {
+    device_id: "4ef0145c-f87d-4f48-a3d6-c600ee84ef97",
+    os_name: null,
+    oas_revision: 2.0,
+  },
+  {
+    device_id: "8d79b74c-c4c1-4517-8f31-b49199024675",
+    os_name: null,
+    oas_revision: 2.0,
+  },
+  {
+    device_id: "dd9f77e0-b73d-418b-b538-aee0e7af380d",
+    os_name: null,
+    oas_revision: 2.0,
+  },
+  {
+    device_id: "75100bad-4341-48e8-9aa2-261d7a7aacb2",
+    os_name: "Thue Geil",
+    oas_revision: 2.0,
+  },
+  {
+    device_id: "fcf8073f-2c64-47dd-b11d-86456bc28a02",
+    os_name: null,
+    oas_revision: 2.0,
+  },
+  {
+    device_id: "e35583b7-96de-41f1-9ccf-cf7915851026",
+    os_name: "Bryggen Room 624",
+    oas_revision: 3.0,
+  },
+  {
+    device_id: "d4c91f75-7e67-4c34-80fe-f27c3673c878",
+    os_name: null,
+    oas_revision: 2.0,
+  },
+  {
+    device_id: "ef6426c6-3549-4a7e-960a-91f8623db9a8",
+    os_name: "Jakob Seidal",
+    oas_revision: 2.0,
+  },
+  {
+    device_id: "83852ff9-68c5-4285-9517-a4e6b6f1ad38",
+    os_name: "Bryggen Room 501",
+    oas_revision: 3.0,
+  },
+  {
+    device_id: "5208c039-7e99-431c-9848-a704c1a5b0de",
+    os_name: null,
+    oas_revision: 3.0,
+  },
+  {
+    device_id: "71db97bd-9d7b-4a59-b89b-66fae5baf7ab",
+    os_name: null,
+    oas_revision: 2.0,
+  },
+  {
+    device_id: "24c8b80b-2f26-4142-b1bd-543e6ef0457b",
+    os_name: "Murermester 2",
+    oas_revision: 3.0,
+  },
+  {
+    device_id: "afe55a94-ab78-4c8f-9608-1b508f6ba4d5",
+    os_name: "Robert Hegyk\u00f6zy",
+    oas_revision: 3.0,
+  },
+  {
+    device_id: "5f620688-85c1-4b15-93b0-272b9c602cf1",
+    os_name: "1932-0003",
+    oas_revision: 2.0,
+  },
+  {
+    device_id: "f5de80a0-f0d9-40e8-84d5-89e0ed0ed91d",
+    os_name: "1944-0008",
+    oas_revision: 2.0,
+  },
+  {
+    device_id: "3b2dfa48-fbce-4688-b0ec-86557be542db",
+    os_name: null,
+    oas_revision: 3.0,
+  },
+  {
+    device_id: "605d9c00-5071-4fa8-a94e-d3f38bd1d83b",
+    os_name: "Venitucci - A3103",
+    oas_revision: 2.0,
+  },
+  {
+    device_id: "e5dc1131-ada3-4fb8-a68a-0e97f06a3a9e",
+    os_name: "Klimakassen",
+    oas_revision: 3.0,
+  },
+  {
+    device_id: "5b8da440-d429-44cf-bf67-cacc8c6cf303",
+    os_name: "REMOVE",
+    oas_revision: 3.0,
+  },
+  {
+    device_id: "b5d2ac82-d2a5-4716-b1a6-d2d8374d54ab",
+    os_name: "Orbital House - V\u00e5n 3",
+    oas_revision: 3.0,
+  },
+  {
+    device_id: "2dbce229-3b91-43fd-b28e-5ba5edaf359a",
+    os_name: null,
+    oas_revision: 2.0,
+  },
+  {
+    device_id: "b183f2f4-7316-44ef-8f0d-a46477987cd5",
+    os_name: "1941-0003",
+    oas_revision: 2.0,
+  },
+  {
+    device_id: "dfb719a9-ed71-45db-ab7f-f27fd1c860f5",
+    os_name: "Bryggen Room 542",
+    oas_revision: 3.0,
+  },
+  {
+    device_id: "ce5eb996-d711-487c-b231-e101ae3d3914",
+    os_name: "Steffen Truelsen - K\u00e6lder",
+    oas_revision: 3.0,
+  },
+  {
+    device_id: "79f3cc0f-a1cb-409f-9a72-7a87db98b3e5",
+    os_name: "Bryggen Room 622",
+    oas_revision: 3.0,
+  },
+  {
+    device_id: "9c194f5c-135a-450e-a195-bf62586effb2",
+    os_name: "Bryggen Room 107",
+    oas_revision: 3.0,
+  },
+  {
+    device_id: "fc5935c8-75c3-4258-a6f4-7ed9ec0ad5a5",
+    os_name: "1944-0011",
+    oas_revision: 2.0,
+  },
+  {
+    device_id: "6a978717-a453-4ba7-a257-9c0f8dec3e50",
+    os_name: "6a978717-a453-4ba7-a257-9c0f8dec3e50",
+    oas_revision: 3.0,
+  },
+  {
+    device_id: "ff4d8f97-d665-43e3-a580-c38127170a42",
+    os_name: "Bryggen Room 106",
+    oas_revision: 3.0,
+  },
+  {
+    device_id: "2c8b378e-876c-42a3-b865-8464d2598b2c",
+    os_name: "Bryggen Room 301",
+    oas_revision: 3.0,
+  },
+  {
+    device_id: "1804b05c-5cf9-41c9-bb2d-7971daaaac41",
+    os_name: "Berns hotel",
+    oas_revision: 3.0,
+  },
+  {
+    device_id: "03aa4e7b-813b-4ede-9dad-7010b0fff2b6",
+    os_name: "Bryggen Room 529",
+    oas_revision: 3.0,
+  },
+  {
+    device_id: "aa8c2623-e544-4c72-b04e-1e4bd398bb09",
+    os_name: "CES",
+    oas_revision: 3.0,
+  },
+  {
+    device_id: "9fb03747-2360-4284-85dd-4e89d9294901",
+    os_name: "Bryggen Room 500",
+    oas_revision: 3.0,
+  },
+  {
+    device_id: "4513931b-fff3-4e9e-938e-904a8a81a6b2",
+    os_name: "Apalby Stuga 5",
+    oas_revision: 3.0,
+  },
+  {
+    device_id: "e5936755-5bfd-437c-b378-7193a2208f56",
+    os_name: null,
+    oas_revision: 3.0,
+  },
+  {
+    device_id: "d67240ae-52a8-466d-87cd-543a43bad97b",
+    os_name: "Bryggen Room 600",
+    oas_revision: 3.0,
+  },
+  {
+    device_id: "c4e531b0-b0e3-4b8c-a041-7b6f6e466f20",
+    os_name: "2247-0007",
+    oas_revision: 3.0,
+  },
+  {
+    device_id: "ba8e69df-43c9-4c39-83ed-f639ef711601",
+    os_name: "Bryggen Room 334",
+    oas_revision: 3.0,
+  },
+  {
+    device_id: "dd89b7a4-5aaf-4e26-8ff6-3517963e1f39",
+    os_name: "Bryggen Room 634",
+    oas_revision: 3.0,
+  },
+  {
+    device_id: "444cbfbd-39e4-423c-8e6a-7da8dd9bde20",
+    os_name: "FF kakel demo",
+    oas_revision: 3.0,
+  },
+  {
+    device_id: "fd06a67e-b23c-4dd7-a591-df7d7f12318e",
+    os_name: "Bryggen Room 133",
+    oas_revision: 3.0,
+  },
+  {
+    device_id: "d271ec81-adfa-4ce1-9bec-ef0c8d52cc1e",
+    os_name: "Soren Wolder",
+    oas_revision: 3.0,
+  },
+  {
+    device_id: "8772ea2a-5435-4141-b679-ddba631fb76b",
+    os_name: "8772ea2a-5435-4141-b679-ddba631fb76b",
+    oas_revision: 3.0,
+  },
+  {
+    device_id: "30f4a698-ff78-41d0-a751-cfc57be1218c",
+    os_name: "Casall 304 Omkl\u00e4dningsrum dusch 2",
+    oas_revision: 3.0,
+  },
+  {
+    device_id: "01d055d3-555a-46f4-b732-91589b2847a7",
+    os_name: "Bryggen Room 506",
+    oas_revision: 3.0,
+  },
+  {
+    device_id: "fc60ceae-3c53-4e45-8c29-9f249fb8871d",
+    os_name: "Bryggen Room 304",
+    oas_revision: 3.0,
+  },
+  {
+    device_id: "86cc5142-5cac-41fc-8d07-44373e162c00",
+    os_name: "Treehotel Room 7",
+    oas_revision: 3.0,
+  },
+  {
+    device_id: "53172612-a28a-4db6-98ee-bb1da652469a",
+    os_name: "Bryggen Room 442",
+    oas_revision: 3.0,
+  },
+  {
+    device_id: "391a3047-735f-42bb-9f1c-491be9a8ca68",
+    os_name: "Treehotel Room 8",
+    oas_revision: 3.0,
+  },
+  {
+    device_id: "cf5296d0-d0de-461e-8fc4-371d83bd1a05",
+    os_name: "Sn\u00e4ck 3320",
+    oas_revision: 3.0,
+  },
+  {
+    device_id: "4ce98374-5733-462f-8f4e-a3a4fa03d9a5",
+    os_name: "Bryggen Room 435",
+    oas_revision: 3.0,
+  },
+  {
+    device_id: "388b5670-c0a9-4c3f-aefa-76fe1e7bffe6",
+    os_name: "Apalby Stuga 4",
+    oas_revision: 3.0,
+  },
+  {
+    device_id: "35511f99-200e-4157-81f9-68240c7aff32",
+    os_name: "Bryggen Room 536",
+    oas_revision: 3.0,
+  },
+  {
+    device_id: "94d6b4a0-9dc6-4166-a7ea-ca7ba2a7f042",
+    os_name: "Bryggen Room 112",
+    oas_revision: 3.0,
+  },
+  {
+    device_id: "b524ea1f-8164-4965-8b12-9590b0b5d7e1",
+    os_name: "Bryggen Room 309",
+    oas_revision: 3.0,
+  },
+  {
+    device_id: "762299d6-2f60-400d-b81b-0ff9a30966ee",
+    os_name: "Friskis Dam 4 - New",
+    oas_revision: 3.0,
+  },
+  {
+    device_id: "2f26c44e-ae81-489f-9f92-dca6684d42d4",
+    os_name: "Bryggen Room 535",
+    oas_revision: 3.0,
+  },
+  {
+    device_id: "36c95e86-fb21-40cc-8370-e2690ff240c7",
+    os_name: "Bryggen Room 141",
+    oas_revision: 3.0,
+  },
+  {
+    device_id: "e789f8b8-2233-43cb-9fb8-6c8bdc210e22",
+    os_name: "REMOVE",
+    oas_revision: 3.0,
+  },
+  {
+    device_id: "47ff2f0f-9116-4d89-b124-ea8f602dcdfe",
+    os_name: "Sturebadet Dam H\u00f6ger",
+    oas_revision: 3.0,
+  },
+  {
+    device_id: "f8c4c0d3-d7a9-43b3-8a18-138132be367b",
+    os_name: "Bryggen Room 238 ",
+    oas_revision: 3.0,
+  },
+  {
+    device_id: "626083f1-3d33-4786-b22e-90dfbe20caee",
+    os_name: "Bryggen Room 322",
+    oas_revision: 3.0,
+  },
+  {
+    device_id: "36393020-e80c-4f70-bb3c-b5668fae3a0b",
+    os_name: "36393020-e80c-4f70-bb3c-b5668fae3a0b",
+    oas_revision: 3.0,
+  },
+  {
+    device_id: "ce7c7067-c7aa-43ed-a8b4-e4e00c124730",
+    os_name: "Casall 113 Omkl\u00e4dningsrum dusch 1",
+    oas_revision: 3.0,
+  },
+  {
+    device_id: "fa2e6b74-7e82-4a18-8c33-6e190bc119a9",
+    os_name: "Bryggen Room 325",
+    oas_revision: 3.0,
+  },
+  {
+    device_id: "99a2f577-ae55-4f81-b7cd-8ecb7d8b5a01",
+    os_name: "Bryggen Room 320",
+    oas_revision: 3.0,
+  },
+  {
+    device_id: "11f19275-8e18-4fd1-bfcc-de18ae440012",
+    os_name: "Bryggen Room 538",
+    oas_revision: 3.0,
+  },
+  {
+    device_id: "090fba23-3338-420d-8be5-3771607d320c",
+    os_name: "Bryggen Room 539",
+    oas_revision: 3.0,
+  },
+  {
+    device_id: "9911b57f-ef39-4654-b044-7f8a90934a25",
+    os_name: "Bokskogen  Dusch 4 (Karl Xll)",
+    oas_revision: 3.0,
+  },
+  {
+    device_id: "9d66ec3e-4677-40e4-a842-fadcc993ecc1",
+    os_name: "Nrep floor 2 till",
+    oas_revision: 3.0,
+  },
+  {
+    device_id: "95c0c50b-1142-471b-bc07-07a22cf07192",
+    os_name: "Bryggen Room 420",
+    oas_revision: 3.0,
+  },
+  {
+    device_id: "f608588a-ccde-4549-bfcf-23b435933f42",
+    os_name: "Bryggen Room 224",
+    oas_revision: 3.0,
+  },
+  {
+    device_id: "4db5701b-1486-44f4-bcfd-b169a04a8efb",
+    os_name: "4db5701b-1486-44f4-bcfd-b169a04a8efb",
+    oas_revision: 3.0,
+  },
+  {
+    device_id: "cd412b9b-5007-47e9-9ce1-b45e7fb4e48c",
+    os_name: "Bryggen Room 326",
+    oas_revision: 3.0,
+  },
+  {
+    device_id: "fa86804f-736a-43b6-b307-e9cf3cbeb3f6",
+    os_name: "Bryggen Room 302",
+    oas_revision: 3.0,
+  },
+  {
+    device_id: "e356fd6c-b3da-46e6-a04a-a4b210d45f03",
+    os_name: "Bryggen Room 612",
+    oas_revision: 3.0,
+  },
+  {
+    device_id: "ee69f4df-efdf-4d0a-9c58-d216d0210ab6",
+    os_name: "Brf Horisonten Lgh 7",
+    oas_revision: 3.0,
+  },
+  {
+    device_id: "bca1c6b4-89a4-4227-9de5-692b6adf7d7f",
+    os_name: "Bryggen Room 608",
+    oas_revision: 3.0,
+  },
+  {
+    device_id: "d36dce13-e027-4375-86e8-f1a3009721ca",
+    os_name: "Apalby Stuga 10",
+    oas_revision: 3.0,
+  },
+  {
+    device_id: "f198bc51-ff88-49eb-8890-f9fb7c97d3b5",
+    os_name: null,
+    oas_revision: 3.0,
+  },
+  {
+    device_id: "2c153c90-924f-40fe-84b1-b5d73dbfb001",
+    os_name: "Bengt Holm",
+    oas_revision: 3.0,
+  },
+  {
+    device_id: "0518e6d3-a1f7-47c7-b5ae-c48faf33c6dc",
+    os_name: "0518e6d3-a1f7-47c7-b5ae-c48faf33c6dc",
+    oas_revision: 3.0,
+  },
+  {
+    device_id: "01c6b44b-cf59-4fd8-9e23-08092773828b",
+    os_name: "Bryggen Room 530",
+    oas_revision: 3.0,
+  },
+  {
+    device_id: "67639d78-e860-4fe9-93e3-f45c5e14f0f4",
+    os_name: "Bryggen Room 416",
+    oas_revision: 3.0,
+  },
+  {
+    device_id: "82a11f26-d043-4304-979e-b89fc7017f3b",
+    os_name: "Miss Clara 102",
+    oas_revision: 3.0,
+  },
+  {
+    device_id: "cd6dc1f9-74a5-4fec-8ed9-64353c0feb09",
+    os_name: "Bryggen Room 546",
+    oas_revision: 3.0,
+  },
+  {
+    device_id: "78a37fd1-1f7f-4ffb-801c-30bc7aab51e4",
+    os_name: "Projects - Gottnock",
+    oas_revision: 3.0,
+  },
+  {
+    device_id: "8764b79a-89dd-496a-a11e-68ac834aef47",
+    os_name: "Bryggen Room 531",
+    oas_revision: 3.0,
+  },
+  {
+    device_id: "bdf532fd-df53-436d-a8ad-c1285399e228",
+    os_name: "Friskis Dam 3 2023",
+    oas_revision: 3.0,
+  },
+  {
+    device_id: "4bc32eb3-063a-4f64-9662-b5cfaa7a52be",
+    os_name: "Bryggen Room 344",
+    oas_revision: 3.0,
+  },
+  {
+    device_id: "bfa05a91-f6c8-49fd-9e6d-d1f4fd7a392a",
+    os_name: "Jesper G New",
+    oas_revision: 3.0,
+  },
+  {
+    device_id: "a485453c-edbf-4e4d-b946-f5b89bb182e5",
+    os_name: "Stefan Wilson",
+    oas_revision: 3.0,
+  },
+  {
+    device_id: "524c4f6e-94a3-4ae2-b539-acb9ceb0e43f",
+    os_name: "Apalby Stuga 1",
+    oas_revision: 3.0,
+  },
+  {
+    device_id: "6cb2ca20-d606-4925-8cc2-25b66be32854",
+    os_name: "Bryggen Room 541",
+    oas_revision: 3.0,
+  },
+  {
+    device_id: "a126e08f-594f-4eb9-af7b-0b5a5287cf29",
+    os_name: "Bryggen Room 139",
+    oas_revision: 3.0,
+  },
+  {
+    device_id: "6da18b5d-a977-4306-b7ef-bb8629542e35",
+    os_name: "Bryggen Room 209",
+    oas_revision: 3.0,
+  },
+  {
+    device_id: "ff7b972a-7fef-4287-a882-a0232fe399bb",
+    os_name: "Thomas L2",
+    oas_revision: 3.0,
+  },
+  {
+    device_id: "86640248-55cd-4672-b16b-7844b795ac03",
+    os_name: "Apalby Stuga 20",
+    oas_revision: 3.0,
+  },
+  {
+    device_id: "45c7f172-922b-4163-bd32-844daec80897",
+    os_name: "Bryggen Room 340",
+    oas_revision: 3.0,
+  },
+  {
+    device_id: "18d5dbe3-928b-484c-a00d-5ae470db9aa7",
+    os_name: "18d5dbe3-928b-484c-a00d-5ae470db9aa7",
+    oas_revision: 3.0,
+  },
+  {
+    device_id: "bcba153e-9f4b-4180-a9dc-878b336b0811",
+    os_name: "Robert tillf\u00e4llig",
+    oas_revision: 3.0,
+  },
+  {
+    device_id: "33a96d4c-ca3a-4bd3-b840-e7714bd59842",
+    os_name: null,
+    oas_revision: 3.0,
+  },
+  {
+    device_id: "4e373390-cbb1-4ded-8c16-8c6bf468d5df",
+    os_name: "Eggensberger Shower 2",
+    oas_revision: 2.0,
+  },
+  {
+    device_id: "67e1e890-9edb-4efb-b53a-e9755af6fcb0",
+    os_name: "Bryggen Room 630",
+    oas_revision: 3.0,
+  },
+  {
+    device_id: "f460071c-2981-4a79-bf78-cabbb38d442a",
+    os_name: "Bryggen Room 524",
+    oas_revision: 3.0,
+  },
+  {
+    device_id: "343d780f-6bde-4730-8dbc-2c7e0d906829",
+    os_name: "Bryggen Room 526",
+    oas_revision: 3.0,
+  },
+  {
+    device_id: "554ff2f9-c381-4859-a55e-c9e156809758",
+    os_name: "Bryggen Room 544",
+    oas_revision: 3.0,
+  },
+  {
+    device_id: "099386c2-7e07-4f61-94f9-4797fb1e6d6e",
+    os_name: "099386c2-7e07-4f61-94f9-4797fb1e6d6e",
+    oas_revision: 3.0,
+  },
+  {
+    device_id: "5a3aa7b0-c22a-4d66-9811-26d2c9387f35",
+    os_name: "Bryggen Room 306",
+    oas_revision: 3.0,
+  },
+  {
+    device_id: "dac750cc-c33f-47e0-ac3a-2cbafbf2181d",
+    os_name: "Bryggen Room 506",
+    oas_revision: 3.0,
+  },
+  {
+    device_id: "5439cfb1-0d08-49b4-956d-e7eb8288c8fd",
+    os_name: "Bryggen Room 140",
+    oas_revision: 3.0,
+  },
+  {
+    device_id: "983b980d-bf55-4e6b-a90c-35ba59ddc609",
+    os_name: "Christiane Ehlers",
+    oas_revision: 2.0,
+  },
+  {
+    device_id: "16b9cb32-2c81-451a-b8d8-de988dc7f838",
+    os_name: "Bryggen Room 302",
+    oas_revision: 3.0,
+  },
+  {
+    device_id: "65bd368e-a927-4a9f-af07-f8fe1890d21e",
+    os_name: "65bd368e-a927-4a9f-af07-f8fe1890d21e",
+    oas_revision: 3.0,
+  },
+  {
+    device_id: "ef44dd9a-a990-47e6-a812-a6d42752cfff",
+    os_name: "Bryggen Room 626",
+    oas_revision: 3.0,
+  },
+  {
+    device_id: "c2a1cf41-f863-4cb2-ba69-eb578bbae8bf",
+    os_name: "Mech - 2",
+    oas_revision: 3.0,
+  },
+  {
+    device_id: "5905cc42-2bc1-47b7-9d13-4a2af5a14724",
+    os_name: "1935-0001",
+    oas_revision: 2.0,
+  },
+  {
+    device_id: "79140844-d0b8-4dcd-be5c-644e61c0f077",
+    os_name: "2002-0006",
+    oas_revision: 2.0,
+  },
+  {
+    device_id: "d51d3c98-8e1e-4528-b96e-b6c5643b5362",
+    os_name: "Bryggen Room 440",
+    oas_revision: 3.0,
+  },
+  {
+    device_id: "adb3115d-54a1-4298-8d98-d6555e7610d7",
+    os_name: "1948-0003",
+    oas_revision: 2.0,
+  },
+  {
+    device_id: "3cde06fb-116c-4ba1-b050-6c6662f5889e",
+    os_name: null,
+    oas_revision: 2.0,
+  },
+  {
+    device_id: "07d1a821-9fa1-4338-ab2f-4a29dbaa66a3",
+    os_name: "Morten Thorndahl",
+    oas_revision: 3.0,
+  },
+  {
+    device_id: "9470f93a-adc5-49a9-bf66-58b5d8c6851a",
+    os_name: "Daniel Kronman",
+    oas_revision: 2.0,
+  },
+  {
+    device_id: "372daf22-ebf3-4f84-adc1-1d45b09d1bdd",
+    os_name: "BRF Horisonten - Varmfrontsgatan 29 Lgh 1001",
+    oas_revision: 2.0,
+  },
+  {
+    device_id: "fb9fa63d-b23a-4f9c-920f-6a0b9e61cc4a",
+    os_name: "Bryggen Room 429",
+    oas_revision: 3.0,
+  },
+  {
+    device_id: "bc3d75a4-b70f-4de0-a34c-f7ead8b399d2",
+    os_name: "Johan Lundqvist - L\u00e4genhet BV",
+    oas_revision: 3.0,
+  },
+  {
+    device_id: "f6544957-3eee-4fbf-abe0-9914c9f53eab",
+    os_name: "Sn\u00e4ck 3312",
+    oas_revision: 3.0,
+  },
+  {
+    device_id: "2a484b5a-30e7-4159-8f6d-a921678cf86a",
+    os_name: "Sn\u00e4ck 3304 V\u00e4nster",
+    oas_revision: 3.0,
+  },
+  {
+    device_id: "11669398-0ef4-4cbf-9bbe-6faeb69681b8",
+    os_name: "Bryggen Room 308",
+    oas_revision: 3.0,
+  },
+  {
+    device_id: "ecb30f79-e109-4a54-9c95-9b928a3d71c9",
+    os_name: "Sn\u00e4ck 3310",
+    oas_revision: 3.0,
+  },
+  {
+    device_id: "a0c686d7-9845-4dd0-846c-c35243b526ec",
+    os_name: "Sn\u00e4ck 3303 V\u00e4nster",
+    oas_revision: 3.0,
+  },
+  {
+    device_id: "b2a3d9ee-8b80-4568-b770-1ba841862808",
+    os_name: "Sn\u00e4ck 3313",
+    oas_revision: 3.0,
+  },
+  {
+    device_id: "f33fcaf8-3a4b-46e9-8c85-937581c6b184",
+    os_name: "H\u00e5llbarafamiljen",
+    oas_revision: 3.0,
+  },
+  {
+    device_id: "7c1a7662-b1df-41ab-beb0-520bf171a0a0",
+    os_name: "Bryggen Room 444",
+    oas_revision: 3.0,
+  },
+  {
+    device_id: "7a90066f-adec-4df5-94d6-1540aced49ac",
+    os_name: "REMOVE",
+    oas_revision: 3.0,
+  },
+  {
+    device_id: "cc4637db-6c32-43cd-b94c-345b41bb3554",
+    os_name: "Bryggen Room 434",
+    oas_revision: 3.0,
+  },
+  {
+    device_id: "8235ec9a-70d0-408c-8a25-b7333edc2c23",
+    os_name: "Rikard Magnusson",
+    oas_revision: 3.0,
+  },
+  {
+    device_id: "061d4027-7444-4831-95a2-5870e4de920d",
+    os_name: "Sn\u00e4ck 3314",
+    oas_revision: 3.0,
+  },
+  {
+    device_id: "c41fe090-14d1-46a4-bb72-3a9e402900b3",
+    os_name: "c41fe090-14d1-46a4-bb72-3a9e402900b3",
+    oas_revision: 3.0,
+  },
+  {
+    device_id: "2ee65986-f0e5-41d8-a223-d87b7f5f9a23",
+    os_name: "Casall Omkl\u00e4dningsrum dusch 2",
+    oas_revision: 3.0,
+  },
+  {
+    device_id: "6a311e75-56d0-438b-b45a-efdebe7381b1",
+    os_name: "Bryggen Room 503",
+    oas_revision: 3.0,
+  },
+  {
+    device_id: "813914c5-d4a0-4250-9afb-0403f4601144",
+    os_name: "Bryggen Room 331",
+    oas_revision: 3.0,
+  },
+  {
+    device_id: "3e0ea86b-c6d5-48d8-9306-ba71acfc6b3e",
+    os_name: "Digital R3",
+    oas_revision: 3.0,
+  },
+  {
+    device_id: "b83e0203-d07d-4e68-9714-d3d843439f14",
+    os_name: "b83e0203-d07d-4e68-9714-d3d843439f14",
+    oas_revision: 3.0,
+  },
+  {
+    device_id: "32f1df97-6fec-49cd-95a2-4c48e6e9a409",
+    os_name: "Franziska Kaufmann",
+    oas_revision: 3.0,
+  },
+  {
+    device_id: "c76b0bee-89e9-48f8-9c61-b6c245611880",
+    os_name: "Bryggen Room 138",
+    oas_revision: 3.0,
+  },
+  {
+    device_id: "2ec9e08b-b6dd-46b9-aa72-38e2cc8cabb3",
+    os_name: "2ec9e08b-b6dd-46b9-aa72-38e2cc8cabb3",
+    oas_revision: 3.0,
+  },
+  {
+    device_id: "aa1a1f12-30e6-4ea7-9f42-1d8eb0cc6e0d",
+    os_name: "Makajo Malm\u00f6",
+    oas_revision: 3.0,
+  },
+  {
+    device_id: "00c08b29-06be-4f9f-a39a-42cae2d0c3f0",
+    os_name: "Apalby Stuga 17",
+    oas_revision: 3.0,
+  },
+  {
+    device_id: "800140e5-7013-4265-acdd-c35a99ed5204",
+    os_name: "Bryggen Room 628",
+    oas_revision: 3.0,
+  },
+  {
+    device_id: "a8039836-68e8-45ff-8669-b46577eb1346",
+    os_name: "a8039836-68e8-45ff-8669-b46577eb1346",
+    oas_revision: 3.0,
+  },
+  {
+    device_id: "c973c300-55a2-429b-b007-7653c9fc20c9",
+    os_name: "Bryggen Room 427",
+    oas_revision: 3.0,
+  },
+  {
+    device_id: "1e0d67a4-869f-4e14-91f0-cf42dab1f382",
+    os_name: "1e0d67a4-869f-4e14-91f0-cf42dab1f382",
+    oas_revision: 3.0,
+  },
+  {
+    device_id: "f4ff0dff-ebc3-4a0b-a6b0-7dfce2a4ff91",
+    os_name: "Bryggen Room 335",
+    oas_revision: 3.0,
+  },
+  {
+    device_id: "a5be8ce7-e0bb-4648-8db9-45a8eca69241",
+    os_name: "Morten Altru 1",
+    oas_revision: 2.0,
+  },
+  {
+    device_id: "9f40ac26-9e29-4549-b4d1-d7b3162556b1",
+    os_name: "9f40ac26-9e29-4549-b4d1-d7b3162556b1",
+    oas_revision: 3.0,
+  },
+  {
+    device_id: "aee46023-7ee6-483f-bc7c-3880354d4465",
+    os_name: "Eggensberger Shower 1",
+    oas_revision: 2.0,
+  },
+  {
+    device_id: "bec1d2b2-238c-408d-8b32-6c8835f3bf2b",
+    os_name: "Tina Kringelum - Basement",
+    oas_revision: 3.0,
+  },
+  {
+    device_id: "a82e7f28-c6b9-4f87-a5b2-d1ca41ed6757",
+    os_name: "Bryggen Room 407",
+    oas_revision: 3.0,
+  },
+  {
+    device_id: "074ede5b-0250-4cdf-ae20-d10cc5110f25",
+    os_name: "Sn\u00e4ck 3316",
+    oas_revision: 3.0,
+  },
+  {
+    device_id: "aadc663f-f394-4c4d-a5fa-aa55c0b97c09",
+    os_name: "Sn\u00e4ck 3301 H\u00f6ger",
+    oas_revision: 3.0,
+  },
+  {
+    device_id: "7809edc4-6057-49a9-83b2-c01d1e77d9f6",
+    os_name: "Hotel Guldsmeden Room 8",
+    oas_revision: 3.0,
+  },
+  {
+    device_id: "b6f73c51-1309-43ed-91d3-45670d0d3762",
+    os_name: "Thomas L1",
+    oas_revision: 3.0,
+  },
+  {
+    device_id: "7dc73246-80be-449b-8271-f108f83d7d47",
+    os_name: "2247-0004",
+    oas_revision: 3.0,
+  },
+];
 export const joins = [
   {
     PK: "SYMPTOM#64b88a82-a742-44b8-bc75-5b418f8ae564",

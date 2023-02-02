@@ -2,6 +2,7 @@ import ParentSize from "@visx/responsive/lib/components/ParentSizeModern";
 import dynamic from "next/dynamic";
 import { Diagnosis, DateInterval } from "../../types";
 import { getDiagnosisColor } from "../../util";
+import { deviceIdNameMap } from "../../exampledata";
 
 const BarChart = dynamic(() => import("../../components/BarChart"), {
   ssr: false,
@@ -30,8 +31,11 @@ export const Report = ({ data, dateInterval }: ReportProps) => {
         obj[b.code] = oldVal + 1;
         return obj;
       }, {});
-
-      return { name: d[0], ...groupByDiagnosis };
+      const deviceId = d[0];
+      const deviceName = deviceIdNameMap.find(
+        (d) => d.device_id === deviceId
+      )?.os_name;
+      return { name: deviceName || deviceId, ...groupByDiagnosis };
     }
   );
 

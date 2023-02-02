@@ -4,6 +4,7 @@ import { Filters } from "./filters";
 import { Symptom, DateInterval } from "../../types";
 import { Report } from "./report";
 import { Chart } from "./chart";
+import { deviceIdNameMap } from "../../exampledata";
 
 export default function Symptoms() {
   const [data, setData] = useState<Symptom[]>([]);
@@ -96,11 +97,18 @@ export default function Symptoms() {
       (_, i) => !selectedInstallationIndexes[i]
     );
 
+    const getSoftwareVersion = (deviceId: string) => {
+      const v =
+        deviceIdNameMap.find((s) => s.device_id === deviceId)?.oas_revision ||
+        0;
+      return `r${v}`;
+    };
+
     return [...unfilteredData].filter(
       (d) =>
         !hiddenSymptomIndexes.includes(d.code) &&
-        !hiddenInstallationIndexes.includes(d.device_id)
-      // selectedSoftwareVersions.includes(`r${d.software_version[0]}`) TODO
+        !hiddenInstallationIndexes.includes(d.device_id) &&
+        selectedSoftwareVersions.includes(getSoftwareVersion(d.device_id))
     );
   };
 

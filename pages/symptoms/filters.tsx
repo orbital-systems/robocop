@@ -4,6 +4,7 @@ import { DataTable } from "../../components/DataTable";
 import { installationTableColumns } from "../../components/DataTable/Installations/columns";
 import { symptomsTableColumns } from "../../components/DataTable/Symptoms/columns";
 import { IndeterminateCheckbox } from "../../components/InterminateCheckbox";
+import { deviceIdNameMap } from "../../exampledata";
 
 interface FiltersProps {
   symptomsData: string[];
@@ -101,7 +102,7 @@ export const Filters = ({
   return (
     <>
       <h2>1: Filter data</h2>
-      {/* <h3>Software version</h3>
+      <h3>Software version</h3>
       <input
         type="checkbox"
         id="r2"
@@ -117,7 +118,7 @@ export const Filters = ({
         checked={selectedSoftwareVersions.includes("r3")}
         onClick={() => toggleSoftwareVersion("r3")}
       />
-      <label htmlFor="r3">R3</label> */}
+      <label htmlFor="r3">R3</label>
       <div
         style={{
           display: "flex",
@@ -148,7 +149,11 @@ export const Filters = ({
           <h3>Installations</h3>
           <DataTable
             data={installationData.map((d) => {
-              return { name: d };
+              return {
+                value: d,
+                name:
+                  deviceIdNameMap?.find((s) => s.device_id === d)?.os_name || d,
+              };
             })}
             columns={installationColumns as any}
             rowSelection={selectedInstallationIndexes}

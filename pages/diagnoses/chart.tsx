@@ -9,6 +9,7 @@ import {
   getSymptomName,
 } from "../../util";
 import { joins, symptoms } from "../../exampledata";
+import { deviceIdNameMap } from "../../exampledata";
 
 const AreaChart = dynamic(() => import("../../components/Chart"), {
   ssr: false,
@@ -158,7 +159,11 @@ export const Chart = ({
                       <a
                         href={`https://osw.orb-sys.com/device/?id=${t.device_id}`}
                       >
-                        device
+                        {`${
+                          deviceIdNameMap?.find(
+                            (d) => d.device_id === t.device_id
+                          )?.os_name || t.device_id
+                        }`}
                       </a>
                     </span>
                     {" : "}

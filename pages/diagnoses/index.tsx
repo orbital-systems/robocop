@@ -46,7 +46,7 @@ export default function Diagnoses() {
     );
   }, []);
 
-  /* All symptoms in the data set */
+  /* All diagnoses in the data set */
   const diagnosisData = useMemo(
     () => Array.from(new Set(data.map((d) => d.code))),
     [data]
@@ -58,8 +58,8 @@ export default function Diagnoses() {
     [data]
   );
 
-  /* Indexes of selected symtpoms */
-  const [selectedSymptomIndexes, setSelectedSymptomIndexes] = useState<{
+  /* Indexes of selected diagnoses */
+  const [selectedDiagnoseIndexes, setSelectedDiagnoseIndexes] = useState<{
     [key: string]: boolean;
   }>({});
 
@@ -69,10 +69,10 @@ export default function Diagnoses() {
       [key: string]: boolean;
     }>({});
 
-  /* Function to filter out data that's not selected symptom & installation  */
+  /* Function to filter out data that's not selected diagnose & installation  */
   const externalFilter = (unfilteredData: Diagnosis[]) => {
-    const hiddenSymptomIndexes = diagnosisData.filter(
-      (_, i) => !selectedSymptomIndexes[i]
+    const hiddenDiagnosesIndexes = diagnosisData.filter(
+      (_, i) => !selectedDiagnoseIndexes[i]
     );
 
     const hiddenInstallationIndexes = installationData.filter(
@@ -81,7 +81,7 @@ export default function Diagnoses() {
 
     return [...unfilteredData].filter(
       (d) =>
-        !hiddenSymptomIndexes.includes(d.code) &&
+        !hiddenDiagnosesIndexes.includes(d.code) &&
         !hiddenInstallationIndexes.includes(d.device_id)
     );
   };
@@ -92,8 +92,8 @@ export default function Diagnoses() {
     <>
       <Filters
         diagnosisData={diagnosisData}
-        selectedSymptomIndexes={selectedSymptomIndexes}
-        setSelectedSymptomIndexes={setSelectedSymptomIndexes}
+        selectedDiagnoseIndexes={selectedDiagnoseIndexes}
+        setSelectedDiagnoseIndexes={setSelectedDiagnoseIndexes}
         installationData={installationData}
         selectedInstallationIndexes={selectedInstallationIndexes}
         setSelectedInstallationIndexes={setSelectedInstallationIndexes}

@@ -3,25 +3,26 @@ import { DataTable } from "../../components/DataTable";
 import { DiagnosisTableColumns } from "../../components/DataTable/Diagnosis/columns";
 import { installationTableColumns } from "../../components/DataTable/Installations/columns";
 import { IndeterminateCheckbox } from "../../components/InterminateCheckbox";
+import { deviceIdNameMap } from "../../exampledata";
 import { getDiagnosisName } from "../../util";
 
 interface FiltersProps {
   diagnosisData: string[];
-  selectedSymptomIndexes: { [key: string]: boolean };
-  setSelectedSymptomIndexes(data: { [key: string]: boolean }): void;
+  selectedDiagnoseIndexes: { [key: string]: boolean };
+  setSelectedDiagnoseIndexes(data: { [key: string]: boolean }): void;
   selectedInstallationIndexes: { [key: string]: boolean };
   setSelectedInstallationIndexes(data: { [key: string]: boolean }): void;
   installationData: string[];
 }
 export const Filters = ({
   diagnosisData,
-  selectedSymptomIndexes,
-  setSelectedSymptomIndexes,
+  selectedDiagnoseIndexes,
+  setSelectedDiagnoseIndexes,
   selectedInstallationIndexes,
   setSelectedInstallationIndexes,
   installationData,
 }: FiltersProps) => {
-  const symptomsColumns = useMemo(
+  const diagnosesColumns = useMemo(
     () => [
       {
         id: "select",
@@ -98,14 +99,14 @@ export const Filters = ({
             width: "48%",
           }}
         >
-          <h3>Symptoms</h3>
+          <h3>Diagnoses</h3>
           <DataTable
             data={diagnosisData.map((d) => {
               return { value: d, name: `${d} - ${getDiagnosisName(d)}` };
             })}
-            columns={symptomsColumns as any}
-            rowSelection={selectedSymptomIndexes}
-            setRowSelection={setSelectedSymptomIndexes}
+            columns={diagnosesColumns as any}
+            rowSelection={selectedDiagnoseIndexes}
+            setRowSelection={setSelectedDiagnoseIndexes}
           />
         </div>
         <div
@@ -116,7 +117,11 @@ export const Filters = ({
           <h3>Installations</h3>
           <DataTable
             data={installationData.map((d) => {
-              return { name: d };
+              return {
+                value: d,
+                name:
+                  deviceIdNameMap?.find((s) => s.device_id === d)?.os_name || d,
+              };
             })}
             columns={installationColumns as any}
             rowSelection={selectedInstallationIndexes}

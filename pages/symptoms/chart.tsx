@@ -3,6 +3,7 @@ import ParentSize from "@visx/responsive/lib/components/ParentSize";
 import { Symptom, DateInterval } from "../../types";
 import { useState } from "react";
 import { getSymptomColor, getSymptomName } from "../../util";
+import { deviceIdNameMap } from "../../exampledata";
 
 const AreaChart = dynamic(() => import("../../components/Chart"), {
   ssr: false,
@@ -69,8 +70,19 @@ export const Chart = ({
                     "blank"
                   )
                 }
-                hoverContent={(dataPoint) => (
-                  <div style={{ display: "flex" }}>
+                hoverContent={(dataPoint: Symptom) => (
+                  <div
+                    style={{
+                      display: "flex",
+                      flexDirection: "column",
+                      alignItems: "flex-end",
+                    }}
+                  >
+                    <div>
+                      {deviceIdNameMap.find(
+                        (d) => d.device_id === dataPoint?.device_id
+                      )?.os_name || dataPoint?.device_id}
+                    </div>
                     <div
                       style={{
                         backgroundColor: getSymptomColor(dataPoint?.code),
