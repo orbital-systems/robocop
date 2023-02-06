@@ -202,6 +202,7 @@ export const Settings = ({
     installationData,
     selectedInstallationIndexes,
     selectedSoftwareVersions,
+    dataType,
   ]);
 
   const toggleSoftwareVersion = (v: string) => {

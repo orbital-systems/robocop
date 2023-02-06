@@ -67,6 +67,16 @@ const Chart = ({
 }: ChartProps) => {
   const brushRef = useRef<BaseBrush | null>(null);
 
+  useEffect(() => {
+    setDataInTimeSpan(
+      data.filter(
+        (d) =>
+          new Date(d.timestamp) > new Date(dateInterval.from) &&
+          new Date(d.timestamp) < new Date(dateInterval.to)
+      )
+    );
+  }, [data]);
+
   const onBrushChange = (domain: Bounds | null) => {
     if (!domain) return;
     const { x0, x1, y0, y1 } = domain;
@@ -177,32 +187,6 @@ const Chart = ({
       brushRef.current.updateBrush(updater);
     }
   }, [desiredDateInterval]);
-
-  //   const handleResetClick = () => {
-  //     if (brushRef?.current) {
-  //       const updater: UpdateBrush = (prevBrush) => {
-  //         const newExtent = brushRef.current!.getExtent(
-  //           initialBrushPosition.start,
-  //           initialBrushPosition.end
-  //         );
-
-  //         const newState: BaseBrushState = {
-  //           ...prevBrush,
-  //           start: { y: newExtent.y0, x: newExtent.x0 },
-  //           end: { y: newExtent.y1, x: newExtent.x1 },
-  //           extent: newExtent,
-  //         };
-
-  //         return newState;
-  //       };
-  //       brushRef.current.updateBrush(updater);
-  //     }
-  //   };
-
-  //   useEffect(() => {
-  //     console.log("reset :>> ");
-  //     handleResetClick();
-  //   }, []);
 
   return (
     <div>
