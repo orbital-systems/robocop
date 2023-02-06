@@ -76,7 +76,7 @@ export default function AreaChart({
           cx={xScale(getDateAccessor(d))}
           cy={yScale(getValueAccessor(d))}
           fill={getCodeColor(d.code)}
-          r={circleRadius ?? 3}
+          r={circleRadius ?? 4}
           onMouseEnter={() => onHover && onHover(d)}
           onMouseLeave={() => onHover && onHover(undefined)}
           style={{ cursor: onHover && "pointer" }}

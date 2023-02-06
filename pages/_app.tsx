@@ -1,20 +1,12 @@
 import "../styles/globals.css";
 import "react-datepicker/dist/react-datepicker.css";
+import "semantic-ui-css/semantic.min.css";
+
 import type { AppProps } from "next/app";
 import Head from "next/head";
-import { useState } from "react";
-import { useRouter } from "next/router";
+import { Header } from "semantic-ui-react";
 
 export default function App({ Component, pageProps }: AppProps) {
-  const [tab, setTab] = useState<"symptoms" | "diagnoses">("diagnoses");
-
-  const router = useRouter();
-
-  const handleTabClick = (t: "symptoms" | "diagnoses") => {
-    setTab(t);
-    router.push(t);
-  };
-
   return (
     <>
       <Head>
@@ -29,34 +21,15 @@ export default function App({ Component, pageProps }: AppProps) {
             display: "flex",
             justifyContent: "space-between",
             alignItems: "center",
-            borderBottom: "1px solid #047130",
+            borderBottom: "1px solid #00000030",
+            marginBottom: 16,
+            marginTop: 16,
           }}
         >
-          <h1>Robocop</h1>
+          <Header size="huge">Robocop</Header>
           <a href="https://orbital-systems.atlassian.net/browse/OSW-271">
             Feature request or bug report
           </a>
-          <div>
-            <a
-              style={{
-                marginRight: 8,
-                fontWeight: tab === "diagnoses" ? "bold" : "normal",
-                cursor: "pointer",
-              }}
-              onClick={() => handleTabClick("diagnoses")}
-            >
-              Diagnoses
-            </a>
-            <a
-              style={{
-                fontWeight: tab === "symptoms" ? "bold" : "normal",
-                cursor: "pointer",
-              }}
-              onClick={() => handleTabClick("symptoms")}
-            >
-              Symptoms
-            </a>
-          </div>
         </div>
         <Component {...pageProps} />
       </main>

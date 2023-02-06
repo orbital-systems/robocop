@@ -34,7 +34,7 @@ export const getSymptomName = (symptom: string) =>
 // accessors
 export const getDateAccessor = (d: ChartData): Date => new Date(d.timestamp);
 
-const diagnosisData = {
+const diagnoseData = {
   D01: { name: "Loose cable", color: "#e6194b" },
   D02: { name: "Cable rupture/ Missing sensor tank", color: "#3cb44b" },
   D03: { name: "Hardware failure", color: "#ffe119" },
@@ -42,8 +42,8 @@ const diagnosisData = {
   D05: { name: "Cleaning needed", color: "#911eb4" },
 };
 
-export const getDiagnosisColor = (diagnose: string) =>
-  diagnosisData[diagnose as keyof typeof diagnosisData]?.color || "orange";
+export const getDiagnoseColor = (diagnose: string) =>
+  diagnoseData[diagnose as keyof typeof diagnoseData]?.color || "orange";
 
-export const getDiagnosisName = (diagnose: string) =>
-  diagnosisData[diagnose as keyof typeof diagnosisData]?.name || "unknown";
+export const getDiagnoseName = (diagnose: string) =>
+  diagnoseData[diagnose as keyof typeof diagnoseData]?.name || "unknown";

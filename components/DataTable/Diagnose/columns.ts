@@ -1,7 +1,7 @@
 import { ColumnDef } from "@tanstack/react-table";
 import { DiagnoseCell } from "./cells";
 
-export enum DiagnosisTableAccessors {
+export enum DiagnoseTableAccessors {
   name = "name",
 }
 
@@ -12,12 +12,12 @@ export enum SymptomTableNames {
 interface Symptom {
   name: string;
 }
-type DiagnosisTable = Symptom[];
+type DiagnoseTable = Symptom[];
 
-export const DiagnosisTableColumns: ColumnDef<DiagnosisTable>[] = [
+export const diagnoseTableColumns: ColumnDef<DiagnoseTable>[] = [
   {
-    accessorKey: DiagnosisTableAccessors.name,
-    id: DiagnosisTableAccessors.name,
+    accessorKey: DiagnoseTableAccessors.name,
+    id: DiagnoseTableAccessors.name,
     header: SymptomTableNames.name,
     cell: DiagnoseCell,
   },

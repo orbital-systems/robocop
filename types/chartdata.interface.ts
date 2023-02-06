@@ -1,5 +1,6 @@
 export interface ChartData {
-  index: number;
   timestamp: string;
   code: string;
+  device_id: string;
+  id: string;
 }

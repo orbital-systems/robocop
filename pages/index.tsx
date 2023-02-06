@@ -1,2 +1,2 @@
-import diagnoses from "./diagnoses";
-export default diagnoses;
+import analyze from "./analyze";
+export default analyze;

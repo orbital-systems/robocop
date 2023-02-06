@@ -1,4 +1,4 @@
-import React, { useRef, useState, useMemo, useEffect, ReactNode } from "react";
+import React, { useRef, useState, useMemo, useEffect } from "react";
 import { scaleTime, scaleLinear } from "@visx/scale";
 import { Brush } from "@visx/brush";
 import { Bounds } from "@visx/brush/lib/types";
@@ -12,8 +12,7 @@ import { LinearGradient } from "@visx/gradient";
 import { max, extent } from "d3-array";
 import AreaChart from "./AreaChart";
 import { getDateAccessor } from "../../util";
-import { DateInterval, ChartData } from "../../types";
-import DatePicker from "react-datepicker";
+import { ChartData, DateInterval } from "../../types";
 
 const brushMargin = { top: 10, bottom: 15, left: 50, right: 20 };
 const chartSeparation = 20;
@@ -34,16 +33,14 @@ type ChartProps = {
   margin?: { top: number; right: number; bottom: number; left: number };
   compact?: boolean;
   data: ChartData[];
-  filteredData: ChartData[];
-  setFilteredData(d: ChartData[]): void;
-  externalFilter(d: ChartData[]): ChartData[];
+  dataInTimeSpan: ChartData[];
+  setDataInTimeSpan(d: ChartData[]): void;
   getValueAccessor(d: ChartData): number;
-  setValueAccessor(a: "code" | "installation"): void;
-  valueAccessor: "code" | "installation";
+  desiredDateInterval: { from: Date; to: Date } | undefined;
   dateInterval: DateInterval;
   setDateInterval(d: DateInterval): void;
-  hoverContent(d: ChartData): ReactNode;
-  onDataPointClick?(d: ChartData): void;
+  setHoverData(d: ChartData): void;
+  setSelectedDataPoint?(d: ChartData): void;
   getCodeColor(d: string): string;
 };
 
@@ -58,16 +55,14 @@ const Chart = ({
     right: 20,
   },
   data,
-  filteredData,
-  setFilteredData,
-  externalFilter,
+  dataInTimeSpan,
+  setDataInTimeSpan,
   getValueAccessor,
-  setValueAccessor,
-  valueAccessor,
   dateInterval,
+  desiredDateInterval,
   setDateInterval,
-  onDataPointClick,
-  hoverContent,
+  setSelectedDataPoint,
+  setHoverData,
   getCodeColor,
 }: ChartProps) => {
   const brushRef = useRef<BaseBrush | null>(null);
@@ -75,18 +70,18 @@ const Chart = ({
   const onBrushChange = (domain: Bounds | null) => {
     if (!domain) return;
     const { x0, x1, y0, y1 } = domain;
-
     setDateInterval({
       ...dateInterval,
       from: new Date(x0),
       to: new Date(x1),
     });
+
     const dataCopy = data.filter((s) => {
       const x = getDateAccessor(s).getTime();
       const y = getValueAccessor(s);
       return x > x0 && x < x1 && y > y0 && y < y1;
     });
-    setFilteredData(dataCopy);
+    setDataInTimeSpan(dataCopy);
   };
 
   const innerHeight = height - margin.top - margin.bottom;
@@ -110,19 +105,19 @@ const Chart = ({
     () =>
       scaleTime<number>({
         range: [0, xMax],
-        domain: extent(filteredData, getDateAccessor) as [Date, Date],
+        domain: extent(dataInTimeSpan, getDateAccessor) as [Date, Date],
       }),
-    [xMax, filteredData]
+    [xMax, dataInTimeSpan]
   );
 
   const valueScale = useMemo(
     () =>
       scaleLinear<number>({
         range: [yMax, 0],
-        domain: [0, max(filteredData, getValueAccessor) || 0],
+        domain: [0, max(dataInTimeSpan, getValueAccessor) || 0],
         nice: true,
       }),
-    [yMax, filteredData]
+    [yMax, dataInTimeSpan]
   );
 
   const brushDateScale = useMemo(
@@ -156,72 +151,18 @@ const Chart = ({
       start: { x: getXFromDate(dateInterval.from) },
       end: { x: getXFromDate(dateInterval.to) },
     }),
-    [brushDateScale, dateInterval]
+    [brushDateScale, dateInterval, data]
   );
 
-  // event handlers
-  const handleClearClick = () => {
-    if (brushRef?.current) {
-      setFilteredData(data);
-      brushRef.current.reset();
-    }
-  };
-
-  const setBrushPastWeek = () => {
-    if (brushRef?.current) {
-      const updater: UpdateBrush = (prevBrush) => {
-        const oneWeekAgo = new Date(dateInterval.max);
-        oneWeekAgo.setDate(oneWeekAgo.getDate() - 7);
-        const newExtent = brushRef.current!.getExtent(
-          { x: getXFromDate(oneWeekAgo) },
-          { x: getXFromDate(dateInterval.max) }
-        );
-
-        const newState: BaseBrushState = {
-          ...prevBrush,
-          start: { y: newExtent.y0, x: newExtent.x0 },
-          end: { y: newExtent.y1, x: newExtent.x1 },
-          extent: newExtent,
-        };
-
-        return newState;
-      };
-      brushRef.current.updateBrush(updater);
-    }
-  };
-
-  const setBrushPastMonth = () => {
-    if (brushRef?.current) {
-      const updater: UpdateBrush = (prevBrush) => {
-        const oneWeekAgo = new Date(dateInterval.max);
-        oneWeekAgo.setMonth(oneWeekAgo.getMonth() - 1);
-        const newExtent = brushRef.current!.getExtent(
-          { x: getXFromDate(oneWeekAgo) },
-          { x: getXFromDate(dateInterval.max) }
-        );
-
-        const newState: BaseBrushState = {
-          ...prevBrush,
-          start: { y: newExtent.y0, x: newExtent.x0 },
-          end: { y: newExtent.y1, x: newExtent.x1 },
-          extent: newExtent,
-        };
-
-        return newState;
-      };
-      brushRef.current.updateBrush(updater);
-    }
-  };
-
-  const handleDatepickerClick = (newValue: Date, type: "from" | "to") => {
-    if (brushRef?.current) {
+  useEffect(() => {
+    if (brushRef?.current && typeof desiredDateInterval !== "undefined") {
       const updater: UpdateBrush = (prevBrush) => {
         const newExtent = brushRef.current!.getExtent(
           {
-            x: type === "from" ? getXFromDate(newValue) : prevBrush.extent.x0,
+            x: getXFromDate(desiredDateInterval.from),
           },
           {
-            x: type === "to" ? getXFromDate(newValue) : prevBrush.extent.x1,
+            x: getXFromDate(desiredDateInterval.to),
           }
         );
 
@@ -231,97 +172,40 @@ const Chart = ({
           end: { y: newExtent.y1, x: newExtent.x1 },
           extent: newExtent,
         };
-
         return newState;
       };
       brushRef.current.updateBrush(updater);
     }
-  };
+  }, [desiredDateInterval]);
 
-  useEffect(() => {
-    setBrushPastWeek();
-  }, []);
+  //   const handleResetClick = () => {
+  //     if (brushRef?.current) {
+  //       const updater: UpdateBrush = (prevBrush) => {
+  //         const newExtent = brushRef.current!.getExtent(
+  //           initialBrushPosition.start,
+  //           initialBrushPosition.end
+  //         );
 
-  const dataInRangeFiltered = externalFilter(filteredData);
-  const allDataFiltered = externalFilter(data);
+  //         const newState: BaseBrushState = {
+  //           ...prevBrush,
+  //           start: { y: newExtent.y0, x: newExtent.x0 },
+  //           end: { y: newExtent.y1, x: newExtent.x1 },
+  //           extent: newExtent,
+  //         };
 
-  const [hoverData, setHoverData] = useState<ChartData | undefined>(undefined);
+  //         return newState;
+  //       };
+  //       brushRef.current.updateBrush(updater);
+  //     }
+  //   };
+
+  //   useEffect(() => {
+  //     console.log("reset :>> ");
+  //     handleResetClick();
+  //   }, []);
 
   return (
     <div>
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "flex-end",
-          marginBottom: 8,
-        }}
-      >
-        <div>
-          <div>
-            <h3>Y axis</h3>
-            <button
-              onClick={() => setValueAccessor("installation")}
-              style={{
-                marginRight: 8,
-                fontWeight:
-                  valueAccessor === "installation" ? "bold" : "normal",
-              }}
-            >
-              {"Installation"}
-            </button>
-            <button
-              onClick={() => setValueAccessor("code")}
-              style={{
-                fontWeight: valueAccessor === "code" ? "bold" : "normal",
-              }}
-            >
-              {"Code"}
-            </button>
-          </div>
-          <div>
-            <h3>Time span</h3>
-            <div style={{ display: "flex" }}>
-              <button onClick={handleClearClick} style={{ marginRight: 8 }}>
-                All time
-              </button>
-              <button onClick={setBrushPastMonth} style={{ marginRight: 8 }}>
-                Past month
-              </button>
-              <button onClick={setBrushPastWeek} style={{ marginRight: 8 }}>
-                Past week
-              </button>
-              <div style={{ display: "flex" }}>
-                <label style={{ marginRight: 8 }}>From</label>
-                <DatePicker
-                  selected={dateInterval.from}
-                  onChange={(date: Date) => handleDatepickerClick(date, "from")}
-                  showTimeSelect
-                  dateFormat="dd/MM/yyyy"
-                  timeFormat="HH:mm"
-                  minDate={dateInterval.min}
-                  maxDate={dateInterval.to}
-                />
-                <label style={{ marginRight: 8, marginLeft: 8 }}>To</label>
-                <DatePicker
-                  selected={dateInterval.to}
-                  onChange={(date: Date) => handleDatepickerClick(date, "to")}
-                  showTimeSelect
-                  dateFormat="dd/MM/yyyy"
-                  timeFormat="HH:mm"
-                  minDate={dateInterval.from}
-                  maxDate={dateInterval.max}
-                />
-              </div>
-            </div>
-          </div>
-        </div>
-        <div>
-          {hoverContent &&
-            typeof hoverData !== "undefined" &&
-            hoverContent(hoverData)}
-        </div>
-      </div>
       <svg width={width} height={height}>
         <LinearGradient
           id={GRADIENT_ID}
@@ -339,7 +223,7 @@ const Chart = ({
         />
         <AreaChart
           hideLeftAxis
-          data={dataInRangeFiltered}
+          data={dataInTimeSpan}
           width={width}
           margin={{ ...margin, bottom: topChartBottomMargin }}
           yMax={yMax}
@@ -347,7 +231,7 @@ const Chart = ({
           yScale={valueScale}
           gradientColor={background2}
           onHover={setHoverData}
-          onClick={onDataPointClick}
+          onClick={setSelectedDataPoint}
           getValueAccessor={getValueAccessor}
           getCodeColor={getCodeColor}
         />
@@ -355,7 +239,7 @@ const Chart = ({
           hideBottomAxis
           hideLeftAxis
           circleRadius={2}
-          data={allDataFiltered}
+          data={data}
           width={width}
           yMax={yBrushMax}
           xScale={brushDateScale}
@@ -386,7 +270,7 @@ const Chart = ({
             brushDirection="horizontal"
             initialBrushPosition={initialBrushPosition}
             onChange={onBrushChange}
-            onClick={() => setFilteredData(data)}
+            onClick={() => setDataInTimeSpan(data)}
             selectedBoxStyle={selectedBrushStyle}
             useWindowMoveEvents
             renderBrushHandle={(props) => <BrushHandle {...props} />}

@@ -1,4 +1,4 @@
 export * from "./symptom.interface";
-export * from "./diagnosis.interface";
+export * from "./diagnose.interface";
 export * from "./dateinterval.interface";
 export * from "./chartdata.interface";

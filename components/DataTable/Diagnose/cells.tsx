@@ -1,9 +1,9 @@
-import { getDiagnosisColor } from "../../../util";
+import { getDiagnoseColor } from "../../../util";
 
 export const DiagnoseCell = ({ row }: any) => (
   <div
     style={{
-      backgroundColor: getDiagnosisColor(row.original.value),
+      backgroundColor: getDiagnoseColor(row.original.value),
     }}
   >
     {row.original.name}

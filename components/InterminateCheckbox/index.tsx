@@ -1,4 +1,5 @@
 import { HTMLProps, useEffect, useRef } from "react";
+import { Checkbox } from "semantic-ui-react";
 
 export const IndeterminateCheckbox = ({
   indeterminate,
@@ -14,7 +15,7 @@ export const IndeterminateCheckbox = ({
   }, [ref, indeterminate]);
 
   return (
-    <input
+    <Checkbox
       type="checkbox"
       ref={ref}
       className={className + " cursor-pointer"}
