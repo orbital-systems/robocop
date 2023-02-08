@@ -26,7 +26,7 @@ const symptomData = {
 };
 
 export const getSymptomColor = (symptom: string) =>
-  symptomData[symptom as keyof typeof symptomData]?.color || "orange";
+  symptomData[symptom as keyof typeof symptomData]?.color || "#000";
 
 export const getSymptomName = (symptom: string) =>
   symptomData[symptom as keyof typeof symptomData]?.name || "unknown";
@@ -43,7 +43,7 @@ const diagnoseData = {
 };
 
 export const getDiagnoseColor = (diagnose: string) =>
-  diagnoseData[diagnose as keyof typeof diagnoseData]?.color || "orange";
+  diagnoseData[diagnose as keyof typeof diagnoseData]?.color || "#000";
 
 export const getDiagnoseName = (diagnose: string) =>
   diagnoseData[diagnose as keyof typeof diagnoseData]?.name || "unknown";

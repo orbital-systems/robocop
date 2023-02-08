@@ -298,9 +298,6 @@ export const Settings = ({
             <div
               style={{ display: "flex", alignItems: "center", marginBottom: 8 }}
             >
-              <Label htmlFor="r2" style={{ marginRight: 8 }}>
-                R2
-              </Label>
               <Checkbox
                 type="checkbox"
                 id="r2"
@@ -308,13 +305,13 @@ export const Settings = ({
                 checked={selectedSoftwareVersions.includes("r2")}
                 onClick={() => toggleSoftwareVersion("r2")}
               />
+              <Label htmlFor="r2" style={{ marginLeft: 8 }}>
+                R2
+              </Label>
             </div>
             <div
               style={{ display: "flex", alignItems: "center", marginBottom: 8 }}
             >
-              <Label htmlFor="r3" style={{ marginRight: 8 }}>
-                R3
-              </Label>
               <Checkbox
                 type="checkbox"
                 id="r3"
@@ -322,6 +319,9 @@ export const Settings = ({
                 checked={selectedSoftwareVersions.includes("r3")}
                 onClick={() => toggleSoftwareVersion("r3")}
               />
+              <Label htmlFor="r3" style={{ marginLeft: 8 }}>
+                R3
+              </Label>
             </div>
           </Segment>
           <Segment>

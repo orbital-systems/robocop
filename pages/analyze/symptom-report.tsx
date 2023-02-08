@@ -228,7 +228,8 @@ export const SymtpomsReport = ({
                 <li key={t.diagnosis_id}>
                   <div
                     style={{
-                      backgroundColor: getDiagnoseColor(t.code),
+                      border: `1px solid ${getDiagnoseColor(t.code)}`,
+                      backgroundColor: `${getDiagnoseColor(t.code)}33`,
                       padding: 8,
                     }}
                   >
