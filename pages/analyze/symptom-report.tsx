@@ -213,6 +213,7 @@ export const SymtpomsReport = ({
                 ).toLocaleString()} on `}
                 <a
                   href={`https://osw.orb-sys.com/device/?id=${selectedDataPoint.device_id}`}
+                  target="_blank"
                 >
                   {`${
                     deviceIdNameMap?.find(
@@ -238,6 +239,7 @@ export const SymtpomsReport = ({
                       {`${new Date(t.timestamp).toLocaleString()} on `}
                       <a
                         href={`https://osw.orb-sys.com/device/?id=${t.device_id}`}
+                        target="_blank"
                       >
                         {`${
                           deviceIdNameMap?.find(
@@ -247,11 +249,12 @@ export const SymtpomsReport = ({
                       </a>
                     </span>
                     {" : "}
-                    {/* <a
+                    <a
                       href={`https://osw.orb-sys.com/plotting/?device_id=${t.device_id}&session_id=${t.session_id}`}
+                      target="_blank"
                     >
                       session
-                    </a> */}
+                    </a>
                   </div>
                 </li>
               ))}

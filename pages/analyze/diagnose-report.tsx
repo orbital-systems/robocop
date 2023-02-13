@@ -213,6 +213,7 @@ export const DiagnoseReport = ({
                 ).toLocaleString()} on `}
                 <a
                   href={`https://osw.orb-sys.com/device/?id=${selectedDataPoint.device_id}`}
+                  target="_blank"
                 >
                   {`${
                     deviceIdNameMap?.find(
@@ -238,6 +239,7 @@ export const DiagnoseReport = ({
                       {`${new Date(t.timestamp).toLocaleString()} on `}
                       <a
                         href={`https://osw.orb-sys.com/device/?id=${t.device_id}`}
+                        target="_blank"
                       >
                         {`${
                           deviceIdNameMap?.find(
@@ -249,6 +251,7 @@ export const DiagnoseReport = ({
                     {" : "}
                     <a
                       href={`https://osw.orb-sys.com/plotting/?device_id=${t.device_id}&session_id=${t.session_id}`}
+                      target="_blank"
                     >
                       session
                     </a>
