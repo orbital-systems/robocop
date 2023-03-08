@@ -1,16 +1,15 @@
 import { useEffect, useState } from "react";
-import { diagnoses, symptoms } from "../../exampledata";
 import { DateInterval, ChartData } from "../../types";
 import { ValueAccessor } from "../../types/valueaccessor.interface";
+import { getData } from "../hooks/getData";
 import { DiagnoseReport } from "./diagnose-report";
 import { Settings } from "./settings";
 import { SymtpomsReport } from "./symptom-report";
 
-type DataType = "diagnoses" | "symptoms";
-export default function Analyze() {
-  const [data, setData] = useState<ChartData[]>([]);
+export type DataType = "diagnosis" | "symptom";
 
-  const [dataType, setDataType] = useState<DataType>("diagnoses");
+export default function Analyze() {
+  const [dataType, setDataType] = useState<DataType>("diagnosis");
 
   const [valueAccessor, setValueAccessor] =
     useState<ValueAccessor>("installation");
@@ -24,29 +23,7 @@ export default function Analyze() {
     { to: Date; from: Date } | undefined
   >(undefined);
 
-  useEffect(() => {
-    if (dataType === "diagnoses") {
-      setData(
-        diagnoses.map((d) => {
-          return {
-            ...d,
-            timestamp: new Date(d.timestamp).toISOString(),
-            id: d.diagnosis_id,
-          };
-        })
-      );
-    } else {
-      setData(
-        symptoms.map((d) => {
-          return {
-            ...d,
-            timestamp: new Date(d.timestamp).toISOString(),
-            id: d.symptom_id,
-          };
-        })
-      );
-    }
-  }, [dataType]);
+  const { data } = getData(dataType);
 
   useEffect(() => {
     const sort = data.sort(
@@ -77,7 +54,7 @@ export default function Analyze() {
         flexDirection: "row",
       }}
     >
-      {dataType === "diagnoses" ? (
+      {dataType === "diagnosis" ? (
         <DiagnoseReport
           filteredData={filteredData}
           dateInterval={dateInterval}

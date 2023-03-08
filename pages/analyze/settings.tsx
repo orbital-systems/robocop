@@ -4,7 +4,6 @@ import { diagnoseTableColumns } from "../../components/DataTable/Diagnose/column
 import { installationTableColumns } from "../../components/DataTable/Installations/columns";
 import { symptomsTableColumns } from "../../components/DataTable/Symptoms/columns";
 import { IndeterminateCheckbox } from "../../components/InterminateCheckbox";
-import { deviceIdNameMap } from "../../exampledata";
 import { ChartData, DateInterval } from "../../types";
 import { getDiagnoseName, getSymptomName } from "../../util";
 import DatePicker from "react-datepicker";
@@ -18,6 +17,7 @@ import {
   Label,
   Segment,
 } from "semantic-ui-react";
+import { DataType } from ".";
 
 interface Settings {
   data: ChartData[];
@@ -26,8 +26,8 @@ interface Settings {
   setDesiredDateInterval({ to, from }: { to: Date; from: Date }): void;
   setValueAccessor(a: ValueAccessor): void;
   valueAccessor: ValueAccessor;
-  dataType: "diagnoses" | "symptoms";
-  setDataType(d: "diagnoses" | "symptoms"): void;
+  dataType: DataType;
+  setDataType(d: DataType): void;
 }
 
 export const Settings = ({
@@ -59,7 +59,15 @@ export const Settings = ({
 
   /* All installations in the data set */
   const installationData = useMemo(
-    () => Array.from(new Set(data.map((d) => d.device_id))),
+    () =>
+      Array.from(new Set(data.map((d) => d.device_id))).map((d) => {
+        const device = data.find((org) => org.device_id === d);
+        return {
+          id: d,
+          name: device?.os_name,
+          oas_revision: device?.oas_revision,
+        };
+      }),
     [data]
   );
 
@@ -181,18 +189,11 @@ export const Settings = ({
       (_, i) => !selectedInstallationIndexes[i]
     );
 
-    const getSoftwareVersion = (deviceId: string) => {
-      const v =
-        deviceIdNameMap.find((s) => s.device_id === deviceId)?.oas_revision ||
-        0;
-      return `r${v}`;
-    };
-
     const filteredData = [...data].filter(
       (d) =>
         !hiddenDiagnosesIndexes.includes(d.code) &&
-        !hiddenInstallationIndexes.includes(d.device_id) &&
-        selectedSoftwareVersions.includes(getSoftwareVersion(d.device_id))
+        !hiddenInstallationIndexes.map((d) => d.id).includes(d.device_id) &&
+        selectedSoftwareVersions.includes(`r${d?.oas_revision}`)
     );
     setFilteredData(filteredData);
   }, [
@@ -329,10 +330,9 @@ export const Settings = ({
             <DataTable
               data={installationData.map((d) => {
                 return {
-                  value: d,
-                  name:
-                    deviceIdNameMap?.find((s) => s.device_id === d)?.os_name ||
-                    d,
+                  value: d.id,
+                  name: d.name,
+                  oas_revision: d.oas_revision,
                 };
               })}
               columns={installationColumns as any}
@@ -357,24 +357,24 @@ export const Settings = ({
             <Checkbox
               radio
               label="Diagnoses"
-              value="diagnoses"
-              checked={dataType === "diagnoses"}
-              onChange={() => setDataType("diagnoses")}
+              value="DIAGNOSIS"
+              checked={dataType === "diagnosis"}
+              onChange={() => setDataType("diagnosis")}
               style={{ marginRight: 8 }}
             />
             <Checkbox
               radio
               label="Symptoms"
               value="symptoms"
-              checked={dataType === "symptoms"}
-              onChange={() => setDataType("symptoms")}
+              checked={dataType === "symptom"}
+              onChange={() => setDataType("symptom")}
             />
           </Segment>
           <Segment>
             <Header size="small">
-              {dataType === "diagnoses" ? "Diagnoses" : "Symptoms"}
+              {dataType === "diagnosis" ? "Diagnosis" : "Symptom"}
             </Header>
-            {dataType === "diagnoses" ? (
+            {dataType === "diagnosis" ? (
               <DataTable
                 data={codeData.map((d) => {
                   return { value: d, name: `${d} - ${getDiagnoseName(d)}` };

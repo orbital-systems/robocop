@@ -10,7 +10,7 @@ import {
 } from "../../util";
 import { ValueAccessor } from "../../types/valueaccessor.interface";
 import { Button, Header, Icon, Segment } from "semantic-ui-react";
-import { deviceIdNameMap, joins, symptoms } from "../../exampledata";
+import { joins, symptoms_diagnoses_db } from "../../exampledata";
 
 const AreaChart = dynamic(() => import("../../components/Chart"), {
   ssr: false,
@@ -46,12 +46,12 @@ export const DiagnoseReport = ({
   const [triggeredBy, setTriggeredBy] = useState<Symptom[]>([]);
   useEffect(() => {
     if (typeof selectedDataPoint !== "undefined") {
-      const triggeredByList =
-        joins
-          ?.filter((j) => j.diagnosis_id === selectedDataPoint?.id)
-          ?.map((d) => symptoms.find((s) => s.symptom_id === d.symptom_id))
-          ?.filter((s) => typeof s !== "undefined") || [];
-
+      const symptomIds = joins
+        .filter((j) => j.PK === selectedDataPoint.SK)
+        .map((j) => j.SK);
+      const triggeredByList = symptomIds.map((sk) =>
+        symptoms_diagnoses_db.find((d) => d.SK === sk)
+      );
       const temporaryUglyCode = triggeredByList as unknown as Symptom[]; // this is temporary anyway :)
       setTriggeredBy(temporaryUglyCode);
     }
@@ -78,7 +78,6 @@ export const DiagnoseReport = ({
     },
     {}
   );
-
   const groupedByInstallationData = Object.entries(groupByInstallation).map(
     (d) => {
       const groupByDiagnose = d[1].reduce((obj: any, b) => {
@@ -86,10 +85,10 @@ export const DiagnoseReport = ({
         obj[b.code] = oldVal + 1;
         return obj;
       }, {});
+
+      console.log("groupByDiagnose :>> ", groupByDiagnose);
       const deviceId = d[0];
-      const deviceName = deviceIdNameMap.find(
-        (d) => d.device_id === deviceId
-      )?.os_name;
+      const deviceName = d[1][0].os_name;
       return { name: deviceName || deviceId, ...groupByDiagnose };
     }
   );
@@ -215,11 +214,7 @@ export const DiagnoseReport = ({
                   href={`https://osw.orb-sys.com/device/?id=${selectedDataPoint.device_id}`}
                   target="_blank"
                 >
-                  {`${
-                    deviceIdNameMap?.find(
-                      (d) => d.device_id === selectedDataPoint.device_id
-                    )?.os_name || selectedDataPoint.device_id
-                  }`}
+                  {`${selectedDataPoint.os_name}`}
                 </a>
               </span>
             </div>
@@ -232,29 +227,19 @@ export const DiagnoseReport = ({
                       border: `1px solid ${getSymptomColor(t.code)}`,
                       backgroundColor: `${getSymptomColor(t.code)}33`,
                       padding: 8,
+                      marginBottom: 8,
                     }}
                   >
                     <p>{`${t.code} - ${getSymptomName(t.code)}`}</p>
                     <span>
                       {`${new Date(t.timestamp).toLocaleString()} on `}
                       <a
-                        href={`https://osw.orb-sys.com/device/?id=${t.device_id}`}
+                        href={`https://osw.orb-sys.com/plotting/?device_id=${t.device_id}&session_id=${t.session_id}`}
                         target="_blank"
                       >
-                        {`${
-                          deviceIdNameMap?.find(
-                            (d) => d.device_id === t.device_id
-                          )?.os_name || t.device_id
-                        }`}
+                        session
                       </a>
                     </span>
-                    {" : "}
-                    <a
-                      href={`https://osw.orb-sys.com/plotting/?device_id=${t.device_id}&session_id=${t.session_id}`}
-                      target="_blank"
-                    >
-                      session
-                    </a>
                   </div>
                 </li>
               ))}

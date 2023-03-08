@@ -25,6 +25,7 @@
     "@visx/scale": "latest",
     "@visx/shape": "latest",
     "@visx/tooltip": "^3.0.0",
+    "aws-sdk": "^2.1324.0",
     "d3-array": "^3.2.1",
     "eslint": "8.31.0",
     "eslint-config-next": "13.1.1",

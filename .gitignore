@@ -9,3 +9,4 @@ snippets
 .vscode
 out
 *.tsx.swp
+.env

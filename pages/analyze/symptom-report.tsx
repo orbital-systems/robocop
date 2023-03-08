@@ -10,7 +10,7 @@ import {
 } from "../../util";
 import { ValueAccessor } from "../../types/valueaccessor.interface";
 import { Button, Header, Icon, Segment } from "semantic-ui-react";
-import { deviceIdNameMap, joins, diagnoses } from "../../exampledata";
+import { joins, symptoms_diagnoses_db } from "../../exampledata";
 
 const AreaChart = dynamic(() => import("../../components/Chart"), {
   ssr: false,
@@ -46,11 +46,15 @@ export const SymtpomsReport = ({
   const [hasTriggered, setHasTriggered] = useState<Diagnose[]>([]);
   useEffect(() => {
     if (typeof selectedDataPoint !== "undefined") {
-      const triggeredByList =
-        joins
-          ?.filter((j) => j.symptom_id === selectedDataPoint?.id)
-          ?.map((d) => diagnoses.find((s) => s.diagnosis_id === d.diagnosis_id))
-          ?.filter((s) => typeof s !== "undefined") || [];
+      console.log("selectedDataPoint :>> ", selectedDataPoint);
+      const diagnoseIds = joins
+        .filter((j) => j.SK === selectedDataPoint.SK)
+        .map((j) => j.PK); // TODO: hmm
+
+      const triggeredByList = diagnoseIds.map((sk) =>
+        symptoms_diagnoses_db.find((d) => d.SK === sk)
+      );
+      console.log("triggeredByList :>> ", triggeredByList);
       const temporaryUglyCode = triggeredByList as unknown as Diagnose[]; // this is temporary anyway :)
       setHasTriggered(temporaryUglyCode);
     }
@@ -86,9 +90,8 @@ export const SymtpomsReport = ({
         return obj;
       }, {});
       const deviceId = d[0];
-      const deviceName = deviceIdNameMap.find(
-        (d) => d.device_id === deviceId
-      )?.os_name;
+      const deviceName = d[1][0].os_name;
+
       return { name: deviceName || deviceId, ...groupBySymtpom };
     }
   );
@@ -215,11 +218,7 @@ export const SymtpomsReport = ({
                   href={`https://osw.orb-sys.com/device/?id=${selectedDataPoint.device_id}`}
                   target="_blank"
                 >
-                  {`${
-                    deviceIdNameMap?.find(
-                      (d) => d.device_id === selectedDataPoint.device_id
-                    )?.os_name || selectedDataPoint.device_id
-                  }`}
+                  {`${selectedDataPoint.os_name}`}
                 </a>
               </span>
             </div>
@@ -232,29 +231,11 @@ export const SymtpomsReport = ({
                       border: `1px solid ${getDiagnoseColor(t.code)}`,
                       backgroundColor: `${getDiagnoseColor(t.code)}33`,
                       padding: 8,
+                      marginBottom: 8,
                     }}
                   >
                     <p>{`${t.code} - ${getDiagnoseName(t.code)}`}</p>
-                    <span>
-                      {`${new Date(t.timestamp).toLocaleString()} on `}
-                      <a
-                        href={`https://osw.orb-sys.com/device/?id=${t.device_id}`}
-                        target="_blank"
-                      >
-                        {`${
-                          deviceIdNameMap?.find(
-                            (d) => d.device_id === t.device_id
-                          )?.os_name || t.device_id
-                        }`}
-                      </a>
-                    </span>
-                    {" : "}
-                    <a
-                      href={`https://osw.orb-sys.com/plotting/?device_id=${t.device_id}&session_id=${t.session_id}`}
-                      target="_blank"
-                    >
-                      session
-                    </a>
+                    <span>{`${new Date(t.timestamp).toLocaleString()}`}</span>
                   </div>
                 </li>
               ))}

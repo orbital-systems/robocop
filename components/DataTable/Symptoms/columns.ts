@@ -21,4 +21,9 @@ export const symptomsTableColumns: ColumnDef<SymptomsTable>[] = [
     header: SymptomTableNames.name,
     cell: SymptomCell,
   },
+  {
+    accessorKey: "oas_revision",
+    id: "oas_revision",
+    header: "SymptomTableNames.name",
+  },
 ];
